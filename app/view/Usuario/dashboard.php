@@ -29,10 +29,8 @@
 
  if($_SESSION["descRol"] == 'Administrador/a') {
      require_once 'dashboardAdmin.php';
- } else if($_SESSION["descRol"] == 'Maestro/a') {
-    require_once 'dashboardMaestros.php';
-}else{
-    require_once 'dashboardSecretaria.php';
+ } else if($_SESSION["descRol"] == 'Cajero') {
+    require_once 'dashboardCajero.php';
 }
 
 ?>

@@ -68,12 +68,7 @@
             </div>
 
             <div class="fields">
-                <div class=" four wide field">
-                    <label for="">DUI:</label>
-                    <input class="reqRegistrar" type="text" name="dui" id="dui" value=<?php echo '"'.$_SESSION['dui'].'"'; ?>>
-                    <div class="ui red pointing label" style="display: none;">
-                    </div>
-                </div>
+                
                 <div class="eight wide field">
                     <label for="">Correo:</label>
                     <input class="reqRegistrar" type="text" name="correo" id="correo" value=<?php echo '"'.$_SESSION['email'].'"'; ?>>
@@ -84,17 +79,6 @@
                 <div class="four wide field">
                     <label for="">Teléfono:</label>
                     <input class="reqRegistrar" type="text" name="telefono" id="telefono" value=<?php echo '"'.$_SESSION['telefono'].'"'; ?>>
-                    <div class="ui red pointing label" style="display: none;">
-                    </div>
-                </div>
-            </div>
-
-            <div class="fields">
-               
-
-                <div class="sixteen wide field">
-                    <label for="">Dirección:</label>
-                    <input class="reqRegistrar" type="text" name="direccion" id="direccion" value=<?php echo '"'.$_SESSION['direccion'].'"'; ?>>
                     <div class="ui red pointing label" style="display: none;">
                     </div>
                 </div>
@@ -177,12 +161,7 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <?php echo $_SESSION['nombre'].' '.$_SESSION['apellido']?></b>
-                    <div class="ui divider"></div>
-                    <a style="font-weight:bold; font-size:19px; color:#08088A;"> <i class="address card  icon"></i>Documento de identidad:</a>
-                    <b style="font-size:16px;">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;
-                    <?php echo $_SESSION['dui'] ?></b>
+                    
                     <div class="ui divider"></div>
                     <a style="font-weight:bold; font-size:19px; color:#08088A;"><i class="phone  icon"></i>N° Teléfono:</a>
                     <b style="font-size:16px;">
@@ -190,13 +169,7 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <?php echo $_SESSION['telefono']?></b>
-                    <div class="ui divider"></div>
-                    <a style="font-weight:bold; font-size:19px; color:#08088A;"> <i class="map marker  icon"></i>Dirección: </a>
-                    <b style="font-size:16px;">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <?php echo $_SESSION['direccion']?></b>
+                   
                     <div class="ui divider"></div>
                     <a style="font-weight:bold; font-size:19px; color:#08088A;"> <i class="cog icon"></i>Permisos de la cuenta:</a>
                     <b style="font-size:16px;">
