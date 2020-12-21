@@ -1,0 +1,28 @@
+create database cafeteriaGabita;
+
+use cafeteriaGabita;
+
+create table rol(
+codigoRol int primary key  auto_increment,
+descRol varchar(50)
+);
+
+create table usuario (
+    codigoUsuario int primary key  auto_increment,
+    nombre varchar(50),
+    apellido varchar(50),
+    nomUsuario varchar(75),
+    email varchar(100),
+    direccion varchar(500),
+    pass varchar(75),
+    telefono varchar(50),
+    dui varchar(10),
+    fechaNac date,
+    codigoRol int,
+    idEliminado int
+);
+
+
+
+ALTER TABLE usuario
+ADD FOREIGN KEY (codigoRol) REFERENCES  rol(codigoRol);
