@@ -1,3 +1,5 @@
+DROP DATABASE cafeteriaGabita;
+
 create database cafeteriaGabita;
 
 use cafeteriaGabita;
@@ -13,11 +15,8 @@ create table usuario (
     apellido varchar(50),
     nomUsuario varchar(75),
     email varchar(100),
-    direccion varchar(500),
     pass varchar(75),
     telefono varchar(50),
-    dui varchar(10),
-    fechaNac date,
     codigoRol int,
     idEliminado int
 );
@@ -26,3 +25,93 @@ create table usuario (
 
 ALTER TABLE usuario
 ADD FOREIGN KEY (codigoRol) REFERENCES  rol(codigoRol);
+
+
+
+insert into rol values(1,'Administrador');
+insert into rol values(2,'Cajero');
+
+
+insert into usuario values(1,'Fabio','Mejia','fabio','mejiafabio383@gmail.com','40bd001563085fc35165329ea1ff5c5ecbdbbeef','7258-8312',1,1);
+
+
+
+delimiter $$
+
+create procedure login(
+	
+in user varchar(50),
+    
+in contra varchar(75)
+
+)
+
+begin
+	
+select u.*, r.descRol
+
+	from usuario u
+	
+inner join rol r on r.codigoRol = u.codigoRol
+
+where u.nomUsuario = user and u.pass = contra and u.idEliminado=1;
+
+end	
+
+$$
+
+
+
+
+delimiter $$
+
+create procedure mostrarUsuarios()
+
+begin
+	
+select u.*, r.descRol
+
+from usuario u
+	
+inner join rol r on r.codigoRol = u.codigoRol
+
+where u.idEliminado=1 and u.codigoUsuario>1;
+
+end
+
+$$
+
+
+
+
+create table sucursales(
+id int primary key  auto_increment,
+nombre varchar(100),
+idEliminado int   
+);
+
+
+create table areas(
+id int primary key  auto_increment,
+nombre varchar(100),
+idSucursal int,
+cantidadSubsidio double,
+idEliminado int   
+);
+
+
+ALTER TABLE areas
+ADD FOREIGN KEY (idSucursal) REFERENCES  sucursales(id);
+
+
+create table cajas(
+id int primary key  auto_increment,
+nombre varchar(100),
+idSucursal int,
+idEliminado int    
+);
+
+
+ALTER TABLE cajas
+ADD FOREIGN KEY (idSucursal) REFERENCES  sucursales(id);
+
