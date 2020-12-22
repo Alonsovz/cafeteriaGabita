@@ -332,11 +332,11 @@ select:-webkit-autofill:focus {
 
 td{
     background: white;
-    border: 1px solid black;
+border-bottom: 1px solid black;
 }
 
 tbody{
-    border: 1px solid black;
+   /* border: 1px solid black;*/
     text-align: center;
 }
 
@@ -347,13 +347,6 @@ thead{
 tr{
     text-align: center;
 }
-
-tbody td:hover{
-    color: blue;
-    background-color: #C2C0C0;
-    font-weight: bold;
-}
-
 
 th{
     text-align: center;
