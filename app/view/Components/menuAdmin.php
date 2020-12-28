@@ -1,59 +1,60 @@
-<br>
-<div class="ui fluid selection dropdown" style="color:yellow; background-color:#1B1C1D; font-weight:bold;">
-<i class="dropdown icon"></i>
-    <div class="default text" style="color:yellow; background-color:#1B1C1D;font-weight:bold;">
-            <i class="cogs icon"></i>
-            <b>Administración</b>       
-    </div>
-
-    <div class="menu" style="background-color:#1B1C1D;">
-
-    <div class="item">
-    <a href="?1=CajasController&2=gestion" class="item menu-it" style=" color:white;font-weight:bold;
+<div class="menu">
+<div class="item" style="border-bottom:1px solid #B7B6B6; ">
+    <a href="?1=ProductosController&2=gestion" class="item menu-it" style=" color:white;
     background-color:#1B1C1D;font-size: 14px;">
-       <img src="./res/img/money-box.png" align="left"> &nbsp;&nbsp; Cajas
+         <img src="./res/img/food.png" align="left"> &nbsp;&nbsp; Productos
     </a>
-    </div>
+</div>
 
-    <div class="item">
-    <a href="?1=AreaController&2=gestion" class="item menu-it" style=" color:white;font-weight:bold;
+<div class="item" style="border-bottom:1px solid #B7B6B6; ">
+    <a href="?1=ClientesController&2=gestion" class="item menu-it" style=" color:white;
     background-color:#1B1C1D;font-size: 14px;">
-       <img src="./res/img/location.png" align="left"> &nbsp;&nbsp; Áreas
+       <img src="./res/img/consumer.png" align="left"> &nbsp;&nbsp; Clientes
     </a>
-    </div>
-  
-    <div class="item">
-    <a href="?1=SucursalesController&2=gestion" class="item menu-it" style=" color:white;font-weight:bold;
-    background-color:#1B1C1D;font-size: 14px;">
-       <img src="./res/img/office.png" align="left"> &nbsp;&nbsp; Sucursales
-    </a>
-    </div>
+</div>
 
 
-    <div class="item">
-    <a href="?1=UsuarioController&2=gestion" class="item menu-it" style=" color:white;font-weight:bold;
+<div class="item" style="border-bottom:1px solid #B7B6B6; ">
+    <a href="?1=UsuarioController&2=gestion" class="item menu-it" style=" color:white;
     background-color:#1B1C1D;font-size: 14px;">
          <img src="./res/img/users.png" align="left"> &nbsp;&nbsp; Usuarios
     </a>
-    </div>
+</div>
 
-    
 
-    
-    </div>
+<div class="item" style="border-bottom:1px solid #B7B6B6; ">
+    <a href="?1=CajasController&2=gestion" class="item menu-it" style=" color:white;
+    background-color:#1B1C1D;font-size: 14px;">
+       <img src="./res/img/money-box.png" align="left"> &nbsp;&nbsp; Cajas
+    </a>
+</div>
 
+<div class="item" style="border-bottom:1px solid #B7B6B6; ">
+    <a href="?1=AreaController&2=gestion" class="item menu-it" style=" color:white;
+    background-color:#1B1C1D;font-size: 14px;">
+       <img src="./res/img/location.png" align="left"> &nbsp;&nbsp; Áreas
+    </a>
+</div>
+  
+<div class="item" style="border-bottom:1px solid #B7B6B6; " id="">
+    <a href="?1=SucursalesController&2=gestion" class="item menu-it" style=" color:white;
+    background-color:#1B1C1D;font-size: 14px;">
+       <img src="./res/img/office.png" align="left"> &nbsp;&nbsp; Sucursales
+    </a>
+</div>
 
 </div>
 
 
-
 <style>
-    div{
-        font-weight:bold;
-        font-size:14px;
+    .item>a:hover{
+        color: yellow !important;
+        font-weight: bold !important;
     }
-    
 </style>
+
+
+
 
 
 

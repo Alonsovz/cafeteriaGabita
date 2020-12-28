@@ -115,3 +115,30 @@ idEliminado int
 ALTER TABLE cajas
 ADD FOREIGN KEY (idSucursal) REFERENCES  sucursales(id);
 
+
+create table clientes(
+id int primary key  auto_increment,
+nombre varchar(100),
+carnet varchar(100),
+idArea int,
+idEliminado int    
+);
+
+
+ALTER TABLE clientes
+ADD FOREIGN KEY (idArea) REFERENCES  areas(id);
+
+
+
+create table productos(
+id int primary key  auto_increment,
+codigo varchar(100),
+nombre varchar(100),
+idSucursal int,
+precio double,
+idEliminado int   
+);
+
+
+ALTER TABLE productos
+ADD FOREIGN KEY (idSucursal) REFERENCES  sucursales(id);

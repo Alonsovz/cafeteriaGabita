@@ -36,6 +36,25 @@ class DaoAreas extends DaoBase {
         return '{"data": ['.$_json .']}';
     }
 
+    public function getAreas() {
+        $_query = "select a.*, s.nombre as sucursal from areas a 
+        inner join sucursales s on s.id = a.idSucursal
+        where a.idEliminado=1 and s.idEliminado = 1";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+            $json .= '{<option value= '.$fila['id'].'>'.$fila['nombre'].'--'.$fila['sucursal'].'</option>},';
+        }
+
+        $json = substr($json,0, strlen($json) - 1);
+
+        return '['.$json.']';
+    }
+
+
     public function getSucursales() {
         $_query = "select * from sucursales where idEliminado=1";
 
@@ -51,7 +70,6 @@ class DaoAreas extends DaoBase {
 
         return '['.$json.']';
     }
-
 
     public function registrar() {
         $_query = "insert into areas values(null,'".$this->objeto->getNombre()."',

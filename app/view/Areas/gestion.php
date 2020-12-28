@@ -3,7 +3,7 @@
         <div class="row">
                 <div class="titulo">
                 <i class="map marker alternate icon"></i>
-                    Áreas <font color="#210B61" size="20px">.</font>
+                    Áreas <font color="#A68358" size="20px">.</font>
                 </div>
         </div>
 
@@ -78,7 +78,7 @@
     </div>
     <div class="actions">
         <button onclick="limpiar()" class="ui deny orange button">
-            Cancelar
+            Cerrar
         </button>
         <button class="ui green button" id="btnGuardarArea" >
         Guardar
@@ -121,7 +121,7 @@
     </div>
     <div class="actions">
         <button class="ui deny orange button">
-            Cancelar
+            Cerrar
         </button>
         <button class="ui green button" id="btnEditarArea" >
         Guardar
@@ -140,7 +140,7 @@
                 </div>
                 <div class="actions">
                     <button class="ui black deny button">
-                        Cancelar
+                        Cerrar
                     </button>
                     <button class="ui right red button" id="btnEliminar">
                         Eliminar
@@ -163,9 +163,11 @@ $(document).ready(function(){
 
 
     function limpiar() {  
-        $("#nombre").val();
+        $("#nombre").val('');
+        $("#subsidio").val('');
      }
 $('#btnModalRegistro').click(function() {
+    limpiar();
 $('#modalAgregarArea').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
 });
 
@@ -191,7 +193,7 @@ $("#btnGuardarArea").click(function(){
         data: datosFormulario,
         success: function(r) {
             if(r == 1) {
-                $('#modalAgregarArea').modal('hide');
+                //$('#modalAgregarArea').modal('hide');
                 swal({
                     title: 'Área Registrada',
                     text: 'Guardada con éxito',
@@ -306,6 +308,5 @@ $("#btnEliminar").click(function(){
                     } 
                 }
             });
-
-        });
+});
 </script>

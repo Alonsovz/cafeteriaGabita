@@ -140,7 +140,7 @@
                     <div class="barra-titulo">
                         <p class="texto-barra-titulo">
                         <h1><i class="user icon"></i>
-                Mi cuenta<font color="#08088A" size="20px"> .</font></h1><hr>
+                Mi cuenta<font color="#88502D" size="20px"> .</font></h1><hr>
                         </p>
                     </div>
                 </div>
@@ -149,21 +149,21 @@
             <div class="row">
         
                 <div class="eight wide column">
-                   <a style="font-weight:bold; font-size:19px; color:#08088A;"><i class="user outline icon"></i>Usuario:</a>
+                   <a style="font-weight:bold; font-size:19px; color:#88502D;"><i class="user outline icon"></i>Usuario:</a>
                     <b style="font-size:16px;">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <?php echo $_SESSION['nomUsuario'] ?></b>
                     <div class="ui divider"></div>
-                    <a style="font-weight:bold; font-size:19px; color:#08088A;"><i class="street view  icon"></i>Nombre Completo: </a>
+                    <a style="font-weight:bold; font-size:19px; color:#88502D;"><i class="street view  icon"></i>Nombre Completo: </a>
                     <b style="font-size:16px;">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <?php echo $_SESSION['nombre'].' '.$_SESSION['apellido']?></b>
                     
                     <div class="ui divider"></div>
-                    <a style="font-weight:bold; font-size:19px; color:#08088A;"><i class="phone  icon"></i>N° Teléfono:</a>
+                    <a style="font-weight:bold; font-size:19px; color:#88502D;"><i class="phone  icon"></i>N° Teléfono:</a>
                     <b style="font-size:16px;">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -171,7 +171,7 @@
                     <?php echo $_SESSION['telefono']?></b>
                    
                     <div class="ui divider"></div>
-                    <a style="font-weight:bold; font-size:19px; color:#08088A;"> <i class="cog icon"></i>Permisos de la cuenta:</a>
+                    <a style="font-weight:bold; font-size:19px; color:#88502D;"> <i class="cog icon"></i>Permisos de la cuenta:</a>
                     <b style="font-size:16px;">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -182,10 +182,10 @@
                 <center><h3><i class="cogs icon"></i> Opciones de configuración.</h3></center>
                     <div class="ui list">
                     <div class="item">
-                            <button class="ui right floated fluid blue button" id="btnCambiarNomUser" type="button"><i class="user icon"></i>Usuario</button>
+                            <button class="ui right floated fluid brown button" id="btnCambiarNomUser" type="button"><i class="user icon"></i>Usuario</button>
                         </div>
                         <div class="item">
-                            <button class="ui right floated fluid teal  button" id="btnCambiarNom" type="button"><i class="street view icon"></i>Datos Personales</button>
+                            <button class="ui right floated fluid orange  button" id="btnCambiarNom" type="button"><i class="street view icon"></i>Datos Personales</button>
                         </div>
                         <div class="item">
                             <button class="ui right floated fluid black button" id="btnCambiarContra" type="button"><i class="lock icon"></i>Modificar contraseña</button>

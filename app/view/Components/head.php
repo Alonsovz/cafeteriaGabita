@@ -72,7 +72,7 @@
 <link rel="stylesheet" type="text/css" href="./res/css/notie.min.css">
 <script src="./res/plugins/notie.js"></script>
 </head>
-<body class="">
+<body style="background-color: #FAFAFA !important;">
 
 <div id="cosa"></div>
 <script>
