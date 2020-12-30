@@ -80,6 +80,25 @@ class DaoCajas extends DaoBase {
     }
 
 
+    public function getCajas() {
+        $_query = "select a.*, s.nombre as sucursal from cajas a 
+        inner join sucursales s on s.id = a.idSucursal
+        where a.idEliminado=1 and s.idEliminado = 1";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+            $json .= '{<option value= '.$fila['id'].'>'.$fila['nombre'].'--'.$fila['sucursal'].'</option>},';
+        }
+
+        $json = substr($json,0, strlen($json) - 1);
+
+        return '['.$json.']';
+    }
+
+
 }
 
 
