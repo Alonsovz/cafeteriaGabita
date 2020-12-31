@@ -1,12 +1,12 @@
-var tablaProductos;
+var tablaProductosCobro;
 
 function tablaProductos(sucursal) {
 
 $(function() {
-    if($('#dtProductos').length) {
-        tablaProductos = $('#dtProductos').DataTable({
+    if($('#dtProductosCobro').length) {
+        tablaProductosCobro = $('#dtProductosCobro').DataTable({
             "ajax": {
-                "url": "?1=ProductosController&2=mostrarProductos&sucursal="+sucursal,
+                "url": "?1=CombosController&2=mostrarProductos&sucursal="+sucursal,
                 "type": "POST"
             },
             "columns": [{
@@ -17,19 +17,16 @@ $(function() {
                 },
                 {
                     "data": "nombre"
-                },
+                },  
                 {
                     "data": "precioTabla"
-                },
-                {
-                    "data": "sucursal"
                 },
                 {
                     "data": "Acciones"             
                 }
             ],
             "order": [
-                [0, "desc"]
+                [1, "asc"]
             ],
             "language": {
                 "sProcessing": "Procesando...",
@@ -44,21 +41,20 @@ $(function() {
                 "sUrl": "",
                 "sInfoThousands": ",",
                 "sLoadingRecords": "Cargando...",
-                "oPaginate": {
-                    "sFirst": "Primero",
-                    "sLast": "Último",
-                    "sNext": "Siguiente",
-                    "sPrevious": "Anterior"
-                },
+                "oPaginate": false,
                 "oAria": {
                     "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
                     "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                 }
-            }
+            },
+            pageLength : 5,
+            "info": false,
+            "bLengthChange": false
         });
 
          // Ocultar columna de id de Usuario
-         tablaProductos.column(0).visible(false);
+         tablaProductosCobro.column(0).visible(false);
     }
+
 });
 }

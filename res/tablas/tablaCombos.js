@@ -1,25 +1,20 @@
-var tablaProductos;
+var tablaCombos;
 
-function tablaProductos(sucursal) {
+function mostrarCombos(sucursal) {
 
 $(function() {
-    if($('#dtProductos').length) {
-        tablaProductos = $('#dtProductos').DataTable({
+    if($('#dtCombos').length) {
+        tablaCombos = $('#dtCombos').DataTable({
             "ajax": {
-                "url": "?1=ProductosController&2=mostrarProductos&sucursal="+sucursal,
+                "url": "?1=CombosController&2=mostrarCombos&sucursal="+sucursal,
                 "type": "POST"
             },
-            "columns": [{
-                    "data": "id"
-                },
-                {
-                    "data": "codigo"
-                },
+            "columns": [
                 {
                     "data": "nombre"
-                },
+                },  
                 {
-                    "data": "precioTabla"
+                    "data": "total"
                 },
                 {
                     "data": "sucursal"
@@ -29,7 +24,7 @@ $(function() {
                 }
             ],
             "order": [
-                [0, "desc"]
+                [1, "asc"]
             ],
             "language": {
                 "sProcessing": "Procesando...",
@@ -44,21 +39,17 @@ $(function() {
                 "sUrl": "",
                 "sInfoThousands": ",",
                 "sLoadingRecords": "Cargando...",
-                "oPaginate": {
-                    "sFirst": "Primero",
-                    "sLast": "Último",
-                    "sNext": "Siguiente",
-                    "sPrevious": "Anterior"
-                },
+                "oPaginate": false,
                 "oAria": {
                     "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
                     "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                 }
-            }
+            },
         });
 
          // Ocultar columna de id de Usuario
-         tablaProductos.column(0).visible(false);
+         //tablaCombos.column(0).visible(false);
     }
+
 });
 }

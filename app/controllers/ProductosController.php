@@ -13,9 +13,12 @@ class ProductosController extends ControladorBase {
 
 
     public function  mostrarProductos() {
+
+        $idCaja = (isset($_REQUEST['sucursal']))? $_REQUEST['sucursal']:0;
+
         $dao = new DaoProductos();
 
-        echo $dao->mostrarProductos();
+        echo $dao->mostrarProductos($idCaja);
     }
 
 

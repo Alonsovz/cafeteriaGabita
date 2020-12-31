@@ -45,7 +45,73 @@ class CobrosController extends ControladorBase {
 
         echo $dao->getDatosProductoNombre();
     }
+
+    public function mostrarCombos() {
+        $idCaja = $_REQUEST['idCaja'];
+
+        $dao = new DaoCobros();
+
+        echo $dao->mostrarCombos($idCaja);
+    }
+
+
+    public function guardarEncabezado(){
+       
+
+        $dao = new DaoCobros();
+
+            $dao->objeto->setCarnet($_REQUEST["carnet"]);
+            $dao->objeto->setEfectivo($_REQUEST["efectivo"]);
+            $dao->objeto->setTotal($_REQUEST["total"]);
+            $dao->objeto->setCambio($_REQUEST["cambio"]);
+            $dao->objeto->setTipoPago($_REQUEST["tipoPago"]);
+            if($_REQUEST["tipoPago"]=='Efectivo'){
+                $dao->objeto->setDescuentoSubsidio("0.00");
+                $dao->objeto->setDescuentoPlanilla("0.00");
+            }
+            else if($_REQUEST["tipoPago"]=='Parcial en planilla'){
+                $dao->objeto->setDescuentoSubsidio("0.00");
+                $dao->objeto->setDescuentoPlanilla($_REQUEST["descPlanilla"]);
+            }
+            else if($_REQUEST["tipoPago"]=='Descuento en planilla'){
+                $dao->objeto->setDescuentoSubsidio("0.00");
+                $dao->objeto->setDescuentoPlanilla($_REQUEST["descPlanilla"]);
+            }
+            $dao->objeto->setNomUsuario($_REQUEST["usuario"]);
+
+            echo $dao->guardarEncabezado();
+          
+    }
     
+
+    public function guardarDetalle(){
+        $detalles = json_decode($_REQUEST["lista"]);
+
+        $contador = 0;
+
+        $dao = new DaoCobros();
+
+        foreach($detalles as $detalle) {
+            $dao->objeto->setCodigo($detalle->codigoProductoL);
+            $dao->objeto->setNombreProducto($detalle->nombreProductoL);
+            $dao->objeto->setPrecio($detalle->precioProductoDecimalL);
+            $dao->objeto->setCantidad($detalle->cantidadProductoL);
+    
+
+            if($dao->guardarDetalle()) {
+                $contador++;
+            } else {
+                echo 'nell';
+            }
+
+        }
+
+        if($contador == count($detalles)) {
+            echo 1;
+        } else {
+            echo 2;
+        }
+    }
 
 
 }

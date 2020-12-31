@@ -142,3 +142,53 @@ idEliminado int
 
 ALTER TABLE productos
 ADD FOREIGN KEY (idSucursal) REFERENCES  sucursales(id);
+
+
+
+create table combos(
+id int primary key  auto_increment,
+nombre varchar(100),
+idProducto int,
+idSucursal int,
+cantidad int,
+idEliminado int   
+);
+
+
+ALTER TABLE combos
+ADD FOREIGN KEY (idSucursal) REFERENCES  sucursales(id);
+
+ALTER TABLE combos
+ADD FOREIGN KEY (idProducto) REFERENCES  productos(id);
+
+
+
+create table enc_ticket(
+id int primary key  auto_increment,
+idCliente int,
+tipoPago varchar(100),
+total double,
+efectivoRecibido double,
+cambio double,
+descuentoPlanilla double,
+descuentoSubsidio double,
+estado int,
+usuarioCobro varchar(100),
+fechaEmision datetime
+);
+
+ALTER TABLE enc_ticket
+ADD FOREIGN KEY (idCliente) REFERENCES  clientes(id);
+
+create table det_ticket(
+id int primary key  auto_increment,
+idEncabezado int,
+idProducto int,
+nombreProducto varchar(100),
+precio double,
+cantidad int
+);
+
+ALTER TABLE det_ticket
+ADD FOREIGN KEY (idEncabezado) REFERENCES  enc_ticket(id);
+

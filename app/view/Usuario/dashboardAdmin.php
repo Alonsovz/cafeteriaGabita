@@ -14,7 +14,7 @@ $(function() {
 <div class="row tiles" id="contenedor-tiles" style="display: flex !important; align-items: baseline; justify-content: space-between">
 
 <a href="?1=CobrosController&2=gestion"  
-    style="width: 45%; background-color: #DBDDDD; !important; text-align:center !important;
+    style="width: 30%; background-color: #DBDDDD; !important; text-align:center !important;
     color:#854A27;" class="tiles-tiles ui basic inverted segment">
         <h3>Iniciar Proceso de cobro</h3>
         <div class="ui divider"></div>
@@ -23,12 +23,21 @@ $(function() {
 
 
 <a href="?1=ReportesController&2=gestion"  
-    style="width: 45%; background-color: #DBDDDD; !important; text-align:center !important;
+    style="width: 30%; background-color: #DBDDDD; !important; text-align:center !important;
     color:#854A27;" class="tiles-tiles ui basic inverted segment">
         <h3>Reportes</h3>
         <div class="ui divider"></div>
         <img src="./res/img/report.png">
     </a>
+
+
+    <a href="?1=CombosController&2=gestion"  
+    style="width: 30%; background-color: #DBDDDD; !important; text-align:center !important;
+    color:#854A27;" class="tiles-tiles ui basic inverted segment">
+        <h3>Combos</h3>
+        <div class="ui divider"></div>
+        <img src="./res/img/combos.png">
+</a>
 
 </div>
 
@@ -66,7 +75,7 @@ $(function() {
         <img src="./res/img/cajas.png">
     </a>
 
-    <a href="?1=AreasController&2=gestion"  
+    <a href="?1=AreaController&2=gestion"  
     style="width: 12%; background-color: #DBDDDD; !important; text-align:center !important;
     color:#854A27;" class="tiles-tiles ui basic inverted segment">
         <h3>Áreas</h3>

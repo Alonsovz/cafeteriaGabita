@@ -7,11 +7,11 @@ class DaoProductos extends DaoBase {
         $this->objeto = new Productos();
     }
 
-    public function mostrarproductos() {
+    public function mostrarproductos($sucursal=0) {
         $_query = "select a.*, s.nombre as sucursal,CONCAT('$ ',ROUND(a.precio , 2 )) as precioTabla,
         ROUND(a.precio , 2 ) as precioDecimal  from productos a 
         inner join sucursales s on s.id = a.idSucursal
-        where a.idEliminado = 1";
+        where a.idEliminado = 1 and a.idSucursal = ".$sucursal." ";
 
         $resultado = $this->con->ejecutar($_query);
 

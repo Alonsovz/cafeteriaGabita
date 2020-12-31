@@ -26,7 +26,7 @@ if(isset($_REQUEST["3"])) {
         justify-content: center;">
              <div class="cuadro" style="border: 3px solid #854A27;">
                 <div class="cuadro-ins" style="border: 3px solid #854A27;">
-                    <img src="./res/img/logoFinalCafe.png" alt="" id="logo-login">
+                    <img src="./res/img/logo.jpg" alt="" id="logo-login">
                 </div>
                 <form id="frmLogin" action="" method="POST" class="ui form">
                     <div class="field">

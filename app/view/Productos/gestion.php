@@ -186,14 +186,20 @@ function limpiar(){
     $("#precio").val('');
 }
 
-    $("#sucursal").change(function(){
-        var id = $(this).val();
+  
 
-        $("#idSucursal").val(id);
-    });
+$("#sucursal").change(function(){
+    var sucursal = $(this).val();
 
+            var table = $('#dtProductos').DataTable();
+            table.destroy();
 
+            tablaProductos(sucursal);
 
+var id = $(this).val();
+
+$("#idSucursal").val(id);
+});
 
 $('#btnModalRegistro').click(function() {
 
@@ -243,7 +249,9 @@ $("#btnGuardarProductos").click(function(){
                  location.href = '?';
              }
          }); 
-         $('#dtProductos').DataTable().ajax.reload();
+            var table = $('#dtProductos').DataTable();
+            table.destroy();
+            tablaProductos($("#sucursal").val());
          limpiar();
      } 
  }
@@ -291,7 +299,9 @@ $("#btnEditarProductos").click(function(){
                         location.href = '?';
                     }
                 }); 
-                $('#dtProductos').DataTable().ajax.reload();
+                var table = $('#dtProductos').DataTable();
+            table.destroy();
+            tablaProductos($("#sucursal").val());
                // limpiar();
             } 
         }
@@ -328,8 +338,9 @@ $("#btnEliminar").click(function(){
                                 location.href = '?';
                             }
                         }); 
-                        $('#dtProductos').DataTable().ajax.reload();
-                        //limpiar();
+                        var table = $('#dtProductos').DataTable();
+            table.destroy();
+            tablaProductos($("#sucursal").val());
                     } 
                 }
             });
