@@ -114,4 +114,31 @@ class CobrosController extends ControladorBase {
     }
 
 
+    public function anularTicket(){
+        $id = $_REQUEST['id'];
+        $idCaja = $_REQUEST['caja'];
+
+        $dao = new DaoCobros();
+
+        echo $dao->getEncabezadoTicket($id, $idCaja);
+    }
+
+    public function detalleTicket(){
+        $id = $_REQUEST['id'];
+        $idCaja = $_REQUEST['caja'];
+
+        $dao = new DaoCobros();
+
+        echo $dao->getDetalleTicket($id, $idCaja);
+    }
+
+
+    public function anularEstadoTicket() {
+        $id = $_REQUEST['id'];
+
+        $dao = new DaoCobros();
+
+        echo $dao->anularEstadoTicket($id);
+    }
+
 }

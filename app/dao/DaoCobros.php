@@ -175,6 +175,95 @@ class DaoCobros extends DaoBase {
         }
     }
 
+    public function getEncabezadoTicket($id = 0, $idCaja = 0) {
+        $_query = "SELECT dt.*, c.nombre as cliente, c.carnet as carnet,
+        CONCAT('$ ',round(efectivoRecibido,2)) as efectivoRecibidoTck,
+        CONCAT('$ ',round(cambio,2)) as cambioTkc,
+        CONCAT('$ ',round(total,2)) as totalTkc,
+        CONCAT('$ ',round(descuentoPlanilla,2)) as descPlanilla,
+        CONCAT('$ ',round(descuentoSubsidio,2)) as descSubsidio ,
+        DATE_FORMAT(fechaEmision,'%d/%m/%Y') as fechaE,
+        TIME_FORMAT(fechaEmision, '%r') as horaE from enc_ticket dt
+        inner join clientes c on c.id = dt.idCliente
+        inner join areas a on a.id= c.idArea
+        inner join sucursales s on s.id = a.idSucursal
+        INNER join cajas cj on cj.idSucursal = s.id
+        where dt.id = ".$id." and cj.id = ".$idCaja."";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $_json = '';
+        $resultado = $this->con->ejecutar($_query);
+        while($fila = $resultado->fetch_assoc()) {
+            $object = json_encode($fila);
+            
+            $_json .= $object.',';
+        }
+
+
+        $_json = substr($_json,0, strlen($_json) - 1);
+
+        return '['.$_json .']';
+    }
+
+    public function getDetalleTicket($id = 0, $idCaja = 0) {
+        $_query = "SELECT *, CONCAT('$ ',round(precio,2)) as precioUni,
+        CONCAT('$ ',round((precio * cantidad),2)) as total FROM det_ticket 
+        inner join enc_ticket en on en.id = det_ticket.idEncabezado
+        inner join clientes c on c.id = en.idCliente
+        inner join areas a on a.id= c.idArea
+        inner join sucursales s on s.id = a.idSucursal
+        INNER join cajas cj on cj.idSucursal = s.id
+        where det_ticket.idEncabezado = ".$id." and cj.id = ".$idCaja."";
+
+        $resultado = $this->con->ejecutar($_query);
+
+
+        $json = '';
+
+        $json.='
+            <table style="margin:auto;width: 80%;">
+            <thead>
+                <tr>
+                    <th style="background-color:#1F0150; color:white;height: 30px;">Cantidad</th>
+                    <th style="background-color:#1F0150; color:white;height: 30px;">Producto</th>
+                    <th style="background-color:#1F0150; color:white;height: 30px;">Precio Unitario</th>
+                    <th style="background-color:#1F0150; color:white;height: 30px;">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+        ';
+
+        while($fila = $resultado->fetch_assoc()) {
+            $json .= '<tr> 
+                        <td style="height: 30px;">'.$fila["cantidad"].'</td>
+                        <td style="height: 30px;">'.$fila["nombreProducto"].'</td>
+                        <td style="height: 30px;">'.$fila["precioUni"].'</td>
+                        <td style="height: 30px;">'.$fila["total"].'</td>
+                      </tr>';
+        }
+
+        $json.='</tbody>
+            </table>';
+
+        $json = substr($json,0, strlen($json) - 1);
+
+        return ''.$json.'';
+    }
+
+
+    public function anularEstadoTicket($id = 0) {
+        $_query = "update enc_ticket set estado =2
+        where id = ".$id." ";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 }
 
 

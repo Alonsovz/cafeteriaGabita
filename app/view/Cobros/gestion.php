@@ -8,9 +8,11 @@
                             <option value="0" set selected>Seleccione una opción</option>
                             <?php echo $cajas; ?>
                         </select>
-
+                        <button class="ui red button" id="btnAnularTicket" style="align:right; float:right;display:none;">Anular ticket</button>
+                        
                         <input type="hidden" id="usuario" name="usuario" value="<?php echo $_SESSION["nomUsuario"] ?>">
-           <a style="color:black; font-size: 15px;color:blue;font-weight:bold;align:right; float:right;" id="nombreCaja"></a>
+           <a style="color:black; font-size: 15px;color:blue;font-weight:bold;align:right; float:right;margin-right:10px;" id="nombreCaja"></a>
+                        
             <a style="color:black; font-size: 15px;font-weight:bold;display:none;align:right; float:right;" class="divProductos">Caja: &nbsp; </a>
                
             </div>
@@ -26,7 +28,8 @@
     <br>
     <div id="vista">
                
-                <form id="frmCliente" class="ui form" method="POST" method="POST" enctype="multipart/form-data">
+                <form id="frmCliente" class="ui form" method="POST" method="POST" enctype="multipart/form-data"
+                style="display:none;">
                 
                     <div class="field">
                         <div class="fields">
@@ -252,6 +255,121 @@
         </div>
 </div>
 </div>
+
+
+<div class="ui modal" id="modalAnulaTicket">
+
+    <div class="header" style="background-color:#024D54; color:white;">
+    <i class="ticket icon"></i><i class="close icon"></i> Anular Ticket
+    </div>
+    <div class="content" class="ui equal width form" style="background-color:#E0E0E0;">
+       <form class="ui form">
+            <div class="field">
+                <div class="fields">
+                    <div class="four wide field">
+                        <label>N° de Ticket: </label>
+                        <input type="text" name="nTicket" id="nTicket" placeholder="N° de Ticket">
+                    </div>
+                </div>
+            </div>
+            <div class="ui divider"></div>
+            <div id="divTicket" style="display:none;">
+                        <h3 style="color:blue;">Detalle del ticket</h3>
+                        <div class="field">
+                            <div class="fields">
+                                <div class="three wide field">
+                                    <label style="text-align:right;color:#038203;">Cliente:</label>
+                                </div>
+                                <div class="seven wide field">
+                                    <label style="text-align:left;" id="clienteTkc"></label>
+                                </div>
+                                <div class="two wide field">
+                                    <label style="text-align:right;color:#038203;">Carnet:</label>
+                                </div>
+                                <div class="four wide field">
+                                    <label style="text-align:left;" id="carnetTkc"></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="fields">
+                                <div class="sixteen wide field" id="detTicket">
+                                
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="fields">
+                                <div class="three wide field">
+                                    <label style="text-align:right;color:#038203;">T.Pago:</label>
+                                </div>
+                                <div class="four wide field">
+                                    <label style="text-align:left;" id="tipoPagoTkc"></label>
+                                </div>
+                                <div class="four wide field">
+                                    <label style="text-align:right;color:#038203;">Usuario Cobro:</label>
+                                </div>
+                                <div class="two wide field">
+                                    <label style="text-align:left;" id="usuarioTkc"></label>
+                                </div>
+                                <div class="four wide field">
+                                    <label style="text-align:right;color:#038203;">Fecha Emisión:</label>
+                                    <label style="text-align:right;color:#038203;">Hora Emisión:</label>
+                                </div>
+                                <div class="four wide field">
+                                    <label style="text-align:left;" id="fechaETkc"></label>
+                                    <label style="text-align:left;" id="horaETkc"></label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="field">
+                            <div class="fields">
+                                <div class="three wide field">
+                                    <label style="text-align:right;color:#038203;">Descuento planilla:</label>
+                                    <label style="text-align:right;color:#038203;">Descuento subsidio:</label>
+                                    <label style="text-align:right;color:#038203;">Efectivo Recibido:</label>
+                                </div>
+                                <div class="two wide field">
+                                    <label style="text-align:left;" id="descPlanillaTkc"></label>
+                                    <label style="text-align:left;" id="descSubsidioTkc"></label>
+                                    <label style="text-align:left;" id="efectivoTkc"></label>
+                                </div>
+                                <div class="four wide field">
+                                    <br><br>
+                                    <label style="text-align:right;color:#038203;">Cambio:</label>
+                                </div>
+                                <div class="two wide field">
+                                <br><br>
+                                    <label style="text-align:left;" id="cambioTkc"></label>
+                                </div>
+
+                                <div class="three wide field">
+                                <br><br>
+                                    <label style="text-align:right;color:#038203;">Total:</label>
+                                </div>
+                                <div class="two wide field">
+                                <br><br>
+                                    <label style="text-align:left;" id="totalTkc"></label>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+       </form>
+    </div>
+    <div class="actions">
+            <button class="ui black deny button">
+                Cerrar
+            </button>
+            <button class="ui teal button" id="btnGuardarAnular" >
+                Anular
+            </button>
+    </div>
+</div>
+
 <script src="./res/tablas/tablaProductosCobro.js"></script>
 
 <script>
@@ -275,6 +393,20 @@
                })
 
                $('#cantidadProducto').keypress(function(e) {
+                 if (e.keyCode == '13') {
+                    e.preventDefault();
+                    //your code here
+                  }
+               })
+
+               $('#precioProducto').keypress(function(e) {
+                 if (e.keyCode == '13') {
+                    e.preventDefault();
+                    //your code here
+                  }
+               })
+
+               $('#nTicket').keypress(function(e) {
                  if (e.keyCode == '13') {
                     e.preventDefault();
                     //your code here
@@ -442,6 +574,35 @@ var app = new Vue({
                 }
 
             },
+
+            anularTicket() {
+                var id = $("#nTicket").val();
+                var caja = $("#caja").val();
+
+            fetch("?1=CobrosController&2=anularTicket&id="+id+"&caja="+caja)
+            .then(response => {
+                return response.json();
+            })
+            .then(dat => {
+
+                dat.forEach(element => {
+                    $("#clienteTkc").text(element["cliente"]);
+                    $("#carnetTkc").text(element["carnet"]);
+                    $("#tipoPagoTkc").text(element["tipoPago"]);
+                    $("#usuarioTkc").text(element["usuarioCobro"]);
+                    $("#efectivoTkc").text(element["efectivoRecibidoTck"]);
+                    $("#cambioTkc").text(element["cambioTkc"]);
+                    $("#totalTkc").text(element["totalTkc"]);
+                    $("#fechaETkc").text(element["fechaE"]);
+                    $("#horaETkc").text(element["horaE"]);
+                    $("#descPlanillaTkc").text(element["descPlanilla"]);
+                    $("#descSubsidioTkc").text(element["descSubsidio"]);
+            });
+                    
+                })
+                .catch(err => {
+                });
+            },
         }
     });
 
@@ -452,6 +613,12 @@ var app = new Vue({
         $("#cantidadProducto").val(1);
         //$("#carnet").val();
     }
+
+$('#btnAnularTicket').click(function() {
+    $("#divTicket").hide();
+    $("#nTicket").val('');
+$('#modalAnulaTicket').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+});
 
     $(document).ready(function(){
         app.eliminarDetalleLista(0);
@@ -472,7 +639,8 @@ var app = new Vue({
         $("#caja").change(function(){
             app.listas = [];
             limpiar();
-
+            $("#btnAnularTicket").show();
+            $("#frmCliente").show();
             $("#totalCuenta").text("$ 0.00");
             var text = $("#caja option:selected").text();
 
@@ -872,5 +1040,63 @@ $("#btnCobroDescuentoPlanilla").click(function(){
                 });
 });
 
+$("#nTicket").keyup(function(e){
+    if(e.keyCode == 13)
+    {
+        var id = $("#nTicket").val();
+        var caja = $("#caja").val();
 
+       app.anularTicket();
+       $("#divTicket").show();
+
+       $.ajax({
+                cache: false,
+                type: 'POST',
+                url: '?1=CobrosController&2=detalleTicket',
+                data: {
+                    id:id,
+                    caja:caja
+                },
+                success: function(r) {
+                   
+                        $("#detTicket").html(r);
+                    
+                }
+                });
+    }else{
+       
+    }
+});
+
+
+$("#btnGuardarAnular").click(function(){
+            var id = $("#nTicket").val();
+
+            $.ajax({
+                    type: 'POST',
+                    data: {
+                        id: id,
+                    },
+                    url: '?1=CobrosController&2=anularEstadoTicket',
+                    success: function (r) {
+                        if (r == 1) {  
+                            swal({
+                            title: 'Ticket anulado',
+                            text: 'Guardado con éxito',
+                            type: 'warning',
+                            showConfirmButton: false,
+                                timer: 1700
+                        }).then((result) => {
+                            if (result.value) {
+                                location.href = '?';
+                            }
+                        });   
+                            $("#divTicket").hide();
+                            $("#nTicket").val('');
+                            $('#modalAnulaTicket').modal('hide');
+                        }
+                        
+                    }
+                });
+});
 </script>
