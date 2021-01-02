@@ -35,7 +35,7 @@ class DaoCobros extends DaoBase {
             and t.tipoPago in ('Parcial en subsidio','Subsidio')
         )
         else 
-        '$ 0.00'
+        CONCAT('$ ',ROUND(a.cantidadSubsidio , 2 ))
         end as remanente,
         CONCAT('$ ',ROUND(a.cantidadSubsidio , 2 )) as subsidioArea  from clientes c
         inner join areas a on a.id = c.idArea
