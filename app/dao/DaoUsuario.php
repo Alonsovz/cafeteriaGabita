@@ -462,7 +462,7 @@ class DaoUsuario extends DaoBase {
                    
             }else{
                 $_query1= "insert into subsidio values(null,".$idCliente.",'".$sucursal."',
-                '".$area."',".$subsidio.", '".$mes."', year(curdate()))";
+                '".$area."',".$subsidio.", '".$mes."', year(curdate()), now())";
 
                 $resultado1 = $this->con->ejecutar($_query1);
             }     

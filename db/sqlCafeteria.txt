@@ -202,7 +202,8 @@ sucursal varchar(100),
 area varchar(100),
 subsidio double,
 mes varchar(2),
-anio varchar(4)
+anio varchar(4),
+fecha datetime
 );
 
 
