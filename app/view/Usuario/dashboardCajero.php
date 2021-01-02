@@ -18,7 +18,7 @@ $(function() {
     color:#854A27;" class="tiles-tiles ui basic inverted segment">
         <h3>Iniciar Proceso de cobro</h3>
         <div class="ui divider"></div>
-        <img src="./res/img/money.png">
+        <img src="./res/img/cashier.png">
 </a>
 
 

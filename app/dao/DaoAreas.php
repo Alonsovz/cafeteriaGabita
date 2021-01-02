@@ -114,6 +114,51 @@ class DaoAreas extends DaoBase {
     }
 
 
+    public function detalleArea($idSucursal = 0) {
+        $_query = "select a.*, s.nombre as sucursal,CONCAT('$ ',ROUND(a.cantidadSubsidio , 2 )) as subsidio,
+        ROUND(a.cantidadSubsidio , 2 ) as subsidioDecimal  from areas a 
+        inner join sucursales s on s.id = a.idSucursal
+        where a.idEliminado = 1 and s.id= ".$idSucursal."";
+
+        $resultado = $this->con->ejecutar($_query);
+
+
+        $json = '';
+
+        $json.='<br>
+            <table style="margin:auto;width: 80%;">
+            <thead>
+                <tr>
+                    <th style="background-color:#1F0150; color:white;height: 30px;">Áreas</th>
+                    <th style="background-color:#1F0150; color:white;height: 30px;">Subsidio asignado</th>
+                </tr>
+            </thead>
+            <tbody>
+        ';
+
+        while($fila = $resultado->fetch_assoc()) {
+            $json .= '<tr> 
+                        <td style="height: 30px;">'.$fila["nombre"].'</td>
+                        <td style="height: 30px;">'.$fila["subsidio"].'</td>
+                      </tr>';
+        }
+
+        $json.='</tbody>
+            </table>
+            <br>
+            <h5 style="text-align:center;color:#337602;">Si desea hacer algún cambio en la cantidad de subsidio asignada,
+                     ve a "Gestión de Áreas".</h5>
+            <h5 style="text-align:center;color:black">
+            <b style="color:red">IMPORTANTE: </b>
+            Si un cliente no está asignado a un área, no se le asignará subsidio.</h5>
+            ';
+
+        $json = substr($json,0, strlen($json) - 1);
+
+        return ''.$json.'';
+    }
+
+
 }
 
 

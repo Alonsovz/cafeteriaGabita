@@ -11,7 +11,33 @@ class DaoCobros extends DaoBase {
     public function getDatosCliente()
     {
 
-        $_query = "select c.*, a.nombre as area, s.nombre as sucursal  from clientes c
+        $_query = "select c.*, a.nombre as area, s.nombre as sucursal,
+        case 
+        when (
+
+            select CONCAT('$ ',ROUND(a.cantidadSubsidio - sum(t.descuentoSubsidio) , 2 ))   from clientes c
+            inner join areas a on a.id = c.idArea
+            inner join subsidio sb on sb.idCliente = c.id
+            inner join enc_ticket t on t.idCliente = c.id
+            where c.idEliminado = 1 and c.carnet= '".$this->objeto->getCarnet()."'
+            and sb.mes = month(curdate()) and sb.anio = year(curdate())
+            and t.tipoPago in ('Parcial en subsidio','Subsidio')
+        ) != ''
+        then 
+        (
+
+            select CONCAT('$ ',ROUND(a.cantidadSubsidio - sum(t.descuentoSubsidio) , 2 ))   from clientes c
+            inner join areas a on a.id = c.idArea
+            inner join subsidio sb on sb.idCliente = c.id
+            inner join enc_ticket t on t.idCliente = c.id
+            where c.idEliminado = 1 and c.carnet= '".$this->objeto->getCarnet()."'
+            and sb.mes = month(curdate()) and sb.anio = year(curdate())
+            and t.tipoPago in ('Parcial en subsidio','Subsidio')
+        )
+        else 
+        '$ 0.00'
+        end as remanente,
+        CONCAT('$ ',ROUND(a.cantidadSubsidio , 2 )) as subsidioArea  from clientes c
         inner join areas a on a.id = c.idArea
         inner join sucursales s on s.id = a.idSucursal
         where c.idEliminado = 1 and c.carnet= '".$this->objeto->getCarnet()."'";
@@ -264,6 +290,8 @@ class DaoCobros extends DaoBase {
             return 0;
         }
     }
+
+    
 }
 
 

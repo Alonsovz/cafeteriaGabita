@@ -77,6 +77,14 @@ class CobrosController extends ControladorBase {
                 $dao->objeto->setDescuentoSubsidio("0.00");
                 $dao->objeto->setDescuentoPlanilla($_REQUEST["descPlanilla"]);
             }
+            else if($_REQUEST["tipoPago"]=='Subsidio'){
+                $dao->objeto->setDescuentoSubsidio($_REQUEST["descSubsidio"]);
+                $dao->objeto->setDescuentoPlanilla("0.00");
+            }
+            else if($_REQUEST["tipoPago"]=='Parcial en subsidio'){
+                $dao->objeto->setDescuentoSubsidio($_REQUEST["descSubsidio"]);
+                $dao->objeto->setDescuentoPlanilla("0.00");
+            }
             $dao->objeto->setNomUsuario($_REQUEST["usuario"]);
 
             echo $dao->guardarEncabezado();

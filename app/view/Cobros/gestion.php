@@ -38,10 +38,13 @@
                                 <input type="text" id="carnet" name="carnet" placeholder="Ingrese el carnet">
                             </div>
                         
-                            <div class="three wide field divNombre"  style="display:none">
-                                    <a  id="nombreCliente" style="color:green; font-weight:bold;"></a><br>
+                            <div class="three wide field divNombre"  style="display:none; font-size: 12px;">
+                                    <a  id="nombreCliente" style="color:green; font-weight:bold;"></a> --
                                     <a  id="areaCliente" style="color:green; font-weight:bold;"></a><br>
-                                    <a  id="sucursalCliente" style="color:green; font-weight:bold;"></a>
+                                    <a style="color:black; font-weight:bold;">Subsidio de área: </a>
+                                    <a  id="subsArea" style="color:green; font-weight:bold;"></a>
+                                    <a style="color:black; font-weight:bold;">Disponible: </a>
+                                    <a  id="subsRemanente" style="color:green; font-weight:bold;"></a>
                             </div> 
 
                             <div class="three wide field">
@@ -191,7 +194,11 @@
                             
 
                         <input type="checkbox" id="credito" name="credito" value="Crédito">
-                        <label style="font-weight:bold;color:#981700;"> Crédito</label><br>
+                        <label style="font-weight:bold;color:#981700;"> Subsidio</label><br>
+                        <div id="divCredito" style="display:none;">
+                                    
+                            <a class="ui green button" id="btnCobroSubsidio">Cobrar</a><br><br>
+                        </div>
 
                         <input type="checkbox" id="parcialPlanilla" name="parcialPlanilla" value="Parcial Planilla">
                         <label style="font-weight:bold;color:#981700;">Parcial en planilla</label><br>
@@ -236,6 +243,44 @@
 
                         <input type="checkbox" id="parcialSubsidio" name="parcialSubsidio" value="Parcial Subsidio">
                         <label style="font-weight:bold;color:#981700;">Parcial con subsidio</label><br>
+                        <div id="divParcialSubs" style="display:none;">
+                                    <form class="ui form">
+                                    <div class="field">
+                                        <div class="fields">
+                                            <div class="eight wide field">
+                                                <label style="font-size:12px;">Descuento Subsidio: </label>
+                                                <input type="text" name="descuentoPSubs" id="descuentoPSubs" 
+                                                placeholder="Subsidio" style="height:12px; font-size:13px;">
+                                            </div>
+                                            <div class="eight wide field">
+                                                <label style="font-size:12px;">Remanente cuenta actual: </label>
+                                                <input type="text" name="RemanentePSubs" id="RemanentePSubs" 
+                                                placeholder="Remanente cuenta" style="height:12px; font-size:13px;" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="fields">
+                                            <div class="eight wide field">
+                                                <label style="font-size:12px;">Efectivo: </label>
+                                                <input type="text" name="cantidadEfectivoPSubs" id="cantidadEfectivoPSubs" 
+                                                placeholder="Efectivo recibido" style="height:12px; font-size:13px;">
+                                            </div>
+
+                                            <div class="eight wide field">
+                                                <label style="font-size:12px;">Cambio: </label>
+                                                <input type="text" name="cambioPSubs" id="cambioPSubs" 
+                                                placeholder="Cambio" readonly style="height:12px; font-size:13px;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                        
+                                    </form>
+
+                                    
+                                    <a class="ui green button" id="btnCobroDescuentoPSubs">Cobrar</a>
+                                    <br><br>
+                            </div>
 
                         <input type="checkbox" id="descPlanilla" name="descPlanilla" value="descPlanilla">
                         <label style="font-weight:bold;color:#981700;">Descuento en planilla</label>
@@ -462,6 +507,8 @@ var app = new Vue({
                         $('#nombreCliente').text(dat.nombre);
                         $('#areaCliente').text(dat.area);
                         $('#sucursalCliente').text(dat.sucursal);
+                        $('#subsArea').text(dat.subsidioArea);
+                        $('#subsRemanente').text(dat.remanente);
                         $(".divNombre").show();
                     })
                     .catch(err => {
@@ -635,6 +682,10 @@ $('#modalAnulaTicket').modal('setting', 'autofocus', false).modal('setting', 'cl
         $("#cantidadEfectivoPPlanilla").mask("###0.00", {reverse: true});
         $("#cambioPPlanilla").mask("###0.00", {reverse: true});
 
+        $("#descuentoPSubs").mask("###0.00", {reverse: true});
+        $("#RemanentePSubs").mask("###0.00", {reverse: true});
+        $("#cantidadEfectivoPSubs").mask("###0.00", {reverse: true});
+        $("#cambioPSubs").mask("###0.00", {reverse: true});
 
         $("#caja").change(function(){
             app.listas = [];
@@ -671,6 +722,10 @@ $('#modalAnulaTicket').modal('setting', 'autofocus', false).modal('setting', 'cl
 
         $("#carnet").keyup(function(){
            app.cargarDatos();
+           $("#credito").prop("disabled",false);
+            $("#parcialSubsidio").prop("disabled",false);
+            limpiarTicket();   
+            app.limpiar();
         });
         
         $("#codigoProducto").keyup(function(){
@@ -714,6 +769,14 @@ $('#codigoProducto').keyup(function(e){
         $("#totalCuenta").text("$ "+app.totalCuenta());
         //limpiar();
         e.preventDefault();
+
+        if($("#subsArea").text()=="$ 0.00" || $("#subsRemanente").text()=="$ 0.00"){
+            $("#credito").prop("disabled",true);
+            $("#parcialSubsidio").prop("disabled",true);
+        }else{
+            $("#credito").prop("disabled",false);
+            $("#parcialSubsidio").prop("disabled",false);
+        }
         }
       
     }
@@ -784,6 +847,7 @@ $("#efectivo").click(function(){
         $('#credito').prop('checked', false);
         $('#parcialPlanilla').prop('checked', false);
         $('#parcialSubsidio').prop('checked', false);
+        $("#divParcialSubs").hide();
         $('#descPlanilla').prop('checked', false);
         $("#divParcialPlanilla").hide();
         $("#descuentoPPlanilla").val('');
@@ -800,7 +864,11 @@ $("#efectivo").click(function(){
     $("#RemanentePPlanilla").val('');
     $("#cantidadEfectivoPPlanilla").val('');
     $("#cambioPPlanilla").val('');
-
+    $("#divCredito").hide();
+    $("#descuentoPSubs").val('');
+    $("#RemanentePSubs").val('');
+    $("#cantidadEfectivoPSubs").val('');
+    $("#cambioPSubs").val('');
     }
     else{
         $('#descPlanilla').prop('checked', false);
@@ -808,6 +876,8 @@ $("#efectivo").click(function(){
 
     $('#parcialPlanilla').prop('checked', false);
     $("#divParcialPlanilla").hide();
+    $('#parcialSubsidio').prop('checked', false);
+    $("#divParcialSubs").hide();
     $("#descuentoPPlanilla").val('');
     $("#RemanentePPlanilla").val('');
     $("#cantidadEfectivoPPlanilla").val('');
@@ -817,6 +887,10 @@ $("#efectivo").click(function(){
     $("#divEfectivo").hide();
     $("#cantidadEfectivo").val('');
     $("#cambio").val('');
+    $("#descuentoPSubs").val('');
+    $("#RemanentePSubs").val('');
+    $("#cantidadEfectivoPSubs").val('');
+    $("#cambioPSubs").val('');
     }
 });
 
@@ -837,6 +911,13 @@ $("#parcialPlanilla").click(function(){
         $("#cambio").val('');
         $('#descPlanilla').prop('checked', false);
         $("#divPlanilla").hide();
+        $("#divCredito").hide();
+        $('#parcialSubsidio').prop('checked', false);
+    $("#divParcialSubs").hide();
+    $("#descuentoPSubs").val('');
+    $("#RemanentePSubs").val('');
+    $("#cantidadEfectivoPSubs").val('');
+    $("#cambioPSubs").val('');
     }
     else{
         $('#descPlanilla').prop('checked', false);
@@ -853,6 +934,12 @@ $("#parcialPlanilla").click(function(){
         $("#divEfectivo").hide();
         $("#cantidadEfectivo").val('');
         $("#cambio").val('');
+        $('#parcialSubsidio').prop('checked', false);
+         $("#divParcialSubs").hide();
+         $("#descuentoPSubs").val('');
+    $("#RemanentePSubs").val('');
+    $("#cantidadEfectivoPSubs").val('');
+    $("#cambioPSubs").val('');
     }
 });
 
@@ -865,17 +952,22 @@ $("#descPlanilla").click(function(){
         $('#efectivo').prop('checked', false);
         $('#parcialSubsidio').prop('checked', false);
         $('#parcialPlanilla').prop('checked', false);
-        $('#parcialPlanilla').prop('checked', false);
     $("#divParcialPlanilla").hide();
     $("#descuentoPPlanilla").val('');
     $("#RemanentePPlanilla").val('');
     $("#cantidadEfectivoPPlanilla").val('');
     $("#cambioPPlanilla").val('');
+    $('#parcialSubsidio').prop('checked', false);
+    $("#divParcialSubs").hide();
 
     $('#efectivo').prop('checked', false);
     $("#divEfectivo").hide();
     $("#cantidadEfectivo").val('');
     $("#cambio").val('');
+    $("#descuentoPSubs").val('');
+    $("#RemanentePSubs").val('');
+    $("#cantidadEfectivoPSubs").val('');
+    $("#cambioPSubs").val('');
     }
     else{
     $('#descPlanilla').prop('checked', false);
@@ -892,8 +984,129 @@ $("#descPlanilla").click(function(){
     $("#divEfectivo").hide();
     $("#cantidadEfectivo").val('');
     $("#cambio").val('');
+    $("#descuentoPSubs").val('');
+    $("#RemanentePSubs").val('');
+    $("#cantidadEfectivoPSubs").val('');
+    $("#cambioPSubs").val('');
     }
 });
+
+
+$("#credito").click(function(){
+    if( $('#credito').prop('checked') ) {
+        $("#divCredito").show();
+
+     
+        $('#parcialPlanilla').prop('checked', false);
+        $('#parcialSubsidio').prop('checked', false);
+    $("#divParcialSubs").hide();
+        $('#descPlanilla').prop('checked', false);
+        $("#divParcialPlanilla").hide();
+        $("#descuentoPPlanilla").val('');
+        $("#RemanentePPlanilla").val('');
+        $("#cantidadEfectivoPPlanilla").val('');
+        $("#cambioPPlanilla").val('');
+
+    $('#descPlanilla').prop('checked', false);
+    $("#divPlanilla").hide();
+
+    $('#parcialPlanilla').prop('checked', false);
+    $("#divParcialPlanilla").hide();
+    $("#descuentoPPlanilla").val('');
+    $("#RemanentePPlanilla").val('');
+    $("#cantidadEfectivoPPlanilla").val('');
+    $("#cambioPPlanilla").val('');
+
+    $('#efectivo').prop('checked', false);
+    $("#divEfectivo").hide();
+
+
+    $("#descuentoPSubs").val('');
+    $("#RemanentePSubs").val('');
+    $("#cantidadEfectivoPSubs").val('');
+    $("#cambioPSubs").val('');
+    }
+    else{
+    $('#descPlanilla').prop('checked', false);
+    $("#divPlanilla").hide();
+
+    $('#parcialPlanilla').prop('checked', false);
+    $("#divParcialPlanilla").hide();
+    $("#descuentoPPlanilla").val('');
+    $("#RemanentePPlanilla").val('');
+    $("#cantidadEfectivoPPlanilla").val('');
+    $("#cambioPPlanilla").val('');
+
+    $('#efectivo').prop('checked', false);
+    $("#divEfectivo").hide();
+    $("#cantidadEfectivo").val('');
+    $("#cambio").val('');
+    $("#divCredito").hide();
+
+    $("#descuentoPSubs").val('');
+    $("#RemanentePSubs").val('');
+    $("#cantidadEfectivoPSubs").val('');
+    $("#cambioPSubs").val('');
+    }
+});
+
+
+$("#parcialSubsidio").click(function(){
+    if( $('#parcialSubsidio').prop('checked') ) {
+        $("#divParcialSubs").show();
+
+     
+        $('#parcialPlanilla').prop('checked', false);
+        $('#credito').prop('checked', false);
+        $('#descPlanilla').prop('checked', false);
+        $("#divParcialPlanilla").hide();
+        $("#descuentoPPlanilla").val('');
+        $("#RemanentePPlanilla").val('');
+        $("#cantidadEfectivoPPlanilla").val('');
+        $("#cambioPPlanilla").val('');
+
+    $('#descPlanilla').prop('checked', false);
+    $("#divPlanilla").hide();
+
+    $('#parcialPlanilla').prop('checked', false);
+    $("#divParcialPlanilla").hide();
+    $("#descuentoPPlanilla").val('');
+    $("#RemanentePPlanilla").val('');
+    $("#cantidadEfectivoPPlanilla").val('');
+    $("#cambioPPlanilla").val('');
+
+    $('#efectivo').prop('checked', false);
+    $("#divEfectivo").hide();
+    $("#descuentoPSubs").val('');
+    $("#RemanentePSubs").val('');
+    $("#cantidadEfectivoPSubs").val('');
+    $("#cambioPSubs").val('');
+    }
+    else{
+    $('#descPlanilla').prop('checked', false);
+    $("#divPlanilla").hide();
+
+    $('#parcialPlanilla').prop('checked', false);
+    $("#divParcialPlanilla").hide();
+    $("#descuentoPPlanilla").val('');
+    $("#RemanentePPlanilla").val('');
+    $("#cantidadEfectivoPPlanilla").val('');
+    $("#cambioPPlanilla").val('');
+
+    $('#efectivo').prop('checked', false);
+    $("#divEfectivo").hide();
+    $("#cantidadEfectivo").val('');
+    $("#cambio").val('');
+    $("#divCredito").hide();
+    $('#parcialSubsidio').prop('checked', false);
+    $("#divParcialSubs").hide();
+    $("#descuentoPSubs").val('');
+    $("#RemanentePSubs").val('');
+    $("#cantidadEfectivoPSubs").val('');
+    $("#cambioPSubs").val('');
+    }
+});
+
 
 $("#cantidadEfectivo").keyup(function(){
     var cuenta = app.totalCuenta();
@@ -932,6 +1145,30 @@ $("#cantidadEfectivoPPlanilla").keyup(function(){
     }
 });
 
+
+$("#descuentoPSubs").keyup(function(){
+    var cuenta = app.totalCuenta();
+    var descPlanilla = $(this).val();
+    var remanenteCuenta = parseFloat(cuenta)-parseFloat(descPlanilla);
+
+    if(isNaN(remanenteCuenta)){
+        $("#RemanentePSubs").val('');
+    }else{
+        $("#RemanentePSubs").val(remanenteCuenta.toFixed(2));
+    }
+});
+
+$("#cantidadEfectivoPSubs").keyup(function(){
+    var cuenta = $("#RemanentePSubs").val();
+    var efectivo = $(this).val();
+    var cobro = parseFloat(efectivo)-parseFloat(cuenta);
+
+    if(isNaN(cobro)){
+        $("#cambioPSubs").val('');
+    }else{
+        $("#cambioPSubs").val(cobro.toFixed(2));
+    }
+});
 
 function limpiarTicket(){
     $("#codigoProducto").val('');
@@ -1062,7 +1299,7 @@ $("#nTicket").keyup(function(e){
                         $("#detTicket").html(r);
                     
                 }
-                });
+        });
     }else{
        
     }
@@ -1099,4 +1336,72 @@ $("#btnGuardarAnular").click(function(){
                     }
                 });
 });
+
+
+
+
+
+$("#btnCobroSubsidio").click(function(){
+            var carnet = $("#carnet").val();
+            var total = app.totalCuenta();
+            var efectivo = "0.00";
+            var cambio = "0.00";
+            var usuario = $("#usuario").val();
+            var descSubsidio = app.totalCuenta();
+
+            $.ajax({
+                    type: 'POST',
+                    data: {
+                        carnet: carnet,
+                        total: total,
+                        efectivo : efectivo,
+                        cambio: cambio,
+                        tipoPago: 'Subsidio',
+                        usuario: usuario,
+                        descSubsidio : descSubsidio,
+                    },
+                    url: '?1=CobrosController&2=guardarEncabezado',
+                    success: function (r) {
+                        if (r == 1) {
+
+                            app.guardarCobroDetalle();      
+                            limpiarTicket();       
+                        }
+                        
+                    }
+                });
+});
+
+
+$("#btnCobroDescuentoPSubs").click(function(){
+            var carnet = $("#carnet").val();
+            var total = app.totalCuenta();
+            var efectivo = $("#cantidadEfectivoPSubs").val();
+            var cambio = $("#cambioPSubs").val();
+            var usuario = $("#usuario").val();
+            var descSubsidio = $("#descuentoPSubs").val();
+
+            $.ajax({
+                    type: 'POST',
+                    data: {
+                        carnet: carnet,
+                        total: total,
+                        efectivo : efectivo,
+                        cambio: cambio,
+                        tipoPago: 'Parcial en subsidio',
+                        usuario: usuario,
+                        descSubsidio : descSubsidio,
+                    },
+                    url: '?1=CobrosController&2=guardarEncabezado',
+                    success: function (r) {
+                        if (r == 1) {
+
+                            app.guardarCobroDetalle();      
+                            limpiarTicket();       
+                        }
+                        
+                    }
+                });
+});
+
 </script>

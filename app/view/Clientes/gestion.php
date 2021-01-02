@@ -44,8 +44,7 @@
         </div>
 
     </div>
-
-
+    
 <div class="ui modal" id="modalAgregarClientes"  style="">
 
     <div class="header" style="background-color:#8E2800; color:white;">

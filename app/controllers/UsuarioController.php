@@ -17,7 +17,8 @@ class UsuarioController extends ControladorBase {
 
     public static function dashboard() {
         self::loadMain();
-      
+        $dao = new DaoAreas();
+        $sucursales = $dao->getSucursales();
         require_once './app/view/Usuario/dashboard.php';
     }
 
@@ -329,5 +330,13 @@ class UsuarioController extends ControladorBase {
     }
 
   
+    public function aplicarSubsidio(){
+        $idSucursal = $_REQUEST['idSucursal'];
+        $mes = $_REQUEST['mes'];
+
+        $dao = new DaoUsuario();
+
+        echo $dao->aplicarSubsidio($idSucursal, $mes);
+    }
 
 }

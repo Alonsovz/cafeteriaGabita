@@ -41,33 +41,19 @@
 
     <!-- DataTable -->
     <link rel="stylesheet" href="./res/plugins/dataTable/dataTable.semantic.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.semanticui.min.css">   
     <script src="./res/plugins/dataTable/dataTable.jquery.min.js"></script>
     <script src="./res/plugins/dataTable/dataTable.semantic.min.js"></script>
 
 
 
-<script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.semanticui.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
 
 
     <!-- SweerAlert -->
     <script src="./res/plugins/sweetalert2.js"></script>
 
-    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/alertify.min.js"></script>
-<!-- CSS -->
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/css/alertify.min.css"/>
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/css/themes/semantic.min.css"/>
-
+ 
 <link rel="stylesheet" href="./res/plugins/amaran.min.css">
 <link rel="stylesheet" href="./res/plugins/animate.min.css">
-<script src="//cdn.jsdelivr.net/jquery.amaran/0.5.4/jquery.amaran.min.js"></script>
 
 <link rel="stylesheet" type="text/css" href="./res/css/notie.min.css">
 <script src="./res/plugins/notie.js"></script>
@@ -80,13 +66,6 @@
         $('.ui.dropdown')
             .dropdown();
     });
-    alertify.defaults.title = "Confirmación";
-alertify.defaults.transition = "zoom";
-alertify.defaults.theme.ok = "ui green button";
-alertify.defaults.theme.cancel = "ui black button";
-
-alertify.defaults.theme.ok.title = "Si";
-alertify.defaults.theme.cancel.title = "No";
 
 
 var random = function(items)

@@ -381,9 +381,6 @@ class DaoUsuario extends DaoBase {
         {
             return 0;
         }
-        
-        
-
     }
 
     public function getEmail()
@@ -436,6 +433,47 @@ class DaoUsuario extends DaoBase {
         return '['.$json.']';
     }
 
+
+    public function aplicarSubsidio($idSucursal, $mes){
+        $_query = "select c.id as idCliente, c.nombre as nombreCliente, a.nombre as area, a.cantidadSubsidio as subsidio, s.nombre as sucursal from clientes c
+        inner join areas a on a.id = c.idArea
+        inner join sucursales s on s.id = a.idSucursal
+        where s.idEliminado = 1 and a.idEliminado = 1 and c.idEliminado = 1
+        and s.id = ".$idSucursal."";
+
+        $resultado = $this->con->ejecutar($_query);
+
+       
+
+        while($fila = $resultado->fetch_assoc()) {
+            $idCliente = $fila["idCliente"];
+            $nombreCliente = $fila["nombreCliente"];
+            $area = $fila["area"];
+            $subsidio = $fila["subsidio"];
+            $sucursal = $fila["sucursal"];
+
+           $validacion ="select subsidio from subsidio where idCliente = ".$idCliente."
+                        and mes='".$mes."' and anio = year(curdate())";
+            
+            $resultadoValidacion=$this->con->ejecutar($validacion)->fetch_assoc();
+
+            if($resultadoValidacion['subsidio']!=null)
+            {
+                   
+            }else{
+                $_query1= "insert into subsidio values(null,".$idCliente.",'".$sucursal."',
+                '".$area."',".$subsidio.", '".$mes."', year(curdate()))";
+
+                $resultado1 = $this->con->ejecutar($_query1);
+            }     
+        }
+
+        if($resultado1){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
    
 
 }

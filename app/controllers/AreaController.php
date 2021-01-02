@@ -42,6 +42,15 @@ class AreaController extends ControladorBase {
         $dao->objeto->setCodigo($_REQUEST["idEliminar"]);
         echo $dao->eliminar();
     }
+
+
+    public function detalleArea(){
+        $idSucursal = $_REQUEST['idSucursal'];
+
+        $dao = new DaoAreas();
+
+        echo $dao->detalleArea($idSucursal);
+    }
 }
 
 

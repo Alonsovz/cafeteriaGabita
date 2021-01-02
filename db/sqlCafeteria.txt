@@ -192,3 +192,22 @@ cantidad int
 ALTER TABLE det_ticket
 ADD FOREIGN KEY (idEncabezado) REFERENCES  enc_ticket(id);
 
+
+
+
+create table subsidio(
+id int primary key  auto_increment,
+idCliente int,
+sucursal varchar(100),
+area varchar(100),
+subsidio double,
+mes varchar(2),
+anio varchar(4)
+);
+
+
+ALTER TABLE subsidio
+ADD FOREIGN KEY (idCliente) REFERENCES  clientes(id);
+
+
+
