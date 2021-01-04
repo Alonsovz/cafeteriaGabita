@@ -486,7 +486,7 @@ var app = new Vue({
                     precioProductoDecimalL: $("#precioProductoDecimal").val(),
                     cantidadProductoL : $("#cantidadProducto").val(),
                 });
-            
+                $("#cantidadProducto").val('1');
             },
 
             totalCuenta() { 
@@ -602,17 +602,6 @@ var app = new Vue({
                             $('#frmLista').removeClass('loading');
                             if (r == 1) {
 
-                                swal({
-                                    title: 'Cobro Registradao',
-                                    text: 'Se imprimirá el ticket',
-                                    type: 'success',
-                                    showConfirmButton: false,
-                                        timer: 1500
-                                }).then((result) => {
-                                    if (result.value) {
-                                        location.href = '?';
-                                    }
-                                }); 
                                 app.limpiar();             
                             }
                             
@@ -745,6 +734,7 @@ $(document).on("click", ".btnEditar", function () {
     $('#precioProducto').val($(this).attr("precioTabla"));
     $('#precioProductoDecimal').val($(this).attr("precioDecimal"));
     $('#nombreProducto').val($(this).attr("nombre"));
+    $("#cantidadProducto").val(1);
 });
 
 
@@ -1171,26 +1161,45 @@ $("#cantidadEfectivoPSubs").keyup(function(){
 });
 
 function imprimirTicket(carnet){
-           $.ajax({
-                    type: 'POST',
-                    url: './app/Controllers/impresionTermica/ticketNormal.php?carnet='+carnet,
-                });    
 
-                $("#carnet").val('');
-                $(".divNombre").hide(); 
+                                swal({
+                                    title: 'Cobro Registradao',
+                                    text: 'Se imprimirá el ticket',
+                                    type: 'success',
+                                    showConfirmButton: true,
+                                        timer: 1500
+                                }).then((result) => {
+                                     $.ajax({
+                                        type: 'POST',
+                                        url: './app/Controllers/impresionTermica/ticketNormal.php?carnet='+carnet,
+                                    });    
+
+                                    $("#carnet").val('');
+                                    $(".divNombre").hide(); 
+                                }); 
+          
 }
 
 function imprimir2Tickets(carnet){
-    $.ajax({
-                    type: 'POST',
-                    url: './app/Controllers/impresionTermica/ticketNormal.php?carnet='+carnet,
-                });
-      $.ajax({
-                    type: 'POST',
-                    url: './app/Controllers/impresionTermica/ticketNormal.php?carnet='+carnet,
-                });
-                $("#carnet").val('');
-                $(".divNombre").hide();
+    swal({
+                                    title: 'Cobro Registradao',
+                                    text: 'Se imprimirá el ticket',
+                                    type: 'success',
+                                    showConfirmButton: false,
+                                        timer: 1500
+                                }).then((result) => {
+                                     $.ajax({
+                                        type: 'POST',
+                                        url: './app/Controllers/impresionTermica/ticketNormal.php?carnet='+carnet,
+                                    });    
+
+                                $.ajax({
+                                        type: 'POST',
+                                        url: './app/Controllers/impresionTermica/ticketNormal.php?carnet='+carnet,
+                                    });  
+                                    $("#carnet").val('');
+                                    $(".divNombre").hide(); 
+                                }); 
 }
 function limpiarTicket(){
     $("#codigoProducto").val('');
