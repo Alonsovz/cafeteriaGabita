@@ -10,7 +10,7 @@
                         </select>
                         <button class="ui red button" id="btnAnularTicket" style="align:right; float:right;display:none;">Anular ticket</button>
                         
-                        <input type="hidden" id="usuario" name="usuario" value="<?php echo $_SESSION["nomUsuario"] ?>">
+            <input type="hidden" id="usuario" name="usuario" value="<?php echo $_SESSION["nomUsuario"] ?>">
            <a style="color:black; font-size: 15px;color:blue;font-weight:bold;align:right; float:right;margin-right:10px;" id="nombreCaja"></a>
                         
             <a style="color:black; font-size: 15px;font-weight:bold;display:none;align:right; float:right;" class="divProductos">Caja: &nbsp; </a>
@@ -1170,6 +1170,28 @@ $("#cantidadEfectivoPSubs").keyup(function(){
     }
 });
 
+function imprimirTicket(carnet){
+           $.ajax({
+                    type: 'POST',
+                    url: './app/Controllers/impresionTermica/ticketNormal.php?carnet='+carnet,
+                });    
+
+                $("#carnet").val('');
+                $(".divNombre").hide(); 
+}
+
+function imprimir2Tickets(carnet){
+    $.ajax({
+                    type: 'POST',
+                    url: './app/Controllers/impresionTermica/ticketNormal.php?carnet='+carnet,
+                });
+      $.ajax({
+                    type: 'POST',
+                    url: './app/Controllers/impresionTermica/ticketNormal.php?carnet='+carnet,
+                });
+                $("#carnet").val('');
+                $(".divNombre").hide();
+}
 function limpiarTicket(){
     $("#codigoProducto").val('');
     $("#nombreProducto").val('');
@@ -1234,18 +1256,14 @@ $("#btnCobroEfectivo").click(function(){
                         if (r == 1) {
                          
                             app.guardarCobroDetalle();      
-                            limpiarTicket();    
-                            
-                            
+                               
                         }
                     }
+                }).then(function(){
+                    imprimirTicket(carnet);
+                    limpiarTicket(); 
                 });
-                $.ajax({
-                    type: 'POST',
-                    url: './app/Controllers/impresionTermica/ticketNormal.php?carnet='+carnet,
-                });
-                $("#carnet").val('');
-                $(".divNombre").hide();
+                
 });
 
 
@@ -1271,35 +1289,17 @@ $("#btnCobroDescuentoPPlanilla").click(function(){
                     url: '?1=CobrosController&2=guardarEncabezado',
                     success: function (r) {
                         if (r == 1) {
-
-                            $("#carnet").val('');
-                            $(".divNombre").hide();
-                            app.guardarCobroDetalle();      
-                            limpiarTicket(); 
-                            $.ajax({
-                                type: 'POST',
-                                data: {
-                                    carnet: carnet,
-                                },
-                                url: './app/Controllers/impresionTermica/ticketNormal.php',
-                                
-                            });
-                            
+                            app.guardarCobroDetalle();   
                         }
                         
                     }
+                }).then(function(){
+                    imprimir2Tickets(carnet);
+                    limpiarTicket(); 
                 });
 
                 
-
-                $.ajax({
-                                type: 'POST',
-                                data: {
-                                    carnet: carnet,
-                                },
-                                url: './app/Controllers/impresionTermica/ticketNormal.php',
-                                
-                            });
+           
 
                 
 });
@@ -1326,26 +1326,14 @@ $("#btnCobroDescuentoPlanilla").click(function(){
                     url: '?1=CobrosController&2=guardarEncabezado',
                     success: function (r) {
                         if (r == 1) {
-                            app.guardarCobroDetalle();      
-                            limpiarTicket();       
-                           
-                
+                            app.guardarCobroDetalle();
                         }
                         
                     }
+                }).then(function(){
+                    imprimir2Tickets(carnet);
+                    limpiarTicket(); 
                 });
-
-                $.ajax({
-                    type: 'POST',
-                    url: './app/Controllers/impresionTermica/ticketNormal.php?carnet='+carnet,
-                });
-
-                $.ajax({
-                    type: 'POST',
-                    url: './app/Controllers/impresionTermica/ticketNormal.php?carnet='+carnet,
-                });
-                $("#carnet").val('');
-                $(".divNombre").hide();
 });
 
 $("#nTicket").keyup(function(e){
@@ -1434,26 +1422,14 @@ $("#btnCobroSubsidio").click(function(){
                     url: '?1=CobrosController&2=guardarEncabezado',
                     success: function (r) {
                         if (r == 1) {
-                            
-                            app.guardarCobroDetalle();      
-                            limpiarTicket();       
-
+                            app.guardarCobroDetalle();  
                         }
                         
                     }
+                }).then(function(){
+                    imprimir2Tickets(carnet);
+                    limpiarTicket(); 
                 });
-
-                $.ajax({
-                    type: 'POST',
-                    url: './app/Controllers/impresionTermica/ticketNormal.php?carnet='+carnet,
-                });
-                
-                $.ajax({
-                    type: 'POST',
-                    url: './app/Controllers/impresionTermica/ticketNormal.php?carnet='+carnet,
-                });
-                $("#carnet").val('');
-                            $(".divNombre").hide();
                 
 });
 
@@ -1480,28 +1456,14 @@ $("#btnCobroDescuentoPSubs").click(function(){
                     url: '?1=CobrosController&2=guardarEncabezado',
                     success: function (r) {
                         if (r == 1) {
-                            app.guardarCobroDetalle();      
-                            limpiarTicket();       
-                
+                            app.guardarCobroDetalle();
                         }
                         
                     }
+                }).then(function(){
+                    imprimir2Tickets(carnet);
+                    limpiarTicket(); 
                 });
-
-                
-                $.ajax({
-                    type: 'POST',
-                    url: './app/Controllers/impresionTermica/ticketNormal.php?carnet='+carnet,
-                });
-
-                $.ajax({
-                    type: 'POST',
-                    url: './app/Controllers/impresionTermica/ticketNormal.php?carnet='+carnet,
-                });
-
-                            
-                            $("#carnet").val('');
-                            $(".divNombre").hide();
 });
 
 </script>

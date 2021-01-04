@@ -40,6 +40,49 @@ class CajasController extends ControladorBase {
         $dao->objeto->setCodigo($_REQUEST["idEliminar"]);
         echo $dao->eliminar();
     }
+
+
+    public function detalleApertura(){
+        $caja = $_REQUEST['idCaja'];
+
+        $dao = new DaoCajas();
+
+        echo $dao->detalleApertura($caja);
+    }
+
+    public function detalleAperturaCierre(){
+        $caja = $_REQUEST['idCaja'];
+
+        $dao = new DaoCajas();
+
+        echo $dao->detalleAperturaCierre($caja);
+    }
+
+
+    public function aperturar(){
+        $caja = $_REQUEST['idCaja'];
+        $cambio = $_REQUEST['cambio'];
+        $usuario = $_REQUEST["usuario"];
+
+        $dao = new DaoCajas();
+
+        echo $dao->aperturar($caja,$cambio,$usuario);
+    }
+
+    public function cerrar(){
+        $caja = $_REQUEST['idCaja'];
+        $montoCambio = $_REQUEST['montoCambio'];
+        $usuario = $_REQUEST["usuario"];
+        $recibidoEfectivo = $_REQUEST["recibidoEfectivo"];
+        $cambioDado = $_REQUEST["cambioDado"];
+        $remanente  = $_REQUEST["remanente"];
+        $fechaA  = $_REQUEST["fechaA"];
+        $usuarioA = $_REQUEST["usuarioA"];
+
+        $dao = new DaoCajas();
+
+        echo $dao->cerrar($caja,$montoCambio,$usuario, $recibidoEfectivo, $cambioDado,  $remanente, $usuarioA, $fechaA);
+    }
 }
 
 

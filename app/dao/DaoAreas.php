@@ -114,7 +114,7 @@ class DaoAreas extends DaoBase {
     }
 
 
-    public function detalleArea($idSucursal = 0) {
+    public function detalleArea($caja = 0) {
         $_query = "select a.*, s.nombre as sucursal,CONCAT('$ ',ROUND(a.cantidadSubsidio , 2 )) as subsidio,
         ROUND(a.cantidadSubsidio , 2 ) as subsidioDecimal  from areas a 
         inner join sucursales s on s.id = a.idSucursal
@@ -158,7 +158,7 @@ class DaoAreas extends DaoBase {
         return ''.$json.'';
     }
 
-
+   
 }
 
 

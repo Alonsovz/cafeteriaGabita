@@ -211,4 +211,22 @@ ALTER TABLE subsidio
 ADD FOREIGN KEY (idCliente) REFERENCES  clientes(id);
 
 
+create table aperturaCajas(
+id int primary key  auto_increment,
+idCaja int,
+fechaApertura datetime,
+montoCambio double,
+fechaCierre datetime,
+recibidoEfectivo double,
+usuarioApertura varchar(100),
+usuarioCierre varchar(100),
+cambioDado double,
+remanente double
+);
+
+
+ALTER TABLE aperturaCajas
+ADD FOREIGN KEY (idCaja) REFERENCES  cajas(id);
+
+
 

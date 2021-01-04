@@ -51,6 +51,9 @@ class AreaController extends ControladorBase {
 
         echo $dao->detalleArea($idSucursal);
     }
+
+
+    
 }
 
 

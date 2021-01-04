@@ -12,27 +12,42 @@ $(function() {
 </script>
 
 <div class="row tiles" id="contenedor-tiles" style="display: flex !important; align-items: baseline; justify-content: space-between">
-
+<input type="hidden" id="usuario" value="<?php echo $_SESSION["nomUsuario"] ?>">
 <a href="?1=CobrosController&2=gestion"  
-    style="width: 23%; background-color: #DBDDDD; !important; text-align:center !important;
+    style="width: 12%; background-color: #DBDDDD; !important; text-align:center !important;
     color:#854A27;" class="tiles-tiles ui basic inverted segment">
-        <h3>Iniciar Proceso de cobro</h3>
+        <h3>Cobrar</h3>
         <div class="ui divider"></div>
         <img src="./res/img/cashier.png">
 </a>
 
+<a id="btnModalCajas" 
+    style="width: 12%; background-color: #DBDDDD; !important; text-align:center !important;
+    color:#854A27;" class="tiles-tiles ui basic inverted segment">
+        <h4>Aperturar Cajas</h4>
+        <div class="ui divider"></div>
+        <img src="./res/img/cash-register.png">
+</a>
+
+<a id="btnModalCajasCerrar" 
+    style="width: 12%; background-color: #DBDDDD; !important; text-align:center !important;
+    color:#854A27;" class="tiles-tiles ui basic inverted segment">
+        <h4>Cerrar Cajas</h4>
+        <div class="ui divider"></div>
+        <img src="./res/img/save-money.png">
+</a>
 
 <a href="?1=ReportesController&2=gestion"  
-    style="width: 23%; background-color: #DBDDDD; !important; text-align:center !important;
+    style="width: 12%; background-color: #DBDDDD; !important; text-align:center !important;
     color:#854A27;" class="tiles-tiles ui basic inverted segment">
         <h3>Reportes</h3>
         <div class="ui divider"></div>
         <img src="./res/img/report.png">
-    </a>
+</a>
 
 
 <a href="?1=CombosController&2=gestion"  
-    style="width: 23%; background-color: #DBDDDD; !important; text-align:center !important;
+    style="width: 12%; background-color: #DBDDDD; !important; text-align:center !important;
     color:#854A27;" class="tiles-tiles ui basic inverted segment">
         <h3>Combos</h3>
         <div class="ui divider"></div>
@@ -41,7 +56,7 @@ $(function() {
 
 
 <a id="btnModalSubsidio"  
-    style="width: 23%; background-color: #DBDDDD; !important; text-align:center !important;
+    style="width: 12%; background-color: #DBDDDD; !important; text-align:center !important;
     color:#854A27;" class="tiles-tiles ui basic inverted segment">
         <h3>Aplicar subsidios</h3>
         <div class="ui divider"></div>
@@ -52,54 +67,54 @@ $(function() {
 
 <div class="row tiles" id="contenedor-tiles" style="display: flex !important; align-items: baseline; justify-content: space-between">
 
-<a href="?1=ProductosController&2=gestion"  
-    style="width: 12%; background-color: #DBDDDD; !important; text-align:center !important;
-    color:#854A27;" class="tiles-tiles ui basic inverted segment">
-        <h3>Productos</h3>
-        <div class="ui divider"></div>
-        <img src="./res/img/productos.png">
-    </a>
+    <a href="?1=ProductosController&2=gestion"  
+        style="width: 12%; background-color: #DBDDDD; !important; text-align:center !important;
+        color:#854A27;" class="tiles-tiles ui basic inverted segment">
+            <h3>Productos</h3>
+            <div class="ui divider"></div>
+            <img src="./res/img/productos.png">
+        </a>
 
-    <a href="?1=ClientesController&2=gestion"  
-    style="width: 12%; background-color: #DBDDDD; !important; text-align:center !important;
-    color:#854A27;" class="tiles-tiles ui basic inverted segment">
-        <h3>Clientes</h3>
-        <div class="ui divider"></div>
-        <img src="./res/img/clientes.png">
-    </a>
+        <a href="?1=ClientesController&2=gestion"  
+        style="width: 12%; background-color: #DBDDDD; !important; text-align:center !important;
+        color:#854A27;" class="tiles-tiles ui basic inverted segment">
+            <h3>Clientes</h3>
+            <div class="ui divider"></div>
+            <img src="./res/img/clientes.png">
+        </a>
 
-    <a href="?1=UsuarioController&2=gestion"  
-    style="width: 12%; background-color: #DBDDDD; !important; text-align:center !important;
-    color:#854A27;" class="tiles-tiles ui basic inverted segment">
-        <h3>Usuarios</h3>
-        <div class="ui divider"></div>
-        <img src="./res/img/group.png">
-    </a>
+        <a href="?1=UsuarioController&2=gestion"  
+        style="width: 12%; background-color: #DBDDDD; !important; text-align:center !important;
+        color:#854A27;" class="tiles-tiles ui basic inverted segment">
+            <h3>Usuarios</h3>
+            <div class="ui divider"></div>
+            <img src="./res/img/group.png">
+        </a>
 
-    <a href="?1=CajasController&2=gestion"  
-    style="width: 12%; background-color: #DBDDDD; !important; text-align:center !important;
-    color:#854A27;" class="tiles-tiles ui basic inverted segment">
-        <h3>Cajas</h3>
-        <div class="ui divider"></div>
-        <img src="./res/img/cajas.png">
-    </a>
+        <a href="?1=CajasController&2=gestion"  
+        style="width: 12%; background-color: #DBDDDD; !important; text-align:center !important;
+        color:#854A27;" class="tiles-tiles ui basic inverted segment">
+            <h3>Cajas</h3>
+            <div class="ui divider"></div>
+            <img src="./res/img/cajas.png">
+        </a>
 
-    <a href="?1=AreaController&2=gestion"  
-    style="width: 12%; background-color: #DBDDDD; !important; text-align:center !important;
-    color:#854A27;" class="tiles-tiles ui basic inverted segment">
-        <h3>Áreas</h3>
-        <div class="ui divider"></div>
-        <img src="./res/img/area.png">
-    </a>
+        <a href="?1=AreaController&2=gestion"  
+        style="width: 12%; background-color: #DBDDDD; !important; text-align:center !important;
+        color:#854A27;" class="tiles-tiles ui basic inverted segment">
+            <h3>Áreas</h3>
+            <div class="ui divider"></div>
+            <img src="./res/img/area.png">
+        </a>
 
 
-    <a href="?1=SucursalesController&2=gestion"  
-    style="width: 12%; background-color: #DBDDDD; !important; text-align:center !important;
-    color:#854A27;" class="tiles-tiles ui basic inverted segment">
-        <h3>Sucursales</h3>
-        <div class="ui divider"></div>
-        <img src="./res/img/market.png">
-    </a>
+        <a href="?1=SucursalesController&2=gestion"  
+        style="width: 12%; background-color: #DBDDDD; !important; text-align:center !important;
+        color:#854A27;" class="tiles-tiles ui basic inverted segment">
+            <h3>Sucursales</h3>
+            <div class="ui divider"></div>
+            <img src="./res/img/market.png">
+        </a>
 
 
     
@@ -184,6 +199,132 @@ $(function() {
 
 </div>
 
+
+<div class="ui modal" id="modalAperturarCajas" style="width: 700px;">
+
+    <div class="header" style="background-color:#024D54; color:white;">
+    <i class="box icon"></i><i class="dollar sign icon"></i> Aperturar Caja
+    </div>
+    <div class="content" class="ui equal width form" style="background-color:#E0E0E0;">
+       <form class="ui form">
+            <div class="field">
+                <div class="fields">
+                   
+                    <div class="seven wide field">
+                            <label>Caja </label>
+                            <select name="caja" id="caja" class="ui dropdown">
+                                <option value="0" set selected>Seleccione una opción</option>
+                                <?php echo $cajas; ?>
+                            </select>
+                            <div class="ui red pointing label"  id="labelCaja"
+                                    style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
+                                    Selecciona una opción
+                        </div>
+                    </div>
+
+                    <div class="nine wide field" id="detCaja">
+                    
+                    </div>
+                </div>
+            </div>
+
+            <div class="field divAbre">
+                <div class="fields">
+                        <div class="sixteen wide field">
+                            <h3 style="color:green">Detalles nueva apertura</h3>
+                        </div>
+                    </div>
+            </div>
+            <div class="field divAbre">
+                <div class="fields">
+                        <div class="eight wide field">
+                            <label>Nuevo monto para cambio</label>
+                            <input type="text" name="nuevoCambio" id="nuevoCambio" placeholder="Nuevo monto para cambio">
+                        </div>
+                        <div class="eight wide field">
+                            <label>Total de monto para cambio</label>
+                            <input type="text" name="totalNuevoCambio" id="totalNuevoCambio" placeholder="Total de monto para cambio" readonly>
+                        </div>
+                    
+                </div>
+            </div>
+       </form>
+    </div>
+    <div class="actions">
+            <button class="ui black deny button">
+                Cancelar
+            </button>
+            <button class="ui teal button" id="btnAperturarCaja" >
+                Aperturar
+            </button>
+    </div>
+</div>
+
+
+<div class="ui modal" id="modalCerrarCajas" style="width: 700px;">
+
+    <div class="header" style="background-color:#024D54; color:white;">
+    <i class="box icon"></i><i class="dollar sign icon"></i> Cerrar Caja
+    </div>
+    <div class="content" class="ui equal width form" style="background-color:#E0E0E0;">
+       <form class="ui form">
+            <div class="field">
+                <div class="fields">
+                   
+                    <div class="seven wide field">
+                            <label>Caja </label>
+                            <select name="cajaCierre" id="cajaCierre" class="ui dropdown">
+                                <option value="0" set selected>Seleccione una opción</option>
+                                <?php echo $cajas; ?>
+                            </select>
+                            <div class="ui red pointing label"  id="labelCajaCierre"
+                                    style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
+                                    Selecciona una opción
+                        </div>
+                    </div>
+
+                    <div class="nine wide field" id="detCajaCierre">
+                    
+                    </div>
+                </div>
+            </div>
+
+            <div class="field divCierre" style="display:none;">
+                <div class="fields">
+                        <div class="sixteen wide field">
+                            <h3 style="color:green">Detalles de cierre</h3>
+                        </div>
+                    </div>
+            </div>
+            <div class="field divCierre">
+                <div class="fields">
+                        <div class="eight wide field">
+                            <label>Efectivo recibido</label>
+                            <input type="text" name="efectivoRecibido" id="efectivoRecibido" placeholder="Efectivo Recibido">
+                        </div>
+                    
+                        <div class="eight wide field">
+                            <label>Sobrante de cambio</label>
+                            <input type="text" name="sobrantecambio" id="sobrantecambio" placeholder="Sobrante de cambio" readonly>
+                        </div>
+
+                        <div class="eight wide field">
+                            <label>Total de caja</label>
+                            <input type="text" name="totalCaja" id="totalCaja" placeholder="Total de caja" readonly>
+                        </div>
+                </div>
+            </div>
+       </form>
+    </div>
+    <div class="actions">
+            <button class="ui black deny button">
+                Cancelar
+            </button>
+            <button class="ui teal button" id="btnCerrarCaja" >
+                Cerrar caja
+            </button>
+    </div>
+</div>
 <style>
         .lds-roller {
     display: inline-block;
@@ -234,7 +375,7 @@ $(function() {
     left: 40px;
     }
     .lds-roller div:nth-child(5) {
-    animation-delay: -0.18s;
+    animation-delay: -0.12s;
     }
     .lds-roller div:nth-child(5):after {
     top: 71px;
@@ -281,7 +422,30 @@ $("#detArea").html('');
 $('#modalAplicarSubsidio').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
 });
 
+$('#btnModalCajas').click(function() {
+    $(".divAbre").hide();
+$("#caja").dropdown('set selected', '0');
+$("#totalNuevoCambio").val('');
+$("#nuevoCambio").val('');
+$("#detCaja").html('');
+$('#modalAperturarCajas').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+});
+
+
+$('#btnModalCajasCerrar').click(function() {
+$("#cajaCierre").dropdown('set selected', '0');
+$("#efectivoRecibido").val('');
+$(".divCierre").hide();
+$("#detCajaCierre").html('');
+$('#modalCerrarCajas').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+});
+
     $(document).ready(function(){
+
+        $('#totalNuevoCambio').mask("###0.00", {reverse: true});
+        $('#nuevoCambio').mask("###0.00", {reverse: true});
+        $('#efectivoRecibido').mask("###0.00", {reverse: true});
+
         var d = new Date();
         var n = d.getMonth();
 
@@ -394,5 +558,177 @@ $('#modalAplicarSubsidio').modal('setting', 'autofocus', false).modal('setting',
         }
         
     });
+
+
+    $("#caja").change(function(){
+        $("#nuevoCambio").val('');
+        $("#totalNuevoCambio").val('');
+        if($(this).val()=='0'){
+            $("#labelCaja").css("display","none");
+        }else{
+            $("#labelCaja").css("display","none");
+        $.ajax({
+                cache: false,
+                type: 'POST',
+                url: '?1=CajasController&2=detalleApertura',
+                data: {
+                    idCaja:$("#caja").val(),
+                },
+                success: function(r) {
+                   
+                    if(r==''){
+                        $("#detCaja").html('<h2>No se ha aperturado nunca</h2>');
+                        $(".divAbre").hide();
+                    }
+                   
+                    else{
+                        $("#detCaja").html(r);
+                        $(".divAbre").show();
+                    }
+                       
+                }
+        });
+        }
+        
+    });
+
+
+
+    $("#nuevoCambio").keyup(function(){
+        
+        
+        if($("#detCaja").html()=='<h2>No se ha aperturado nunca</h2>'){
+            var camNuevo = $(this).val();
+            
+            $("#totalNuevoCambio").val(camNuevo);
+        }else{
+            var camNuevo = $(this).val();
+            var remanenteCaja = $("#remanenteCaja").val();
+
+            var total = parseFloat(camNuevo) + parseFloat(remanenteCaja);
+            $("#totalNuevoCambio").val(total.toFixed(2));
+
+        }
+    });
+
+
+    $("#cajaCierre").change(function(){
+        $("#nuevoCambio").val('');
+        $("#totalNuevoCambio").val('');
+        if($(this).val()=='0'){
+            $("#labelCaja").css("display","none");
+        }else{
+            $("#labelCaja").css("display","none");
+        $.ajax({
+                cache: false,
+                type: 'POST',
+                url: '?1=CajasController&2=detalleAperturaCierre',
+                data: {
+                    idCaja:$("#cajaCierre").val(),
+                },
+                success: function(r) {
+                   
+                    if(r==''){
+                        $("#detCajaCierre").html('<h2>No se ha aperturado nunca</h2>');
+                        $(".divCierre").hide();
+                    }else{
+                        $("#detCajaCierre").html(r);
+                        $(".divCierre").show();
+                    }
+                       
+                }
+        });
+        }
+        
+    });
+
+
+    $("#btnAperturarCaja").click(function(){
+        var cambio = $("#totalNuevoCambio").val();
+        var idCaja = $("#caja").val();
+        var usuario = $("#usuario").val();
+
+      //console.log(cambio, idCaja, usuario);
+
+      $.ajax({
+        cache: false,
+        type: 'POST',
+        url: '?1=CajasController&2=aperturar',
+        data: {
+            cambio:cambio,
+            idCaja:idCaja,
+            usuario:usuario,
+        },
+        success: function(r) {
+            if(r==1){
+                $('#modalAperturarCajas').modal('hide');
+                swal({
+                                title: 'Caja Aperturada',
+                                text: 'No olvides hacer el cierre',
+                                type: 'success',
+                                showConfirmButton: false,
+                                timer: 2000
+                                });
+            }
+        }
+});
+
+    });
+
+
+
+    $("#efectivoRecibido").keyup(function(){
+        var efectivoRecibido = $(this).val();
+        var efectivoVendido = $("#efectivoCierre").val();
+        var cambioDadoCierre = $("#cambioDadoCierre").val();
+        var cambioDejado = $("#cambioDejado").val();
+
+        var sobranteCambio = parseFloat(cambioDejado) - parseFloat(cambioDadoCierre);
+
+        var totalCaja = sobranteCambio + parseFloat(efectivoRecibido);
+
+        $("#sobrantecambio").val(sobranteCambio.toFixed(2));
+        $("#totalCaja").val(totalCaja.toFixed(2));
+    });
+
+
+$("#btnCerrarCaja").click(function(){
+        var montoCambio = $("#sobrantecambio").val();
+        var recibidoEfectivo  = $("#efectivoRecibido").val();
+        var usuario = $("#usuario").val();
+        var cambioDado = $("#cambioDadoCierre").val();
+        var remanente = $("#totalCaja").val();
+        var idCaja = $("#cajaCierre").val();
+        var usuarioA = $("#usuarioA").val();
+        var fechaA = $("#fechaA").val();
+
+      $.ajax({
+        cache: false,
+        type: 'POST',
+        url: '?1=CajasController&2=cerrar',
+        data: {
+            montoCambio:montoCambio,
+            idCaja:idCaja,
+            usuario:usuario,
+            recibidoEfectivo:recibidoEfectivo,
+            cambioDado:cambioDado,
+            remanente:remanente,
+            fechaA:fechaA,
+            usuarioA: usuarioA,
+        },
+        success: function(r) {
+            if(r==1){
+                $('#modalCerrarCajas').modal('hide');
+                swal({
+                                title: 'Caja cerrada',
+                                text: 'No olvides hacer la apertura',
+                                type: 'success',
+                                showConfirmButton: false,
+                                timer: 2000
+                                });
+            }
+        }
+});
+});
 </script>
 

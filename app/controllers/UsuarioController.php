@@ -19,6 +19,9 @@ class UsuarioController extends ControladorBase {
         self::loadMain();
         $dao = new DaoAreas();
         $sucursales = $dao->getSucursales();
+
+        $dao1 = new DaoCajas();
+        $cajas = $dao1->getCajas();
         require_once './app/view/Usuario/dashboard.php';
     }
 
