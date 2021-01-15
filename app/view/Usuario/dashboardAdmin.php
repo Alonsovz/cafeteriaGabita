@@ -241,10 +241,6 @@ $(function() {
                             <label>Nuevo monto para cambio</label>
                             <input type="text" name="nuevoCambio" id="nuevoCambio" placeholder="Nuevo monto para cambio">
                         </div>
-                        <div class="eight wide field">
-                            <label>Total de monto para cambio</label>
-                            <input type="text" name="totalNuevoCambio" id="totalNuevoCambio" placeholder="Total de monto para cambio" readonly>
-                        </div>
                     
                 </div>
             </div>
@@ -302,16 +298,6 @@ $(function() {
                             <label>Efectivo recibido</label>
                             <input type="text" name="efectivoRecibido" id="efectivoRecibido" placeholder="Efectivo Recibido">
                         </div>
-                    
-                        <div class="eight wide field">
-                            <label>Sobrante de cambio</label>
-                            <input type="text" name="sobrantecambio" id="sobrantecambio" placeholder="Sobrante de cambio" readonly>
-                        </div>
-
-                        <div class="eight wide field">
-                            <label>Total de caja</label>
-                            <input type="text" name="totalCaja" id="totalCaja" placeholder="Total de caja" readonly>
-                        </div>
                 </div>
             </div>
        </form>
@@ -325,6 +311,27 @@ $(function() {
             </button>
     </div>
 </div>
+
+
+<div class="ui tiny modal" id="modalConfirmarCaja">
+
+    <div class="header" style="background-color:#024D54; color:white;">
+    <i class="box icon"></i><i class="dollar sign icon"></i> Cerrar Caja
+    </div>
+    <div class="content" class="ui equal width form" style="background-color:#E0E0E0;text-align:center;">
+        <h2 style="color:red">El efectivo recibido es menor al total real de la caja</h2>
+        <h3>¿Desea guardar los datos?</h3>
+    </div>
+    <div class="actions">
+            <button class="ui black deny button">
+                Cancelar
+            </button>
+            <button class="ui teal button" id="btnCerrarCajaModal">
+                Guardar datos
+            </button>
+    </div>
+</div>
+
 <style>
         .lds-roller {
     display: inline-block;
@@ -425,7 +432,6 @@ $('#modalAplicarSubsidio').modal('setting', 'autofocus', false).modal('setting',
 $('#btnModalCajas').click(function() {
     $(".divAbre").hide();
 $("#caja").dropdown('set selected', '0');
-$("#totalNuevoCambio").val('');
 $("#nuevoCambio").val('');
 $("#detCaja").html('');
 $('#modalAperturarCajas').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
@@ -442,7 +448,7 @@ $('#modalCerrarCajas').modal('setting', 'autofocus', false).modal('setting', 'cl
 
     $(document).ready(function(){
 
-        $('#totalNuevoCambio').mask("###0.00", {reverse: true});
+        
         $('#nuevoCambio').mask("###0.00", {reverse: true});
         $('#efectivoRecibido').mask("###0.00", {reverse: true});
 
@@ -562,7 +568,6 @@ $('#modalCerrarCajas').modal('setting', 'autofocus', false).modal('setting', 'cl
 
     $("#caja").change(function(){
         $("#nuevoCambio").val('');
-        $("#totalNuevoCambio").val('');
         if($(this).val()=='0'){
             $("#labelCaja").css("display","none");
         }else{
@@ -578,7 +583,7 @@ $('#modalCerrarCajas').modal('setting', 'autofocus', false).modal('setting', 'cl
                    
                     if(r==''){
                         $("#detCaja").html('<h2>No se ha aperturado nunca</h2>');
-                        $(".divAbre").hide();
+                        $(".divAbre").show();
                     }
                    
                     else{
@@ -594,27 +599,9 @@ $('#modalCerrarCajas').modal('setting', 'autofocus', false).modal('setting', 'cl
 
 
 
-    $("#nuevoCambio").keyup(function(){
-        
-        
-        if($("#detCaja").html()=='<h2>No se ha aperturado nunca</h2>'){
-            var camNuevo = $(this).val();
-            
-            $("#totalNuevoCambio").val(camNuevo);
-        }else{
-            var camNuevo = $(this).val();
-            var remanenteCaja = $("#remanenteCaja").val();
-
-            var total = parseFloat(camNuevo) + parseFloat(remanenteCaja);
-            $("#totalNuevoCambio").val(total.toFixed(2));
-
-        }
-    });
-
 
     $("#cajaCierre").change(function(){
         $("#nuevoCambio").val('');
-        $("#totalNuevoCambio").val('');
         if($(this).val()=='0'){
             $("#labelCaja").css("display","none");
         }else{
@@ -629,7 +616,7 @@ $('#modalCerrarCajas').modal('setting', 'autofocus', false).modal('setting', 'cl
                 success: function(r) {
                    
                     if(r==''){
-                        $("#detCajaCierre").html('<h2>No se ha aperturado nunca</h2>');
+                        $("#detCajaCierre").html('<h2>No se ha aperturado</h2>');
                         $(".divCierre").hide();
                     }else{
                         $("#detCajaCierre").html(r);
@@ -644,7 +631,7 @@ $('#modalCerrarCajas').modal('setting', 'autofocus', false).modal('setting', 'cl
 
 
     $("#btnAperturarCaja").click(function(){
-        var cambio = $("#totalNuevoCambio").val();
+        var cambio = $("#nuevoCambio").val();
         var idCaja = $("#caja").val();
         var usuario = $("#usuario").val();
 
@@ -677,58 +664,100 @@ $('#modalCerrarCajas').modal('setting', 'autofocus', false).modal('setting', 'cl
 
 
 
-    $("#efectivoRecibido").keyup(function(){
-        var efectivoRecibido = $(this).val();
-        var efectivoVendido = $("#efectivoCierre").val();
-        var cambioDadoCierre = $("#cambioDadoCierre").val();
-        var cambioDejado = $("#cambioDejado").val();
-
-        var sobranteCambio = parseFloat(cambioDejado) - parseFloat(cambioDadoCierre);
-
-        var totalCaja = sobranteCambio + parseFloat(efectivoRecibido);
-
-        $("#sobrantecambio").val(sobranteCambio.toFixed(2));
-        $("#totalCaja").val(totalCaja.toFixed(2));
-    });
+   
 
 
 $("#btnCerrarCaja").click(function(){
-        var montoCambio = $("#sobrantecambio").val();
+
+
+        var montoCambio = '0';
         var recibidoEfectivo  = $("#efectivoRecibido").val();
         var usuario = $("#usuario").val();
         var cambioDado = $("#cambioDadoCierre").val();
-        var remanente = $("#totalCaja").val();
+        var remanente = $("#efectivoRecibido").val();
         var idCaja = $("#cajaCierre").val();
         var usuarioA = $("#usuarioA").val();
         var fechaA = $("#fechaA").val();
+        var totalReal = $("#totalReal").val();
 
-      $.ajax({
-        cache: false,
-        type: 'POST',
-        url: '?1=CajasController&2=cerrar',
-        data: {
-            montoCambio:montoCambio,
-            idCaja:idCaja,
-            usuario:usuario,
-            recibidoEfectivo:recibidoEfectivo,
-            cambioDado:cambioDado,
-            remanente:remanente,
-            fechaA:fechaA,
-            usuarioA: usuarioA,
-        },
-        success: function(r) {
-            if(r==1){
-                $('#modalCerrarCajas').modal('hide');
-                swal({
-                                title: 'Caja cerrada',
-                                text: 'No olvides hacer la apertura',
-                                type: 'success',
-                                showConfirmButton: false,
-                                timer: 2000
-                                });
+        if(recibidoEfectivo < totalReal ){
+            $('#modalConfirmarCaja').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+        }else{
+            $.ajax({
+            cache: false,
+            type: 'POST',
+            url: '?1=CajasController&2=cerrar',
+            data: {
+                montoCambio:montoCambio,
+                idCaja:idCaja,
+                usuario:usuario,
+                recibidoEfectivo:recibidoEfectivo,
+                cambioDado:cambioDado,
+                remanente:remanente,
+                fechaA:fechaA,
+                usuarioA: usuarioA,
+            },
+            success: function(r) {
+                if(r==1){
+                    $('#modalCerrarCajas').modal('hide');
+                    swal({
+                                    title: 'Caja cerrada',
+                                    text: 'No olvides hacer la apertura',
+                                    type: 'success',
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                    });
+                }
             }
+            });
         }
+    
 });
+
+
+$("#btnCerrarCajaModal").click(function(){
+
+
+var montoCambio = '0';
+var recibidoEfectivo  = $("#efectivoRecibido").val();
+var usuario = $("#usuario").val();
+var cambioDado = $("#cambioDadoCierre").val();
+var remanente = $("#efectivoRecibido").val();
+var idCaja = $("#cajaCierre").val();
+var usuarioA = $("#usuarioA").val();
+var fechaA = $("#fechaA").val();
+var totalReal = $("#totalReal").val();
+
+
+    $.ajax({
+    cache: false,
+    type: 'POST',
+    url: '?1=CajasController&2=cerrar',
+    data: {
+        montoCambio:montoCambio,
+        idCaja:idCaja,
+        usuario:usuario,
+        recibidoEfectivo:recibidoEfectivo,
+        cambioDado:cambioDado,
+        remanente:remanente,
+        fechaA:fechaA,
+        usuarioA: usuarioA,
+    },
+    success: function(r) {
+        if(r==1){
+            $('#modalCerrarCajas').modal('hide');
+            swal({
+                            title: 'Caja cerrada',
+                            text: 'No olvides hacer la apertura',
+                            type: 'success',
+                            showConfirmButton: false,
+                            timer: 2000
+                            });
+        }
+    }
+    });
+
+
 });
 </script>
 

@@ -383,6 +383,48 @@ class DaoReportes extends DaoBase {
 
         return ''.$json.'';
     }
+
+
+    public function detalleProductos($idSucursal, $fecha1, $fecha2) {
+        $_query = "select dt.nombreProducto  as prod, count(dt.idProducto) as ventas from det_ticket dt
+        inner join enc_ticket et on et.id = dt.idEncabezado
+        inner join clientes c on c.id = et.idCliente
+        inner join areas a on a.id = c.idArea
+        where et.estado = 1 and a.idSucursal = ".$idSucursal."
+        and et.fechaEmision BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
+        GROUP by 1 order by 2 desc";
+
+        $resultado = $this->con->ejecutar($_query);
+
+
+        $json = '';
+
+        $json.='<br>
+            <table style="margin:auto;width: 100%;">
+            <thead>
+                <tr>
+                <th style="background-color:#1F0150; color:white;height: 30px;">Producto</th>
+                    <th style="background-color:#1F0150; color:white;height: 30px;">Cantidad vendida</th>
+                </tr>
+            </thead>
+            <tbody>
+        ';
+
+        while($fila = $resultado->fetch_assoc()) {
+            $json .= '<tr> 
+                        <td style="height: 30px;">'.$fila["prod"].'</td>
+                        <td style="height: 30px;">'.$fila["ventas"].'</td>
+                      </tr>';
+        }
+
+        $json.='</tbody>
+            </table>
+            ';
+
+        $json = substr($json,0, strlen($json) - 1);
+
+        return ''.$json.'';
+    }
 }
 
 ?>

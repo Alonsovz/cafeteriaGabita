@@ -136,10 +136,7 @@ class DaoCajas extends DaoBase {
                 <a style="color:blue">Ultima fecha de cierre:</a> </a>'.$fila["fechaC"].'--'.$fila["horaC"].'</a><br>
                 <a style="color:blue">Usuario cierre:</a> </a>'.$fila["usuarioCierre"].'</a><br>
 
-                <a style="color:blue">Monto para cambio inicial:</a> </a>'.$fila["cambio"].'</a><br>
-                <a style="color:blue">Efectivo Recibido:</a> </a>'.$fila["efectivoR"].'</a><br>
-                <a style="color:blue">Cambio dado:</a> </a>'.$fila["cambioDado"].'</a><br>
-                <a style="color:blue">Total en caja:</a> </a>'.$fila["remanente"].'</a><br></b>
+                <a style="color:blue">Total del ultimo cierre:</a> </a>'.$fila["remanente"].'</a><br></b>
                 <input type="hidden" id="remanenteCaja" value="'.$fila["cambioDecimal"].'">
             ';
                 
@@ -175,9 +172,6 @@ class DaoCajas extends DaoBase {
         DATE_FORMAT(fechaCierre,'%d/%m/%Y') as fechaC,
         TIME_FORMAT(fechaCierre, '%r') as horaC,
         ROUND(montoCambio , 2 ) as cambio,
-        CONCAT('$ ',ROUND(recibidoEfectivo , 2 )) as efectivoR,
-        CONCAT('$ ',ROUND(remanente , 2 )) as remanente,
-        CONCAT('$ ',ROUND(cambioDado , 2 )) as cambioDado,
         ROUND(remanente , 2 ) as remanenteDecimal,
         
         (select ROUND(sum(en.cambio) , 2 ) from enc_ticket en
@@ -188,9 +182,9 @@ class DaoCajas extends DaoBase {
         where ca.id = ".$caja." and 
         fechaEmision >= (select ap.fechaApertura from aperturacajas ap
             where ap.usuarioCierre = ''
-            order by ap.id limit 1)) as cambioDado,
+            order by ap.id desc limit 1)) as cambioDado,
 
-            (select ROUND(sum(en.efectivoRecibido) , 2 ) from enc_ticket en
+            (select ROUND(sum(en.efectivoRecibido - en.cambio) , 2 ) from enc_ticket en
         inner join clientes c on c.id = en.idCliente
         inner join areas a on a.id = c.idArea
         inner join sucursales s on s.id = a.idSucursal
@@ -198,7 +192,7 @@ class DaoCajas extends DaoBase {
         where ca.id = ".$caja." and 
         fechaEmision >= (select ap.fechaApertura from aperturacajas ap
             where ap.usuarioCierre = ''
-            order by ap.id limit 1)) as efectivoRecibido
+            order by ap.id desc limit 1)) as efectivoRecibido
         from aperturaCajas where idCaja = ".$caja."
         order by id desc 
         limit 1";
@@ -211,21 +205,32 @@ class DaoCajas extends DaoBase {
 
         while($fila = $resultado->fetch_assoc()) {
             if($fila["usuarioCierre"]==null){
+                $total = 0;
+                if($fila["cambioDado"] < $fila["cambio"]){
+                    $total = ($fila["cambio"]- $fila["cambioDado"]) + $fila["efectivoRecibido"];
+                }else{
+                    $total = $fila["efectivoRecibido"] +  + $fila["cambio"];
+                }
+              
+
                 $json .= '<h4 style="color:purple">Detalles</h4>
                 <b style="font-size:13px;"><a style="color:blue">Ultima fecha de apertura:</a> </a>'.$fila["fechaA"].'--'.$fila["horaA"].'</a><br>
                 <a style="color:blue">Usuario ultima apertura:</a> </a>'.$fila["usuarioApertura"].'</a><br>
 
 
                 <a style="color:blue">Monto para cambio inicial:</a> </a>$ '.$fila["cambio"].'</a><br>
+                <a style="color:blue">Cambio dado:</a> </a> $ '.$fila["cambioDado"].'</a><br>
                 <a style="color:blue">Vendido en efectivo:</a> </a>$ '.$fila["efectivoRecibido"].'</a><br>
-                <a style="color:blue">Cambio dado:</a> </a> $ '.$fila["cambioDado"].'</a><br></b>
+                <a style="color:green">Total en caja:</a> </a>$ '.number_format($total,2).'</a><br></b>
+                
+             
 
                 <input type="hidden" id="efectivoCierre" value="'.$fila["efectivoRecibido"].'">
                 <input type="hidden" id="cambioDadoCierre" value="'.$fila["cambioDado"].'">
                 <input type="hidden" id="cambioDejado" value="'.$fila["cambio"].'">
                 <input type="hidden" id="usuarioA" value="'.$fila["usuarioApertura"].'">
                 <input type="hidden" id="fechaA" value="'.$fila["fechaApertura"].'">
-
+                <input type="hidden" id="totalReal" value="'.number_format($total,2).'">
             ';
                
             }

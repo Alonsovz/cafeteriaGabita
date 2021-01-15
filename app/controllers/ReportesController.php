@@ -32,6 +32,18 @@ class ReportesController extends ControladorBase {
 
         echo $dao->detalleClientes($idSucursal,$fecha1,$fecha2);
     }
+
+
+    public function detalleProductos(){
+        $idSucursal = $_REQUEST['idSucursal'];
+        $fecha1 = $_REQUEST['fecha1'];
+        $fecha2 = $_REQUEST['fecha2'];
+
+        $dao = new DaoReportes();
+
+        echo $dao->detalleProductos($idSucursal,$fecha1,$fecha2);
+    }
+
 }
 
 

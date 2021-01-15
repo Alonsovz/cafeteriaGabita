@@ -1,6 +1,5 @@
 <div id="app">
     <div class="ui grid">
-
         <div class="row title-bar">
             <div class="sixteen wide column">
                         <label style="font-weight:bold;font-size: 15px;">Seleccione caja a utilizar: </label> &nbsp;
@@ -35,7 +34,7 @@
                         <div class="fields">
                             <div class="three wide field">
                                 <label> <i class="address card icon"></i> Carnet de cliente</label>
-                                <input type="text" id="carnet" name="carnet" placeholder="Ingrese el carnet">
+                                <input type="text" class="datosCliente" id="carnet" name="carnet" placeholder="Ingrese el carnet">
                             </div>
                         
                             <div class="three wide field divNombre"  style="display:none; font-size: 12px;">
@@ -49,17 +48,17 @@
 
                             <div class="three wide field">
                                 <label> <i class="barcode icon"></i> Código Producto</label>
-                                <input type="text" id="codigoProducto" name="codigoProducto">
+                                <input type="text" id="codigoProducto" name="codigoProducto" class="datosCliente">
                             </div>
 
                             <div class="three wide field">
                                 <label> <i class="pencil icon"></i> Nombre Producto</label>
-                                <input type="text" id="nombreProducto" name="nombreProducto">
+                                <input type="text" id="nombreProducto" name="nombreProducto" class="datosCliente">
                             </div>
 
                             <div class="three wide field">
                                 <label> <i class="dollar sign icon"></i> Precio Producto</label>
-                                <input type="text" id="precioProducto" name="precioProducto">
+                                <input type="text" id="precioProducto" name="precioProducto" class="datosCliente">
                                 <input type="hidden" id="precioProductoDecimal" name="precioProductoDecimal">
                                 <div class="ui red pointing label"  id="labelPrecio"
                                 style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
@@ -69,7 +68,7 @@
 
                             <div class="three wide field">
                                 <label> <i class="plus icon"></i> Cantidad</label>
-                                <input type="number" id="cantidadProducto" name="cantidadProducto" value="1">
+                                <input type="number" id="cantidadProducto" name="cantidadProducto" value="1" class="datosCliente">
                             </div>
 
                          </div>  
@@ -109,9 +108,9 @@
                     
 
                     <div class="eight wide field divLista" style="display:none;">
-                    <a style="font-weight: bold; font-size: 16px; color: #854a27;margin-left:30px;">Total:</a>
+                        <a style="font-weight: bold; font-size: 16px; color: #854a27;margin-left:30px;">Total:</a>
 
-                    <a style="font-weight: bold; font-size: 18px; color: black;" id="totalCuenta"></a>
+                        <a style="font-weight: bold; font-size: 18px; color: black;" class="totalCuenta"></a>
 
                         <form action="" class="ui form" id="frmLista" >
                                 <table class="ui selectable very compact celled table" style="width:90%; margin:auto;">
@@ -161,137 +160,6 @@
                     
                     </div>
 
-                    <div class="three wide field divLista" style="text-align:left;display:none;">
-                        <a style="font-weight: bold; font-size: 16px; color: #010187;margin-left:20px;">Tipo de pago:</a>
-                        <br><br>
-
-                        <input type="checkbox" id="efectivo" name="efectivo" value="Efectivo">
-                        <labels style="font-weight:bold;color:#981700;"> Efectivo</label><br>
-                            <div id="divEfectivo" style="display:none;">
-                                <form class="ui form" id="frmEfectivo">
-                                <div class="fields">
-                                    <div class="field">
-                                        <div class="sixteen wide field">
-                                            <label>Recibido: </label>
-                                            <input type="text" name="cantidadEfectivo" id="cantidadEfectivo" 
-                                            placeholder="Efectivo recibido">
-                                        </div>
-
-                                        <div class="sixteen wide field">
-                                            <label>Cambio: </label>
-                                            <input type="text" name="cambio" id="cambio" 
-                                            placeholder="Cambio" readonly>
-                                        </div>
-                                    </div>
-                                </div>
-                                    
-                                </form>
-
-                                
-                                <a class="ui green button" id="btnCobroEfectivo">Cobrar</a>
-                                <br><br>
-                            </div>
-                            
-
-                        <input type="checkbox" id="credito" name="credito" value="Crédito">
-                        <label style="font-weight:bold;color:#981700;"> Subsidio</label><br>
-                        <div id="divCredito" style="display:none;">
-                                    
-                            <a class="ui green button" id="btnCobroSubsidio">Cobrar</a><br><br>
-                        </div>
-
-                        <input type="checkbox" id="parcialPlanilla" name="parcialPlanilla" value="Parcial Planilla">
-                        <label style="font-weight:bold;color:#981700;">Parcial en planilla</label><br>
-                            <div id="divParcialPlanilla" style="display:none;">
-                                    <form class="ui form">
-                                    <div class="field">
-                                        <div class="fields">
-                                            <div class="eight wide field">
-                                                <label style="font-size:12px;">Descuento planilla: </label>
-                                                <input type="text" name="descuentoPPlanilla" id="descuentoPPlanilla" 
-                                                placeholder="Descuento planilla" style="height:12px; font-size:13px;">
-                                            </div>
-                                            <div class="eight wide field">
-                                                <label style="font-size:12px;">Remanente cuenta actual: </label>
-                                                <input type="text" name="RemanentePPlanilla" id="RemanentePPlanilla" 
-                                                placeholder="Remanente cuenta" style="height:12px; font-size:13px;" readonly>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <div class="fields">
-                                            <div class="eight wide field">
-                                                <label style="font-size:12px;">Efectivo: </label>
-                                                <input type="text" name="cantidadEfectivoPPlanilla" id="cantidadEfectivoPPlanilla" 
-                                                placeholder="Efectivo recibido" style="height:12px; font-size:13px;">
-                                            </div>
-
-                                            <div class="eight wide field">
-                                                <label style="font-size:12px;">Cambio: </label>
-                                                <input type="text" name="cambioPPlanilla" id="cambioPPlanilla" 
-                                                placeholder="Cambio" readonly style="height:12px; font-size:13px;">
-                                            </div>
-                                        </div>
-                                    </div>
-                                        
-                                    </form>
-
-                                    
-                                    <a class="ui green button" id="btnCobroDescuentoPPlanilla">Cobrar</a>
-                                    <br><br>
-                            </div>
-
-                        <input type="checkbox" id="parcialSubsidio" name="parcialSubsidio" value="Parcial Subsidio">
-                        <label style="font-weight:bold;color:#981700;">Parcial con subsidio</label><br>
-                        <div id="divParcialSubs" style="display:none;">
-                                    <form class="ui form">
-                                    <div class="field">
-                                        <div class="fields">
-                                            <div class="eight wide field">
-                                                <label style="font-size:12px;">Descuento Subsidio: </label>
-                                                <input type="text" name="descuentoPSubs" id="descuentoPSubs" 
-                                                placeholder="Subsidio" style="height:12px; font-size:13px;">
-                                            </div>
-                                            <div class="eight wide field">
-                                                <label style="font-size:12px;">Remanente cuenta actual: </label>
-                                                <input type="text" name="RemanentePSubs" id="RemanentePSubs" 
-                                                placeholder="Remanente cuenta" style="height:12px; font-size:13px;" readonly>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <div class="fields">
-                                            <div class="eight wide field">
-                                                <label style="font-size:12px;">Efectivo: </label>
-                                                <input type="text" name="cantidadEfectivoPSubs" id="cantidadEfectivoPSubs" 
-                                                placeholder="Efectivo recibido" style="height:12px; font-size:13px;">
-                                            </div>
-
-                                            <div class="eight wide field">
-                                                <label style="font-size:12px;">Cambio: </label>
-                                                <input type="text" name="cambioPSubs" id="cambioPSubs" 
-                                                placeholder="Cambio" readonly style="height:12px; font-size:13px;">
-                                            </div>
-                                        </div>
-                                    </div>
-                                        
-                                    </form>
-
-                                    
-                                    <a class="ui green button" id="btnCobroDescuentoPSubs">Cobrar</a>
-                                    <br><br>
-                            </div>
-
-                        <input type="checkbox" id="descPlanilla" name="descPlanilla" value="descPlanilla">
-                        <label style="font-weight:bold;color:#981700;">Descuento en planilla</label>
-
-                        <div id="divPlanilla" style="display:none;">
-                                    
-                                    <a class="ui green button" id="btnCobroDescuentoPlanilla">Cobrar</a>
-                            </div>
-
-
-                    </div>
 
                     </div>
                 </div>
@@ -415,9 +283,217 @@
     </div>
 </div>
 
+<div class="ui tiny modal" id="modalTipoCobro" style="position: absolute;top: 10px;">
+<div class="header" style="background-color:#024D54; color:white;">
+    <i class="ticket icon"></i><i class="dollar sign icon"></i> Cobrar
+    
+    <a style="font-weight: bold; font-size: 16px; color: yellow;margin-left:30px;">Total:</a>
+    <a style="font-weight: bold; font-size: 18px; color: white;" class="totalCuenta"></a>
+    </div>
+    <div class="content" class="ui equal width form" style="background-color:#E0E0E0;">
+    <div class="divLista" style="text-align:left;display:none; width: 100%;">
+                        <a style="font-weight: bold; font-size: 16px; color: #010187;margin-left:20px;">Tipo de pago:</a>
+                        <br><br>
+
+                        <input type="checkbox" id="efectivo" name="efectivo" value="Efectivo">
+                        <label style="font-weight:bold;color:#981700;"> Efectivo</label><br>
+                            <div id="divEfectivo" style="display:none;">
+                                <form class="ui form" id="frmEfectivo">
+                                <div class="fields">
+                                    <div class="field">
+                                        <div class="sixteen wide field">
+                                            <label>Recibido: </label>
+                                            <input type="text" name="cantidadEfectivo" id="cantidadEfectivo" 
+                                            placeholder="Efectivo recibido">
+                                        </div>
+
+                                        <div class="sixteen wide field">
+                                            <label>Cambio: </label>
+                                            <input type="text" name="cambio" id="cambio" 
+                                            placeholder="Cambio" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                    
+                                </form>
+
+                                
+                                <a class="ui green button" id="btnCobroEfectivo">Cobrar</a>
+                                <br><br>
+                            </div>
+                            
+
+                        <input type="checkbox" id="credito" name="credito" value="Crédito" style="float:left">
+                        <label style="font-weight:bold;color:#981700;"> Subsidio</label><br>
+                        <div id="divCredito" style="display:none;">
+                                    
+                            <a class="ui green button" id="btnCobroSubsidio">Cobrar</a><br><br>
+                        </div>
+
+                        <input type="checkbox" id="parcialPlanilla" name="parcialPlanilla" value="Parcial Planilla" style="float:left">
+                        <label style="font-weight:bold;color:#981700;">Parcial en planilla</label><br>
+                            <div id="divParcialPlanilla" style="display:none;">
+                                    <form class="ui form">
+                                    <div class="field">
+                                        <div class="fields">
+                                            <div class="eight wide field">
+                                                <label style="font-size:12px;">Descuento planilla: </label>
+                                                <input type="text" name="descuentoPPlanilla" id="descuentoPPlanilla" 
+                                                placeholder="Descuento planilla" style="height:12px; font-size:13px;">
+                                            </div>
+                                            <div class="eight wide field">
+                                                <label style="font-size:12px;">Remanente cuenta actual: </label>
+                                                <input type="text" name="RemanentePPlanilla" id="RemanentePPlanilla" 
+                                                placeholder="Remanente cuenta" style="height:12px; font-size:13px;" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="fields">
+                                            <div class="eight wide field">
+                                                <label style="font-size:12px;">Efectivo: </label>
+                                                <input type="text" name="cantidadEfectivoPPlanilla" id="cantidadEfectivoPPlanilla" 
+                                                placeholder="Efectivo recibido" style="height:12px; font-size:13px;">
+                                            </div>
+
+                                            <div class="eight wide field">
+                                                <label style="font-size:12px;">Cambio: </label>
+                                                <input type="text" name="cambioPPlanilla" id="cambioPPlanilla" 
+                                                placeholder="Cambio" readonly style="height:12px; font-size:13px;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                        
+                                    </form>
+
+                                    
+                                    <a class="ui green button" id="btnCobroDescuentoPPlanilla">Cobrar</a>
+                                    <br><br>
+                            </div>
+
+                        <input type="checkbox" id="parcialSubsidio" name="parcialSubsidio" value="Parcial Subsidio" style="float:left">
+                        <label style="font-weight:bold;color:#981700;">Parcial con subsidio</label><br>
+                        <div id="divParcialSubs" style="display:none;">
+                                    <form class="ui form">
+                                    <div class="field">
+                                        <div class="fields">
+                                            <div class="eight wide field">
+                                                <label style="font-size:12px;">Descuento Subsidio: </label>
+                                                <input type="text" name="descuentoPSubs" id="descuentoPSubs" 
+                                                placeholder="Subsidio" style="height:12px; font-size:13px;">
+                                            </div>
+                                            <div class="eight wide field">
+                                                <label style="font-size:12px;">Remanente cuenta actual: </label>
+                                                <input type="text" name="RemanentePSubs" id="RemanentePSubs" 
+                                                placeholder="Remanente cuenta" style="height:12px; font-size:13px;" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="fields">
+                                            <div class="eight wide field">
+                                                <label style="font-size:12px;">Efectivo: </label>
+                                                <input type="text" name="cantidadEfectivoPSubs" id="cantidadEfectivoPSubs" 
+                                                placeholder="Efectivo recibido" style="height:12px; font-size:13px;">
+                                            </div>
+
+                                            <div class="eight wide field">
+                                                <label style="font-size:12px;">Cambio: </label>
+                                                <input type="text" name="cambioPSubs" id="cambioPSubs" 
+                                                placeholder="Cambio" readonly style="height:12px; font-size:13px;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                        
+                                    </form>
+
+                                    
+                                    <a class="ui green button" id="btnCobroDescuentoPSubs">Cobrar</a>
+                                    <br><br>
+                            </div>
+
+                        <input type="checkbox" id="descPlanilla" name="descPlanilla" value="descPlanilla" style="float:left">
+                        <label style="font-weight:bold;color:#981700;">Descuento en planilla</label>
+
+                        <div id="divPlanilla" style="display:none;">
+                                    
+                                    <a class="ui green button" id="btnCobroDescuentoPlanilla">Cobrar</a>
+                            </div>
+
+
+                    </div>
+
+    </div>
+    <div class="actions">
+            <button class="ui black deny button">
+                Cerrar
+            </button>
+    </div>
+</div>
+
 <script src="./res/tablas/tablaProductosCobro.js"></script>
 
 <script>
+
+$(document).ready(function(){
+    var elements = document.getElementsByClassName("datosCliente");
+    var currentIndex = 0;
+    var elements1 = document.getElementsByClassName("chPago");
+    var currentIndex1 = 0;
+
+    document.onkeydown = function(e) {
+      switch (e.keyCode) {
+        case 37:
+          currentIndex = (currentIndex == 0) ? elements.length - 1 : --currentIndex;
+          elements[currentIndex].focus();
+
+          
+        
+          
+          break;
+        case 39:
+          currentIndex = ((currentIndex + 1) == elements.length) ? 0 : ++currentIndex;
+          elements[currentIndex].focus();
+
+          break;
+        case 38:
+          currentIndex1 = (currentIndex1 == 0) ? elements1.length - 1 : --currentIndex1;
+          elements1[currentIndex1].focus();
+
+         
+          break;
+        case 40:
+          currentIndex1 = ((currentIndex1 + 1) == elements1.length) ? 0 : ++currentIndex1;
+          elements1[currentIndex1].focus();
+          break;
+
+          case 27:
+          $("#modalTipoCobro").modal('hide');
+          $("#cantidadProducto").val('1');
+          $("#codigoProducto").val('');
+          $("#nombreProducto").val('');
+          $("#precioProducto").val('');
+          $("#precioProductoDecimal").val('');
+          break;
+      }
+    };
+
+    
+});
+
+
+
+$(document).on("keypress", function (e) {
+    if(e.keyCode == '42'){
+        $("#efectivo").focus();
+        $('#modalTipoCobro').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+    }
+});
+
+
+
+
+
                $('#codigoProducto').keypress(function(e) {
                  if (e.keyCode == '13') {
                     e.preventDefault();
@@ -476,7 +552,7 @@ var app = new Vue({
         methods: {
             eliminarDetalleLista(index) {
                 this.listas.splice(index, 1);
-                $("#totalCuenta").text("$ "+this.totalCuenta());
+                $(".totalCuenta").text("$ "+this.totalCuenta());
             },
             agregarDetalleLista() {
                 this.listas.push({
@@ -486,7 +562,11 @@ var app = new Vue({
                     precioProductoDecimalL: $("#precioProductoDecimal").val(),
                     cantidadProductoL : $("#cantidadProducto").val(),
                 });
-                $("#cantidadProducto").val('1');
+                    $("#cantidadProducto").val('1');
+                    $("#codigoProducto").val('');
+                    $("#nombreProducto").val('');
+                    $("#precioProducto").val('');
+                    $("#precioProductoDecimal").val('');
             },
 
             totalCuenta() { 
@@ -510,6 +590,14 @@ var app = new Vue({
                         $('#subsArea').text(dat.subsidioArea);
                         $('#subsRemanente').text(dat.remanente);
                         $(".divNombre").show();
+
+                        if(dat.subsidioArea == '$ 0.00'){     
+                            $("#credito").css("display","none");
+                            $("#parcialSubsidio").css("display","none");
+                        }else{
+                            $("#credito").css("display","block");
+                            $("#parcialSubsidio").css("display","block");
+                        }
                     })
                     .catch(err => {
                         $('#nombreCliente').text('');
@@ -531,6 +619,7 @@ var app = new Vue({
                         $('#nombreProducto').val(dat.nombre);
                         $('#precioProducto').val(dat.precioTabla);
                         $('#precioProductoDecimal').val(dat.precioDecimal);
+                       
                     })
                     .catch(err => {
                         $('#nombreProducto').val('');
@@ -577,7 +666,7 @@ var app = new Vue({
                         cantidadProductoL : element["cantidad"],
                     });
                     
-                $("#totalCuenta").text("$ "+app.totalCuenta());
+                $(".totalCuenta").text("$ "+app.totalCuenta());
                 });
                         
                     })
@@ -602,7 +691,8 @@ var app = new Vue({
                             $('#frmLista').removeClass('loading');
                             if (r == 1) {
 
-                                app.limpiar();             
+                                app.limpiar();     
+                                $('#modalTipoCobro').modal('hide');        
                             }
                             
                         }
@@ -640,7 +730,7 @@ var app = new Vue({
                 });
             },
         }
-    });
+});
 
     function limpiar(){
         $('#codigoProducto').val('');
@@ -681,7 +771,7 @@ $('#modalAnulaTicket').modal('setting', 'autofocus', false).modal('setting', 'cl
             limpiar();
             $("#btnAnularTicket").show();
             $("#frmCliente").show();
-            $("#totalCuenta").text("$ 0.00");
+            $(".totalCuenta").text("$ 0.00");
             var text = $("#caja option:selected").text();
 
            
@@ -709,21 +799,37 @@ $('#modalAnulaTicket').modal('setting', 'autofocus', false).modal('setting', 'cl
            
         }); 
 
-        $("#carnet").keyup(function(){
-           app.cargarDatos();
-           $("#credito").prop("disabled",false);
-            $("#parcialSubsidio").prop("disabled",false);
-            limpiarTicket();   
-            app.limpiar();
+        $("#carnet").keyup(function(e){
+            if(e.keyCode == '13'){
+                e.preventDefault();
+                $("#codigoProducto").focus();
+                app.cargarDatos();
+
+                limpiarTicket();   
+                app.limpiar();
+            }else{
+         
+            }
+        
+          
         });
         
-        $("#codigoProducto").keyup(function(){
-           app.cargarDatosCodigo();
+        $("#codigoProducto").keyup(function(e){
+            if(e.keyCode == '39'){
+            }else if(e.keyCode == '37'){
+            }else{
+                app.cargarDatosCodigo();
+            }
+           
            
         }); 
 
-        $("#nombreProducto").keyup(function(){
-           app.cargarDatosNombre();
+        $("#nombreProducto").keyup(function(e){
+            if(e.keyCode == '39'){
+            }else if(e.keyCode == '37'){
+            }else{
+                app.cargarDatosCodigo();
+            }
         }); 
 
     });
@@ -734,6 +840,12 @@ $(document).on("click", ".btnEditar", function () {
     $('#precioProducto').val($(this).attr("precioTabla"));
     $('#precioProductoDecimal').val($(this).attr("precioDecimal"));
     $('#nombreProducto').val($(this).attr("nombre"));
+    
+    if($(this).attr("codigo") == '//'){
+        $('#precioProducto').prop("readonly",false);
+    }else{
+        $('#precioProducto').prop("readonly",true);
+    }
     $("#cantidadProducto").val(1);
 });
 
@@ -742,7 +854,7 @@ $(document).on("click", ".btnCombo", function () {
     var caja = $("#caja").val();
     app.cargarDatosCombo($(this).attr("nombre"),caja);
     $(".divLista").show();
-    $("#totalCuenta").text("$ "+app.totalCuenta());
+    $(".totalCuenta").text("$ "+app.totalCuenta());
 
     
 });
@@ -756,7 +868,7 @@ $('#codigoProducto').keyup(function(e){
         }else{
         $(".divLista").show();
         app.agregarDetalleLista();
-        $("#totalCuenta").text("$ "+app.totalCuenta());
+        $(".totalCuenta").text("$ "+app.totalCuenta());
         //limpiar();
         e.preventDefault();
 
@@ -782,7 +894,7 @@ $('#nombreProducto').keyup(function(e){
         }else{
         $(".divLista").show();
         app.agregarDetalleLista();
-        $("#totalCuenta").text("$ "+app.totalCuenta());
+        $(".totalCuenta").text("$ "+app.totalCuenta());
         //limpiar();
         e.preventDefault();
         }
@@ -797,15 +909,22 @@ $('#cantidadProducto').keyup(function(e){
         }else{
         $(".divLista").show();
         app.agregarDetalleLista();
-        $("#totalCuenta").text("$ "+app.totalCuenta());
+        $(".totalCuenta").text("$ "+app.totalCuenta());
         //limpiar();
         e.preventDefault();
         }
         
     }
 });
-$('#precioProducto').click(function(e){
-    $("#precioProducto").val('$ ');
+$('#precioProducto').focus(function(e){
+    if($('#codigoProducto').val()== '//'){
+        $('#precioProducto').prop("readonly",false);
+        $("#precioProducto").val('');
+    }else{
+        $('#precioProducto').prop("readonly",true);
+
+    }
+   
 });
 
 $('#precioProducto').keyup(function(e){
@@ -816,7 +935,7 @@ $('#precioProducto').keyup(function(e){
         }else{
         $(".divLista").show();
         app.agregarDetalleLista();
-        $("#totalCuenta").text("$ "+app.totalCuenta());
+        $(".totalCuenta").text("$ "+app.totalCuenta());
         //limpiar();
         e.preventDefault();
         }
@@ -826,12 +945,15 @@ $('#precioProducto').keyup(function(e){
         $("#labelPrecio").css("display","none");
         $("#precioProductoDecimal").val(valor);
 
-        $("#precioProducto").val('$ ' +valor);
+        $("#precioProducto").val(valor);
     }
 });
 
 $("#efectivo").click(function(){
+
+
     if( $('#efectivo').prop('checked') ) {
+     
         $("#divEfectivo").show();
 
         $('#credito').prop('checked', false);
@@ -845,45 +967,44 @@ $("#efectivo").click(function(){
         $("#cantidadEfectivoPPlanilla").val('');
         $("#cambioPPlanilla").val('');
 
-    $('#descPlanilla').prop('checked', false);
-    $("#divPlanilla").hide();
-
-    $('#parcialPlanilla').prop('checked', false);
-    $("#divParcialPlanilla").hide();
-    $("#descuentoPPlanilla").val('');
-    $("#RemanentePPlanilla").val('');
-    $("#cantidadEfectivoPPlanilla").val('');
-    $("#cambioPPlanilla").val('');
-    $("#divCredito").hide();
-    $("#descuentoPSubs").val('');
-    $("#RemanentePSubs").val('');
-    $("#cantidadEfectivoPSubs").val('');
-    $("#cambioPSubs").val('');
-    }
-    else{
         $('#descPlanilla').prop('checked', false);
-    $("#divPlanilla").hide();
+        $("#divPlanilla").hide();
 
-    $('#parcialPlanilla').prop('checked', false);
-    $("#divParcialPlanilla").hide();
-    $('#parcialSubsidio').prop('checked', false);
-    $("#divParcialSubs").hide();
-    $("#descuentoPPlanilla").val('');
-    $("#RemanentePPlanilla").val('');
-    $("#cantidadEfectivoPPlanilla").val('');
-    $("#cambioPPlanilla").val('');
+        $('#parcialPlanilla').prop('checked', false);
+        $("#divParcialPlanilla").hide();
+        $("#descuentoPPlanilla").val('');
+        $("#RemanentePPlanilla").val('');
+        $("#cantidadEfectivoPPlanilla").val('');
+        $("#cambioPPlanilla").val('');
+        $("#divCredito").hide();
+        $("#descuentoPSubs").val('');
+        $("#RemanentePSubs").val('');
+        $("#cantidadEfectivoPSubs").val('');
+        $("#cambioPSubs").val('');
+        }
+        else{
+            $('#descPlanilla').prop('checked', false);
+        $("#divPlanilla").hide();
 
-    $('#efectivo').prop('checked', false);
-    $("#divEfectivo").hide();
-    $("#cantidadEfectivo").val('');
-    $("#cambio").val('');
-    $("#descuentoPSubs").val('');
-    $("#RemanentePSubs").val('');
-    $("#cantidadEfectivoPSubs").val('');
-    $("#cambioPSubs").val('');
-    }
+        $('#parcialPlanilla').prop('checked', false);
+        $("#divParcialPlanilla").hide();
+        $('#parcialSubsidio').prop('checked', false);
+        $("#divParcialSubs").hide();
+        $("#descuentoPPlanilla").val('');
+        $("#RemanentePPlanilla").val('');
+        $("#cantidadEfectivoPPlanilla").val('');
+        $("#cambioPPlanilla").val('');
+
+        $('#efectivo').prop('checked', false);
+        $("#divEfectivo").hide();
+        $("#cantidadEfectivo").val('');
+        $("#cambio").val('');
+        $("#descuentoPSubs").val('');
+        $("#RemanentePSubs").val('');
+        $("#cantidadEfectivoPSubs").val('');
+        $("#cambioPSubs").val('');
+        }
 });
-
 
 
 $("#parcialPlanilla").click(function(){
