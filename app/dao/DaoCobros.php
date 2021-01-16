@@ -12,6 +12,19 @@ class DaoCobros extends DaoBase {
     {
 
         $_query = "select c.*, a.nombre as area, s.nombre as sucursal,
+        case
+        when 
+        (select sum(t.descuentoSubsidio) from enc_ticket t 
+            inner join clientes c on c.id = t.idCliente
+            where  DATE(t.fechaEmision) = curdate() and c.carnet = '".$this->objeto->getCarnet()."'
+        )!= ''
+        then
+         (ROUND((1.50 - ( select sum(t.descuentoSubsidio) from enc_ticket t 
+         inner join clientes c on c.id = t.idCliente
+         where  DATE(t.fechaEmision) = curdate() and c.carnet = '".$this->objeto->getCarnet()."') ),2))
+        else
+            1.50
+        end as subsidioremanente,
         case 
         when (
 

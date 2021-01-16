@@ -41,9 +41,9 @@
                                     <a  id="nombreCliente" style="color:green; font-weight:bold;"></a> --
                                     <a  id="areaCliente" style="color:green; font-weight:bold;"></a><br>
                                     <a style="color:black; font-weight:bold;">Subsidio de área: </a>
-                                    <a  id="subsArea" style="color:green; font-weight:bold;"></a>
-                                    <a style="color:black; font-weight:bold;">Disponible: </a>
-                                    <a  id="subsRemanente" style="color:green; font-weight:bold;"></a>
+                                    <a style="color:green; font-weight:bold;" id="subsArea"></a>
+                                    <a style="color:black; font-weight:bold;">Remanente de subsidio: </a>
+                                    <a style="color:green; font-weight:bold;" id="subsRemanente"></a>
                             </div> 
 
                             <div class="three wide field">
@@ -143,7 +143,7 @@
                                             </td>
 
                                             <td>  
-                                            <input class="requerido" readonly v-model="lista.cantidadProductoL" name="cantidadProductoL"
+                                            <input class="requerido" v-model="lista.cantidadProductoL" name="cantidadProductoL"
                                             id="cantidadProductoL" type="text">
                                             </td>
                                             
@@ -290,6 +290,7 @@
     <a style="font-weight: bold; font-size: 16px; color: yellow;margin-left:30px;">Total:</a>
     <a style="font-weight: bold; font-size: 18px; color: white;" class="totalCuenta"></a>
     </div>
+    <input type="hidden" id="validarRemanente">
     <div class="content" class="ui equal width form" style="background-color:#E0E0E0;">
     <div class="divLista" style="text-align:left;display:none; width: 100%;">
                         <a style="font-weight: bold; font-size: 16px; color: #010187;margin-left:20px;">Tipo de pago:</a>
@@ -339,12 +340,12 @@
                                             <div class="eight wide field">
                                                 <label style="font-size:12px;">Descuento planilla: </label>
                                                 <input type="text" name="descuentoPPlanilla" id="descuentoPPlanilla" 
-                                                placeholder="Descuento planilla" style="height:12px; font-size:13px;">
+                                                placeholder="Descuento planilla">
                                             </div>
                                             <div class="eight wide field">
                                                 <label style="font-size:12px;">Remanente cuenta actual: </label>
                                                 <input type="text" name="RemanentePPlanilla" id="RemanentePPlanilla" 
-                                                placeholder="Remanente cuenta" style="height:12px; font-size:13px;" readonly>
+                                                placeholder="Remanente cuenta" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -353,13 +354,13 @@
                                             <div class="eight wide field">
                                                 <label style="font-size:12px;">Efectivo: </label>
                                                 <input type="text" name="cantidadEfectivoPPlanilla" id="cantidadEfectivoPPlanilla" 
-                                                placeholder="Efectivo recibido" style="height:12px; font-size:13px;">
+                                                placeholder="Efectivo recibido">
                                             </div>
 
                                             <div class="eight wide field">
                                                 <label style="font-size:12px;">Cambio: </label>
                                                 <input type="text" name="cambioPPlanilla" id="cambioPPlanilla" 
-                                                placeholder="Cambio" readonly style="height:12px; font-size:13px;">
+                                                placeholder="Cambio" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -380,12 +381,12 @@
                                             <div class="eight wide field">
                                                 <label style="font-size:12px;">Descuento Subsidio: </label>
                                                 <input type="text" name="descuentoPSubs" id="descuentoPSubs" 
-                                                placeholder="Subsidio" style="height:12px; font-size:13px;">
+                                                placeholder="Subsidio">
                                             </div>
                                             <div class="eight wide field">
                                                 <label style="font-size:12px;">Remanente cuenta actual: </label>
                                                 <input type="text" name="RemanentePSubs" id="RemanentePSubs" 
-                                                placeholder="Remanente cuenta" style="height:12px; font-size:13px;" readonly>
+                                                placeholder="Remanente cuenta" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -394,13 +395,13 @@
                                             <div class="eight wide field">
                                                 <label style="font-size:12px;">Efectivo: </label>
                                                 <input type="text" name="cantidadEfectivoPSubs" id="cantidadEfectivoPSubs" 
-                                                placeholder="Efectivo recibido" style="height:12px; font-size:13px;">
+                                                placeholder="Efectivo recibido">
                                             </div>
 
                                             <div class="eight wide field">
                                                 <label style="font-size:12px;">Cambio: </label>
                                                 <input type="text" name="cambioPSubs" id="cambioPSubs" 
-                                                placeholder="Cambio" readonly style="height:12px; font-size:13px;">
+                                                placeholder="Cambio" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -584,12 +585,26 @@ var app = new Vue({
                         return response.json();
                     })
                     .then(dat => {
-                        $('#nombreCliente').text(dat.nombre);
+
+                        if(id == '11' || id == '22'){
+                            $('#nombreCliente').text(dat.nombre);
                         $('#areaCliente').text(dat.area);
                         $('#sucursalCliente').text(dat.sucursal);
-                        $('#subsArea').text(dat.subsidioArea);
-                        $('#subsRemanente').text(dat.remanente);
+                        $('#subsArea').text("$ 0.00");
+                        $("#subsRemanente").text("$ 0.00");
                         $(".divNombre").show();
+                        }else{
+                            $('#nombreCliente').text(dat.nombre);
+                        $('#areaCliente').text(dat.area);
+                        $('#sucursalCliente').text(dat.sucursal);
+                        $('#subsArea').text("$ 1.50 diario");
+                        $("#subsRemanente").text("$ "+dat.subsidioremanente);
+                        $("#validarRemanente").val(dat.subsidioremanente);
+                        $(".divNombre").show();
+                        }
+                       
+                      
+                        
 
                         if(dat.subsidioArea == '$ 0.00'){     
                             $("#credito").css("display","none");
@@ -739,6 +754,11 @@ var app = new Vue({
         $("#cantidadProducto").val(1);
         //$("#carnet").val();
     }
+
+
+$("#cantidadProductoL").keypress(function(){
+    app.totalCuenta();
+});
 
 $('#btnAnularTicket').click(function() {
     $("#divTicket").hide();
@@ -1262,6 +1282,9 @@ $("#descuentoPSubs").keyup(function(){
     var descPlanilla = $(this).val();
     var remanenteCuenta = parseFloat(cuenta)-parseFloat(descPlanilla);
 
+    $("#RemanentePSubs").val('');
+    $("#cantidadEfectivoPSubs").val('');
+    $("#cambioPSubs").val('');
     if(isNaN(remanenteCuenta)){
         $("#RemanentePSubs").val('');
     }else{
@@ -1284,7 +1307,7 @@ $("#cantidadEfectivoPSubs").keyup(function(){
 function imprimirTicket(carnet){
 
                                 swal({
-                                    title: 'Cobro Registradao',
+                                    title: 'Cobro Registrado',
                                     text: 'Se imprimirá el ticket',
                                     type: 'success',
                                     showConfirmButton: true,
@@ -1303,7 +1326,7 @@ function imprimirTicket(carnet){
 
 function imprimir2Tickets(carnet){
     swal({
-                                    title: 'Cobro Registradao',
+                                    title: 'Cobro Registrado',
                                     text: 'Se imprimirá el ticket',
                                     type: 'success',
                                     showConfirmButton: false,
@@ -1531,6 +1554,10 @@ $("#btnGuardarAnular").click(function(){
 
 
 $("#btnCobroSubsidio").click(function(){
+
+    var remanente = $("#validarRemanente").val();
+
+
             var carnet = $("#carnet").val();
             var total = app.totalCuenta();
             var efectivo = "0.00";
@@ -1538,7 +1565,16 @@ $("#btnCobroSubsidio").click(function(){
             var usuario = $("#usuario").val();
             var descSubsidio = app.totalCuenta();
 
-            $.ajax({
+            if(descSubsidio > remanente){
+                swal({
+                    title: 'Denegado',
+                    text: 'El monto excede el monto disponible para subisidio',
+                    type: 'error',
+                    showConfirmButton: false,
+                    timer: 2000
+                    });
+            }else{
+                $.ajax({
                     type: 'POST',
                     data: {
                         carnet: carnet,
@@ -1560,11 +1596,15 @@ $("#btnCobroSubsidio").click(function(){
                     imprimir2Tickets(carnet);
                     limpiarTicket(); 
                 });
+            }
+
+            
                 
 });
 
 
 $("#btnCobroDescuentoPSubs").click(function(){
+    var remanente = $("#validarRemanente").val();
             var carnet = $("#carnet").val();
             var total = app.totalCuenta();
             var efectivo = $("#cantidadEfectivoPSubs").val();
@@ -1572,7 +1612,17 @@ $("#btnCobroDescuentoPSubs").click(function(){
             var usuario = $("#usuario").val();
             var descSubsidio = $("#descuentoPSubs").val();
 
-            $.ajax({
+
+            if(descSubsidio > remanente){
+                swal({
+                    title: 'Denegado',
+                    text: 'El monto excede el monto disponible para subisidio',
+                    type: 'error',
+                    showConfirmButton: false,
+                    timer: 2000
+                    });
+            }else{
+                $.ajax({
                     type: 'POST',
                     data: {
                         carnet: carnet,
@@ -1594,6 +1644,10 @@ $("#btnCobroDescuentoPSubs").click(function(){
                     imprimir2Tickets(carnet);
                     limpiarTicket(); 
                 });
+
+            }
+
+            
 });
 
 </script>

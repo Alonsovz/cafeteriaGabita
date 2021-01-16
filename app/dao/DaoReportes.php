@@ -14,10 +14,8 @@ class DaoReportes extends DaoBase {
     
             select ROUND(sum(t.total) , 2 )   from clientes cl
              inner join areas a on a.id = cl.idArea
-            inner join subsidio sb on sb.idCliente = cl.id
             inner join enc_ticket t on t.idCliente = cl.id
             where cl.idEliminado = 1 and cl.carnet= c.carnet
-            and sb.fecha BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
             and t.fechaEmision BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
             
         ) != ''
@@ -26,10 +24,8 @@ class DaoReportes extends DaoBase {
     
           select ROUND(sum(t.total) , 2 )   from clientes cl
               inner join areas a on a.id = cl.idArea
-            inner join subsidio sb on sb.idCliente = cl.id
             inner join enc_ticket t on t.idCliente = cl.id
             where cl.idEliminado = 1 and cl.carnet= c.carnet
-            and sb.fecha BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
             and t.fechaEmision BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
         )
         else 
@@ -40,10 +36,8 @@ class DaoReportes extends DaoBase {
     
             select ROUND(sum(t.efectivoRecibido) - sum(t.cambio), 2 )   from clientes cl
              inner join areas a on a.id = cl.idArea
-            inner join subsidio sb on sb.idCliente = cl.id
             inner join enc_ticket t on t.idCliente = cl.id
             where cl.idEliminado = 1 and cl.carnet= c.carnet
-            and sb.fecha BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
             and t.fechaEmision BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
         ) != ''
         then 
@@ -51,10 +45,8 @@ class DaoReportes extends DaoBase {
     
             select ROUND(sum(t.efectivoRecibido) - sum(t.cambio) , 2 )   from clientes cl
             inner join areas a on a.id = cl.idArea
-            inner join subsidio sb on sb.idCliente = cl.id
             inner join enc_ticket t on t.idCliente = cl.id
             where cl.idEliminado = 1 and cl.carnet= c.carnet
-            and sb.fecha BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
             and t.fechaEmision BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
         )
         else 
@@ -65,10 +57,8 @@ class DaoReportes extends DaoBase {
     
             select ROUND(sum(t.descuentoSubsidio) , 2 )   from clientes cl
               inner join areas a on a.id = cl.idArea
-            inner join subsidio sb on sb.idCliente = cl.id
             inner join enc_ticket t on t.idCliente = cl.id
             where cl.idEliminado = 1 and cl.carnet= c.carnet
-            and sb.fecha BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
             and t.fechaEmision BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
                and t.tipoPago in ('Parcial en subsidio','Subsidio')
         ) != ''
@@ -77,10 +67,8 @@ class DaoReportes extends DaoBase {
     
             select ROUND(sum(t.descuentoSubsidio) , 2 )  from clientes cl
             inner join areas a on a.id = cl.idArea
-            inner join subsidio sb on sb.idCliente = cl.id
             inner join enc_ticket t on t.idCliente = cl.id
             where cl.idEliminado = 1 and cl.carnet= c.carnet
-            and sb.fecha BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
             and t.fechaEmision BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
             and t.tipoPago in ('Parcial en subsidio','Subsidio')
         )
@@ -92,10 +80,8 @@ class DaoReportes extends DaoBase {
     
             select ROUND(a.cantidadSubsidio - sum(t.descuentoSubsidio) , 2 )   from clientes cl
               inner join areas a on a.id = cl.idArea
-            inner join subsidio sb on sb.idCliente = cl.id
             inner join enc_ticket t on t.idCliente = cl.id
             where cl.idEliminado = 1 and cl.carnet= c.carnet
-            and sb.fecha BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
             and t.fechaEmision BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
             and t.tipoPago in ('Parcial en subsidio','Subsidio')
         ) != ''
@@ -104,10 +90,8 @@ class DaoReportes extends DaoBase {
     
             select ROUND(a.cantidadSubsidio - sum(t.descuentoSubsidio) , 2 )  from clientes cl
             inner join areas a on a.id = cl.idArea
-            inner join subsidio sb on sb.idCliente = cl.id
             inner join enc_ticket t on t.idCliente = cl.id
             where cl.idEliminado = 1 and cl.carnet= c.carnet
-            and sb.fecha BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
             and t.fechaEmision BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
             and t.tipoPago in ('Parcial en subsidio','Subsidio')
         )
@@ -120,10 +104,8 @@ class DaoReportes extends DaoBase {
     
             select ROUND(sum(t.total) , 2 )  from clientes cl
               inner join areas a on a.id = cl.idArea
-            inner join subsidio sb on sb.idCliente = cl.id
             inner join enc_ticket t on t.idCliente = cl.id
             where cl.idEliminado = 1 and cl.carnet= c.carnet
-            and sb.fecha BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
             and t.fechaEmision BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
             and t.tipoPago in ('Parcial en planilla','Descuento en planilla')
         ) != ''
@@ -132,10 +114,8 @@ class DaoReportes extends DaoBase {
     
             select ROUND(sum(t.total) , 2 )   from clientes cl
             inner join areas a on a.id = cl.idArea
-            inner join subsidio sb on sb.idCliente = cl.id
             inner join enc_ticket t on t.idCliente = cl.id
             where cl.idEliminado = 1 and cl.carnet= c.carnet
-            and sb.fecha BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
             and t.fechaEmision BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
             and t.tipoPago in ('Parcial en planilla','Descuento en planilla')
         )
@@ -165,8 +145,6 @@ class DaoReportes extends DaoBase {
                     <th style="background-color:#1F0150; color:white;height: 30px;">Pago en efectivo</th>
                     <th style="background-color:#1F0150; color:white;height: 30px;">Descuento en planilla</th>
                     <th style="background-color:#1F0150; color:white;height: 30px;">Descuento en subsidio</th>
-                    <th style="background-color:#1F0150; color:white;height: 30px;">Remanente subsidio</th>
-                    <th style="background-color:#1F0150; color:white;height: 30px;">Subsidio área</th>
                 </tr>
             </thead>
             <tbody>
@@ -181,8 +159,6 @@ class DaoReportes extends DaoBase {
                         <td style="height: 30px;">$ '.$fila["pagoEfectivo"].'</td>
                         <td style="height: 30px;">$ '.$fila["descuentoPlanilla"].'</td>
                         <td style="height: 30px;">$ '.$fila["gastoSubsidio"].'</td>
-                        <td style="height: 30px;">$ '.$fila["remanenteSubsidio"].'</td>
-                        <td style="height: 30px;">$ '.$fila["subsidioArea"].'</td>
                       </tr>';
         }
 
@@ -203,10 +179,8 @@ class DaoReportes extends DaoBase {
     
             select ROUND(sum(t.total) , 2 )   from clientes cl
              inner join areas a on a.id = cl.idArea
-            inner join subsidio sb on sb.idCliente = cl.id
             inner join enc_ticket t on t.idCliente = cl.id
             where cl.idEliminado = 1 and cl.carnet= c.carnet
-            and sb.fecha BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
             and t.fechaEmision BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
             
         ) != ''
@@ -215,10 +189,8 @@ class DaoReportes extends DaoBase {
     
           select ROUND(sum(t.total) , 2 )   from clientes cl
               inner join areas a on a.id = cl.idArea
-            inner join subsidio sb on sb.idCliente = cl.id
             inner join enc_ticket t on t.idCliente = cl.id
             where cl.idEliminado = 1 and cl.carnet= c.carnet
-            and sb.fecha BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
             and t.fechaEmision BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
         )
         else 
@@ -229,10 +201,8 @@ class DaoReportes extends DaoBase {
     
             select ROUND(sum(t.efectivoRecibido) - sum(t.cambio), 2 )   from clientes cl
              inner join areas a on a.id = cl.idArea
-            inner join subsidio sb on sb.idCliente = cl.id
             inner join enc_ticket t on t.idCliente = cl.id
             where cl.idEliminado = 1 and cl.carnet= c.carnet
-            and sb.fecha BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
             and t.fechaEmision BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
         ) != ''
         then 
@@ -240,10 +210,8 @@ class DaoReportes extends DaoBase {
     
             select ROUND(sum(t.efectivoRecibido) - sum(t.cambio) , 2 )   from clientes cl
             inner join areas a on a.id = cl.idArea
-            inner join subsidio sb on sb.idCliente = cl.id
             inner join enc_ticket t on t.idCliente = cl.id
             where cl.idEliminado = 1 and cl.carnet= c.carnet
-            and sb.fecha BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
             and t.fechaEmision BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
         )
         else 
@@ -254,10 +222,8 @@ class DaoReportes extends DaoBase {
     
             select ROUND(sum(t.descuentoSubsidio) , 2 )  from clientes cl
               inner join areas a on a.id = cl.idArea
-            inner join subsidio sb on sb.idCliente = cl.id
             inner join enc_ticket t on t.idCliente = cl.id
             where cl.idEliminado = 1 and cl.carnet= c.carnet
-            and sb.fecha BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
             and t.fechaEmision BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
                and t.tipoPago in ('Parcial en subsidio','Subsidio')
         ) != ''
@@ -266,10 +232,8 @@ class DaoReportes extends DaoBase {
     
             select ROUND(sum(t.descuentoSubsidio) , 2 )   from clientes cl
             inner join areas a on a.id = cl.idArea
-            inner join subsidio sb on sb.idCliente = cl.id
             inner join enc_ticket t on t.idCliente = cl.id
             where cl.idEliminado = 1 and cl.carnet= c.carnet
-            and sb.fecha BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
             and t.fechaEmision BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
             and t.tipoPago in ('Parcial en subsidio','Subsidio')
         )
@@ -281,10 +245,8 @@ class DaoReportes extends DaoBase {
     
             select ROUND(a.cantidadSubsidio - sum(t.descuentoSubsidio) , 2 )   from clientes cl
               inner join areas a on a.id = cl.idArea
-            inner join subsidio sb on sb.idCliente = cl.id
             inner join enc_ticket t on t.idCliente = cl.id
             where cl.idEliminado = 1 and cl.carnet= c.carnet
-            and sb.fecha BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
             and t.fechaEmision BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
             and t.tipoPago in ('Parcial en subsidio','Subsidio')
         ) != ''
@@ -293,10 +255,8 @@ class DaoReportes extends DaoBase {
     
             select ROUND(a.cantidadSubsidio - sum(t.descuentoSubsidio) , 2 )   from clientes cl
             inner join areas a on a.id = cl.idArea
-            inner join subsidio sb on sb.idCliente = cl.id
             inner join enc_ticket t on t.idCliente = cl.id
             where cl.idEliminado = 1 and cl.carnet= c.carnet
-            and sb.fecha BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
             and t.fechaEmision BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
             and t.tipoPago in ('Parcial en subsidio','Subsidio')
         )
@@ -309,10 +269,8 @@ class DaoReportes extends DaoBase {
     
             select ROUND(sum(t.descuentoPlanilla) , 2 )  from clientes cl
               inner join areas a on a.id = cl.idArea
-            inner join subsidio sb on sb.idCliente = cl.id
             inner join enc_ticket t on t.idCliente = cl.id
             where cl.idEliminado = 1 and cl.carnet= c.carnet
-            and sb.fecha BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
             and t.fechaEmision BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
             and t.tipoPago in ('Parcial en planilla','Descuento en planilla')
         ) != ''
@@ -321,10 +279,8 @@ class DaoReportes extends DaoBase {
     
             select ROUND(sum(t.descuentoPlanilla) , 2 )  from clientes cl
             inner join areas a on a.id = cl.idArea
-            inner join subsidio sb on sb.idCliente = cl.id
             inner join enc_ticket t on t.idCliente = cl.id
             where cl.idEliminado = 1 and cl.carnet= c.carnet
-            and sb.fecha BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
             and t.fechaEmision BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
             and t.tipoPago in ('Parcial en planilla','Descuento en planilla')
         )
@@ -354,8 +310,6 @@ class DaoReportes extends DaoBase {
                     <th style="background-color:#1F0150; color:white;height: 30px;">Pago en efectivo</th>
                     <th style="background-color:#1F0150; color:white;height: 30px;">Descuento en planilla</th>
                     <th style="background-color:#1F0150; color:white;height: 30px;">Descuento en subsidio</th>
-                    <th style="background-color:#1F0150; color:white;height: 30px;">Remanente subsidio</th>
-                    <th style="background-color:#1F0150; color:white;height: 30px;">Subsidio área</th>
                 </tr>
             </thead>
             <tbody>
@@ -370,8 +324,6 @@ class DaoReportes extends DaoBase {
                         <td style="height: 30px;">$ '.$fila["pagoEfectivo"].'</td>
                         <td style="height: 30px;">$ '.$fila["descuentoPlanilla"].'</td>
                         <td style="height: 30px;">$ '.$fila["gastoSubsidio"].'</td>
-                        <td style="height: 30px;">$ '.$fila["remanenteSubsidio"].'</td>
-                        <td style="height: 30px;">$ '.$fila["subsidioArea"].'</td>
                       </tr>';
         }
 

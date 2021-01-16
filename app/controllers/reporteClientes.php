@@ -27,10 +27,9 @@ require_once('../model/conexion.php');
 
         select ROUND(sum(t.total) , 2 )   from clientes cl
          inner join areas a on a.id = cl.idArea
-        inner join subsidio sb on sb.idCliente = cl.id
+        
         inner join enc_ticket t on t.idCliente = cl.id
         where cl.idEliminado = 1 and cl.carnet= c.carnet
-        and sb.fecha BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
         and t.fechaEmision BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
         
     ) != ''
@@ -39,10 +38,9 @@ require_once('../model/conexion.php');
 
       select ROUND(sum(t.total) , 2 )   from clientes cl
           inner join areas a on a.id = cl.idArea
-        inner join subsidio sb on sb.idCliente = cl.id
+        
         inner join enc_ticket t on t.idCliente = cl.id
         where cl.idEliminado = 1 and cl.carnet= c.carnet
-        and sb.fecha BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
         and t.fechaEmision BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
     )
     else 
@@ -53,10 +51,9 @@ require_once('../model/conexion.php');
 
         select ROUND(sum(t.efectivoRecibido) - sum(t.cambio), 2 )   from clientes cl
          inner join areas a on a.id = cl.idArea
-        inner join subsidio sb on sb.idCliente = cl.id
+        
         inner join enc_ticket t on t.idCliente = cl.id
         where cl.idEliminado = 1 and cl.carnet= c.carnet
-        and sb.fecha BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
         and t.fechaEmision BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
     ) != ''
     then 
@@ -64,10 +61,9 @@ require_once('../model/conexion.php');
 
         select ROUND(sum(t.efectivoRecibido) - sum(t.cambio) , 2 )   from clientes cl
         inner join areas a on a.id = cl.idArea
-        inner join subsidio sb on sb.idCliente = cl.id
+        
         inner join enc_ticket t on t.idCliente = cl.id
         where cl.idEliminado = 1 and cl.carnet= c.carnet
-        and sb.fecha BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
         and t.fechaEmision BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
     )
     else 
@@ -78,10 +74,9 @@ require_once('../model/conexion.php');
 
         select ROUND(sum(t.descuentoSubsidio) , 2 )  from clientes cl
           inner join areas a on a.id = cl.idArea
-        inner join subsidio sb on sb.idCliente = cl.id
+        
         inner join enc_ticket t on t.idCliente = cl.id
         where cl.idEliminado = 1 and cl.carnet= c.carnet
-        and sb.fecha BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
         and t.fechaEmision BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
            and t.tipoPago in ('Parcial en subsidio','Subsidio')
     ) != ''
@@ -90,10 +85,9 @@ require_once('../model/conexion.php');
 
         select ROUND(sum(t.descuentoSubsidio) , 2 )   from clientes cl
         inner join areas a on a.id = cl.idArea
-        inner join subsidio sb on sb.idCliente = cl.id
+        
         inner join enc_ticket t on t.idCliente = cl.id
         where cl.idEliminado = 1 and cl.carnet= c.carnet
-        and sb.fecha BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
         and t.fechaEmision BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
         and t.tipoPago in ('Parcial en subsidio','Subsidio')
     )
@@ -105,10 +99,9 @@ require_once('../model/conexion.php');
 
         select ROUND(a.cantidadSubsidio - sum(t.descuentoSubsidio) , 2 )   from clientes cl
           inner join areas a on a.id = cl.idArea
-        inner join subsidio sb on sb.idCliente = cl.id
+        
         inner join enc_ticket t on t.idCliente = cl.id
         where cl.idEliminado = 1 and cl.carnet= c.carnet
-        and sb.fecha BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
         and t.fechaEmision BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
         and t.tipoPago in ('Parcial en subsidio','Subsidio')
     ) != ''
@@ -117,10 +110,9 @@ require_once('../model/conexion.php');
 
         select ROUND(a.cantidadSubsidio - sum(t.descuentoSubsidio) , 2 )   from clientes cl
         inner join areas a on a.id = cl.idArea
-        inner join subsidio sb on sb.idCliente = cl.id
+        
         inner join enc_ticket t on t.idCliente = cl.id
         where cl.idEliminado = 1 and cl.carnet= c.carnet
-        and sb.fecha BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
         and t.fechaEmision BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
         and t.tipoPago in ('Parcial en subsidio','Subsidio')
     )
@@ -133,10 +125,9 @@ require_once('../model/conexion.php');
 
         select ROUND(sum(t.descuentoPlanilla) , 2 )  from clientes cl
           inner join areas a on a.id = cl.idArea
-        inner join subsidio sb on sb.idCliente = cl.id
+        
         inner join enc_ticket t on t.idCliente = cl.id
         where cl.idEliminado = 1 and cl.carnet= c.carnet
-        and sb.fecha BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
         and t.fechaEmision BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
         and t.tipoPago in ('Parcial en planilla','Descuento en planilla')
     ) != ''
@@ -145,10 +136,9 @@ require_once('../model/conexion.php');
 
         select ROUND(sum(t.descuentoPlanilla) , 2 )  from clientes cl
         inner join areas a on a.id = cl.idArea
-        inner join subsidio sb on sb.idCliente = cl.id
+        
         inner join enc_ticket t on t.idCliente = cl.id
         where cl.idEliminado = 1 and cl.carnet= c.carnet
-        and sb.fecha BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
         and t.fechaEmision BETWEEN '".$fecha1." 00:00:00' and '".$fecha2." 23:59:59'
         and t.tipoPago in ('Parcial en planilla','Descuento en planilla')
     )
@@ -192,8 +182,6 @@ require_once('../model/conexion.php');
         <th style="background-color:#1F0150; color:white;height: 30px;">Pago en efectivo</th>
         <th style="background-color:#1F0150; color:white;height: 30px;">Descuento en planilla</th>
         <th style="background-color:#1F0150; color:white;height: 30px;">Descuento en subsidio</th>
-        <th style="background-color:#1F0150; color:white;height: 30px;">Remanente subsidio</th>
-        <th style="background-color:#1F0150; color:white;height: 30px;">Subsidio area</th>
     </tr>
 </thead>
 <tbody> 
@@ -209,8 +197,6 @@ while ($row=mysqli_fetch_assoc($result)) {
             <td style="border: 1px solid black;">$ &nbsp;<?php echo $row['pagoEfectivo'];$totalEfectivo+=$row['pagoEfectivo'];?></td>
             <td style="border: 1px solid black;">$ &nbsp;<?php echo $row['descuentoPlanilla'];$totalPlanilla+=$row['descuentoPlanilla'];?></td>
             <td style="border: 1px solid black;">$ &nbsp;<?php echo $row['gastoSubsidio'];$totalSubsidio+=$row['gastoSubsidio'];?></td>
-            <td style="border: 1px solid black;">$ &nbsp;<?php echo $row['remanenteSubsidio'];$totalRemanente+=$row['remanenteSubsidio'];?></td>
-            <td style="border: 1px solid black;">$ &nbsp;<?php echo $row['subsidioArea'];?></td>
         </tr>
 </tbody>
 
@@ -225,7 +211,6 @@ while ($row=mysqli_fetch_assoc($result)) {
         <td style="border: 1px solid black;">$ &nbsp;<?php echo number_format($totalEfectivo,2);?></td>
         <td style="border: 1px solid black;">$ &nbsp;<?php echo number_format($totalPlanilla,2);?></td>
         <td style="border: 1px solid black;">$ &nbsp;<?php echo number_format($totalSubsidio,2);?></td>
-        <td style="border: 1px solid black;">$ &nbsp;<?php echo number_format($totalRemanente,2);?></td>
     </tr>
 </tfoot>
 </table>
