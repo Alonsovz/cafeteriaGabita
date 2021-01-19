@@ -1112,7 +1112,7 @@ $("#btnProcesarTickets").click(function() {
 });
 
     $(document).ready(function(){
-        $('#carnet').mask("########-#");
+        $('#carnet').mask("99999999-9");
         app.eliminarDetalleLista(0);
         var total = 0;
 
