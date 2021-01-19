@@ -179,7 +179,7 @@ class DaoCajas extends DaoBase {
         inner join areas a on a.id = c.idArea
         inner join sucursales s on s.id = a.idSucursal
         inner join cajas ca on ca.idSucursal = s.id
-        where ca.id = ".$caja." and 
+        where ca.id = ".$caja." and en.estado = 1 and
         fechaEmision >= (select ap.fechaApertura from aperturacajas ap
             where ap.usuarioCierre = ''
             order by ap.id desc limit 1)) as cambioDado,
@@ -189,8 +189,8 @@ class DaoCajas extends DaoBase {
         inner join areas a on a.id = c.idArea
         inner join sucursales s on s.id = a.idSucursal
         inner join cajas ca on ca.idSucursal = s.id
-        where ca.id = ".$caja." and 
-        fechaEmision >= (select ap.fechaApertura from aperturacajas ap
+        where ca.id = ".$caja." and en.estado = 1 and
+        en.fechaEmision >= (select ap.fechaApertura from aperturacajas ap
             where ap.usuarioCierre = ''
             order by ap.id desc limit 1)) as efectivoRecibido
         from aperturaCajas where idCaja = ".$caja."

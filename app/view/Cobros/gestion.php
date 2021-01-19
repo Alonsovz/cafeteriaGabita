@@ -2,18 +2,40 @@
     <div class="ui grid">
         <div class="row title-bar">
             <div class="sixteen wide column">
-                        <label style="font-weight:bold;font-size: 15px;">Seleccione caja a utilizar: </label> &nbsp;
+            <form class="ui form">
+            <div class="field">
+                <div class="fields">
+                    <div class="four wide field">
+                    <label>Seleccione caja a utilizar: </label>
                         <select name="caja" id="caja" class="ui dropdown">
                             <option value="0" set selected>Seleccione una opción</option>
                             <?php echo $cajas; ?>
                         </select>
-                        <button class="ui red button" id="btnAnularTicket" style="align:right; float:right;display:none;">Anular ticket</button>
+                    </div>
+                    <input type="hidden" id="validarModal">
+
+                    <div class="four wide field">
+                        <label>Fecha de facturacion</label>
+                        <input type="date" id="fechaFacturacion" name="fechaFacturacion">
+                    </div>
+                    <div class="two wide field"></div>
+                    <div class="six wide field">
+                    <br>
+                    <button class="ui green button" id="btnTodoTickets" style="align:right; float:right;display:none;">Anular tickets</button>
+                     
+                    <button class="ui red button" id="btnAnularTicket" style="align:right; float:right;display:none;">Anular ticket por N°</button>
                         
-            <input type="hidden" id="usuario" name="usuario" value="<?php echo $_SESSION["nomUsuario"] ?>">
-           <a style="color:black; font-size: 15px;color:blue;font-weight:bold;align:right; float:right;margin-right:10px;" id="nombreCaja"></a>
+                        <input type="hidden" id="usuario" name="usuario" value="<?php echo $_SESSION["nomUsuario"] ?>">
+                    </div>
+
+                </div>
+            </div>
                         
-            <a style="color:black; font-size: 15px;font-weight:bold;display:none;align:right; float:right;" class="divProductos">Caja: &nbsp; </a>
-               
+           
+            
+            
+          
+            </form>
             </div>
         </div>
 
@@ -26,7 +48,7 @@
     </div>
     <br>
     <div id="vista">
-               
+    <input type="hidden" id="validarRemanente">
                 <form id="frmCliente" class="ui form" method="POST" method="POST" enctype="multipart/form-data"
                 style="display:none;">
                 
@@ -283,146 +305,48 @@
     </div>
 </div>
 
-<div class="ui tiny modal" id="modalTipoCobro" style="position: absolute;top: 10px;">
-<div class="header" style="background-color:#024D54; color:white;">
-    <i class="ticket icon"></i><i class="dollar sign icon"></i> Cobrar
-    
-    <a style="font-weight: bold; font-size: 16px; color: yellow;margin-left:30px;">Total:</a>
-    <a style="font-weight: bold; font-size: 18px; color: white;" class="totalCuenta"></a>
+
+
+<div class="ui modal" id="modalAnulaTickets">
+
+    <div class="header" style="background-color:#024D54; color:white;">
+    <i class="ticket icon"></i><i class="close icon"></i> Anular Tickets
     </div>
-    <input type="hidden" id="validarRemanente">
     <div class="content" class="ui equal width form" style="background-color:#E0E0E0;">
-    <div class="divLista" style="text-align:left;display:none; width: 100%;">
-                        <a style="font-weight: bold; font-size: 16px; color: #010187;margin-left:20px;">Tipo de pago:</a>
-                        <br><br>
-
-                        <input type="checkbox" id="efectivo" name="efectivo" value="Efectivo">
-                        <label style="font-weight:bold;color:#981700;"> Efectivo</label><br>
-                            <div id="divEfectivo" style="display:none;">
-                                <form class="ui form" id="frmEfectivo">
-                                <div class="fields">
-                                    <div class="field">
-                                        <div class="sixteen wide field">
-                                            <label>Recibido: </label>
-                                            <input type="text" name="cantidadEfectivo" id="cantidadEfectivo" 
-                                            placeholder="Efectivo recibido">
-                                        </div>
-
-                                        <div class="sixteen wide field">
-                                            <label>Cambio: </label>
-                                            <input type="text" name="cambio" id="cambio" 
-                                            placeholder="Cambio" readonly>
-                                        </div>
-                                    </div>
-                                </div>
-                                    
-                                </form>
-
-                                
-                                <a class="ui green button" id="btnCobroEfectivo">Cobrar</a>
-                                <br><br>
-                            </div>
-                            
-
-                        <input type="checkbox" id="credito" name="credito" value="Crédito" style="float:left">
-                        <label style="font-weight:bold;color:#981700;"> Subsidio</label><br>
-                        <div id="divCredito" style="display:none;">
-                                    
-                            <a class="ui green button" id="btnCobroSubsidio">Cobrar</a><br><br>
-                        </div>
-
-                        <input type="checkbox" id="parcialPlanilla" name="parcialPlanilla" value="Parcial Planilla" style="float:left">
-                        <label style="font-weight:bold;color:#981700;">Parcial en planilla</label><br>
-                            <div id="divParcialPlanilla" style="display:none;">
-                                    <form class="ui form">
-                                    <div class="field">
-                                        <div class="fields">
-                                            <div class="eight wide field">
-                                                <label style="font-size:12px;">Descuento planilla: </label>
-                                                <input type="text" name="descuentoPPlanilla" id="descuentoPPlanilla" 
-                                                placeholder="Descuento planilla">
-                                            </div>
-                                            <div class="eight wide field">
-                                                <label style="font-size:12px;">Remanente cuenta actual: </label>
-                                                <input type="text" name="RemanentePPlanilla" id="RemanentePPlanilla" 
-                                                placeholder="Remanente cuenta" readonly>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <div class="fields">
-                                            <div class="eight wide field">
-                                                <label style="font-size:12px;">Efectivo: </label>
-                                                <input type="text" name="cantidadEfectivoPPlanilla" id="cantidadEfectivoPPlanilla" 
-                                                placeholder="Efectivo recibido">
-                                            </div>
-
-                                            <div class="eight wide field">
-                                                <label style="font-size:12px;">Cambio: </label>
-                                                <input type="text" name="cambioPPlanilla" id="cambioPPlanilla" 
-                                                placeholder="Cambio" readonly>
-                                            </div>
-                                        </div>
-                                    </div>
-                                        
-                                    </form>
-
-                                    
-                                    <a class="ui green button" id="btnCobroDescuentoPPlanilla">Cobrar</a>
-                                    <br><br>
-                            </div>
-
-                        <input type="checkbox" id="parcialSubsidio" name="parcialSubsidio" value="Parcial Subsidio" style="float:left">
-                        <label style="font-weight:bold;color:#981700;">Parcial con subsidio</label><br>
-                        <div id="divParcialSubs" style="display:none;">
-                                    <form class="ui form">
-                                    <div class="field">
-                                        <div class="fields">
-                                            <div class="eight wide field">
-                                                <label style="font-size:12px;">Descuento Subsidio: </label>
-                                                <input type="text" name="descuentoPSubs" id="descuentoPSubs" 
-                                                placeholder="Subsidio">
-                                            </div>
-                                            <div class="eight wide field">
-                                                <label style="font-size:12px;">Remanente cuenta actual: </label>
-                                                <input type="text" name="RemanentePSubs" id="RemanentePSubs" 
-                                                placeholder="Remanente cuenta" readonly>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <div class="fields">
-                                            <div class="eight wide field">
-                                                <label style="font-size:12px;">Efectivo: </label>
-                                                <input type="text" name="cantidadEfectivoPSubs" id="cantidadEfectivoPSubs" 
-                                                placeholder="Efectivo recibido">
-                                            </div>
-
-                                            <div class="eight wide field">
-                                                <label style="font-size:12px;">Cambio: </label>
-                                                <input type="text" name="cambioPSubs" id="cambioPSubs" 
-                                                placeholder="Cambio" readonly>
-                                            </div>
-                                        </div>
-                                    </div>
-                                        
-                                    </form>
-
-                                    
-                                    <a class="ui green button" id="btnCobroDescuentoPSubs">Cobrar</a>
-                                    <br><br>
-                            </div>
-
-                        <input type="checkbox" id="descPlanilla" name="descPlanilla" value="descPlanilla" style="float:left">
-                        <label style="font-weight:bold;color:#981700;">Descuento en planilla</label>
-
-                        <div id="divPlanilla" style="display:none;">
-                                    
-                                    <a class="ui green button" id="btnCobroDescuentoPlanilla">Cobrar</a>
-                            </div>
-
-
+       <form class="ui form"> 
+            <div class="field">
+                <div class="fields">
+                    <div class="seven wide field">
+                        <label>Fecha de emisión: </label>
+                        <input type="date" id="fechaTickets">
                     </div>
+                    <div class="seven wide field">
+                        <br>
+                        <a class="ui blue button" id="btnProcesarTickets">Ver tickets</a>
+                    </div>
+                </div>
+            </div>
+       </form>
+
+       <div class="sixteen wide field">
+            <table class="ui table" id="dtTickets" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th style="background-color: black; color:white;">N° Ticket</th>
+                        <th style="background-color: black; color:white;">Carnet</th>
+                        <th style="background-color: black; color:white;">Cliente</th>
+                        <th style="background-color: black; color:white;">Tipo Pago</th>
+                        <th style="background-color: black; color:white;">Efectivo</th>
+                        <th style="background-color: black; color:white;">Planilla</th>
+                        <th style="background-color: black; color:white;">Subsidio</th>
+                        <th style="background-color: black; color:white;">Total</th>
+                        <th style="background-color: black; color:white;"><i class="trash icon"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
 
     </div>
     <div class="actions">
@@ -432,60 +356,430 @@
     </div>
 </div>
 
-<script src="./res/tablas/tablaProductosCobro.js"></script>
+<div class="ui tiny modal" id="modalCobroEfectivo" style="position: absolute;top: 10px;">
+    <div class="header" style="background-color:#024D54; color:white;">
+    <i class="ticket icon"></i><i class="dollar sign icon"></i> Cobrar en efectivo
+    
+    <a style="font-weight: bold; font-size: 16px; color: yellow;margin-left:30px;">Total:</a>
+    <a style="font-weight: bold; font-size: 18px; color: white;" class="totalCuenta"></a>
+    </div>
 
+    <div class="content">
+
+    <form class="ui form" id="frmEfectivo" style="margin-left: 25% !important;">
+        <div class="fields">
+            <div class="field">
+                <div class="sixteen wide field">
+                    <label>Recibido: </label>
+                    <input type="text" name="cantidadEfectivo" id="cantidadEfectivo" 
+                    placeholder="Efectivo recibido">
+                </div>
+
+                <div class="sixteen wide field">
+                    <label>Cambio: </label>
+                    <input type="text" name="cambio" id="cambio" 
+                    placeholder="Cambio" readonly>
+                </div>
+            </div>
+        </div>
+                                    
+    </form>
+    <br><br>
+        <b style="text-align:center !important;">"Esc" para cancelar</b>
+    </div>
+</div>
+
+
+<div class="ui tiny modal" id="modalCobroSubsidio" style="position: absolute;top: 10px;">
+    <div class="header" style="background-color:#024D54; color:white;">
+    <i class="ticket icon"></i><i class="dollar sign icon"></i> Cobrar en subsidio
+    
+    <a style="font-weight: bold; font-size: 16px; color: yellow;margin-left:30px;">Total:</a>
+    <a style="font-weight: bold; font-size: 18px; color: white;" class="totalCuenta"></a>
+    </div>
+
+    <div class="content" style="text-align:center !important;">
+        <h2>¿Desea efectuar cobro en subsidio?</h2>
+        
+        <b>"Enter" para aceptar</b>
+        <br><br>
+        <button class="ui green deny button" id="aceptarSubsidio">
+                Si
+        </button>
+        <br><br>
+        <b>"Esc" para cancelar</b>
+
+    </div>
+
+</div>
+
+
+<div class="ui tiny modal" id="modalCobroPlanilla" style="position: absolute;top: 10px;">
+    <div class="header" style="background-color:#024D54; color:white;">
+    <i class="ticket icon"></i><i class="dollar sign icon"></i> Cobrar en planilla
+    
+    <a style="font-weight: bold; font-size: 16px; color: yellow;margin-left:30px;">Total:</a>
+    <a style="font-weight: bold; font-size: 18px; color: white;" class="totalCuenta"></a>
+    </div>
+
+    <div class="content" style="text-align:center !important;">
+        <h2>¿Desea efectuar cobro en planilla?</h2>
+        
+        <b>"Enter" para aceptar</b>
+        <br><br>
+        <button class="ui green deny button" id="aceptarPlanilla">
+                Si
+        </button>
+        <br><br>
+        <b>"Esc" para cancelar</b>
+
+    </div>
+
+</div>
+
+
+<div class="ui tiny modal" id="modalCobroParcialPlanilla" style="position: absolute;top: 10px;">
+    <div class="header" style="background-color:#024D54; color:white;">
+    <i class="ticket icon"></i><i class="dollar sign icon"></i> Cobrar parcial planilla
+    
+    <a style="font-weight: bold; font-size: 16px; color: yellow;margin-left:30px;">Total:</a>
+    <a style="font-weight: bold; font-size: 18px; color: white;" class="totalCuenta"></a>
+    </div>
+
+    <div class="content" style="text-align:center !important;">
+    <form class="ui form">
+        <div class="field">
+            <div class="fields">
+                <div class="eight wide field">
+                    <label style="font-size:12px;">Descuento planilla: </label>
+                    <input type="text" name="descuentoPPlanilla" id="descuentoPPlanilla" 
+                    placeholder="Descuento planilla">
+                </div>
+                <div class="eight wide field">
+                    <label style="font-size:12px;">Remanente cuenta actual: </label>
+                    <input type="text" name="RemanentePPlanilla" id="RemanentePPlanilla" 
+                    placeholder="Remanente cuenta" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <div class="fields">
+                <div class="eight wide field">
+                    <label style="font-size:12px;">Efectivo: </label>
+                    <input type="text" name="cantidadEfectivoPPlanilla" id="cantidadEfectivoPPlanilla" 
+                    placeholder="Efectivo recibido">
+                </div>
+                <div class="eight wide field">
+                    <label style="font-size:12px;">Cambio: </label>
+                    <input type="text" name="cambioPPlanilla" id="cambioPPlanilla" 
+                    placeholder="Cambio" readonly>
+                </div>
+            </div>
+        </div>
+                                        
+    </form>
+    <br><br>
+        <b style="text-align:center !important;">"Esc" para cancelar</b>
+    </div>
+
+</div>
+
+
+
+<div class="ui tiny modal" id="modalCobroParcialSubsidio" style="position: absolute;top: 10px;">
+    <div class="header" style="background-color:#024D54; color:white;">
+    <i class="ticket icon"></i><i class="dollar sign icon"></i> Cobrar parcial subsidio
+    
+    <a style="font-weight: bold; font-size: 16px; color: yellow;margin-left:30px;">Total:</a>
+    <a style="font-weight: bold; font-size: 18px; color: white;" class="totalCuenta"></a>
+    </div>
+
+    <div class="content" style="text-align:center !important;">
+    <form class="ui form">
+        <div class="field">
+            <div class="fields">
+                <div class="eight wide field">
+                    <label style="font-size:12px;">Descuento Subsidio: </label>
+                    <input type="text" name="descuentoPSubs" id="descuentoPSubs" 
+                    placeholder="Subsidio">
+                </div>
+                <div class="eight wide field">
+                    <label style="font-size:12px;">Remanente cuenta actual: </label>
+                    <input type="text" name="RemanentePSubs" id="RemanentePSubs" 
+                    placeholder="Remanente cuenta" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <div class="fields">
+                <div class="eight wide field">
+                    <input type="checkbox" id="cargarEnPlanilla" class="chPago"> Cargar en planilla
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <div class="fields">
+                <div class="eight wide field">
+                <input type="checkbox" id="cargarEnEfectivo" class="chPago"> Cargar en efectivo
+                </div>
+            </div>
+        </div>
+        <div class="field" id="remanenteConEfectivo" style="display:none;">
+            <div class="fields">
+                <div class="eight wide field">
+                    <label style="font-size:12px;">Efectivo: </label>
+                    <input type="text" name="cantidadEfectivoPSubs" id="cantidadEfectivoPSubs" 
+                    placeholder="Efectivo recibido">
+                </div>
+                <div class="eight wide field">
+                    <label style="font-size:12px;">Cambio: </label>
+                    <input type="text" name="cambioPSubs" id="cambioPSubs" 
+                    placeholder="Cambio" readonly>
+                </div>
+            </div>
+        </div>
+                                        
+    </form>
+    <br><br>
+        <b style="text-align:center !important;">"Esc" para cancelar</b>
+    </div>
+
+</div>
+
+
+<div class="ui tiny modal" id="modalConfirmAnula">
+    <div class="header" style="background-color:#024D54; color:white;">
+    <i class="ticket icon"></i><i class="dollar sign icon"></i> Anular ticket
+    
+    </div>
+
+    <div class="content" style="text-align:center !important;">
+    <input type="hidden" id ="idAnular">
+    <h2 style="color:red;">¿Desea anular el ticket N° <a style="color:red;" id="idTicketAnular"></a>?</h2>
+    </div>
+
+    <div class="actions">
+            <button class="ui black deny button" id="btnCancelarAnular">
+                No
+            </button>
+
+            <button class="ui green button" id="btnConfirmarAnular">
+                Si
+            </button>
+    </div>
+</div>
+
+
+<div class="ui tiny modal" id="modalConfirmarTicketEfectivo">
+    
+
+    <div class="content" style="text-align:center !important;">
+        <h2 style="color:red;">¿Desea imprimir ticket?</h2>
+        <form class="ui form">
+        
+        <div class="field">
+            <div class="fields">
+                <div class="eight wide field">
+                    <input type="checkbox" id="siTckEfectivo" class="tckEfectivo"> Si
+                </div>
+                <div class="eight wide field">
+                    <input type="checkbox" id="noTckEfectivo" class="tckEfectivo"> No
+                </div>
+            </div>
+        </div>
+
+        </form>
+    </div>
+
+    
+</div>
+
+
+<div class="ui tiny modal" id="modalConfirmarDoble">
+    
+
+    <div class="content" style="text-align:center !important;">
+        <h2 style="color:red;">¿Desea imprimir ticket?</h2>
+        <form class="ui form">
+        
+        <div class="field">
+            <div class="fields">
+                <div class="eight wide field">
+                    <input type="checkbox" id="siTckDoble" class="tckDoble"> Si
+                </div>
+                <div class="eight wide field">
+                    <input type="checkbox" id="noTckDoble" class="tckDoble"> No
+                </div>
+            </div>
+        </div>
+
+        </form>
+    </div>
+
+    
+</div>
+
+<script src="./res/tablas/tablaProductosCobro.js"></script>
+<script src="./res/tablas/tablaTickets.js"></script>
 <script>
 
-$(document).ready(function(){
+$(document).ready(function(e){
+
+        var now = new Date();
+
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+        var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+
+        $('#fechaFacturacion').val(today);
+        $('#fechaTickets').val(today);
+   
     var elements = document.getElementsByClassName("datosCliente");
     var currentIndex = 0;
     var elements1 = document.getElementsByClassName("chPago");
     var currentIndex1 = 0;
 
-    document.onkeydown = function(e) {
+    var elements2 = document.getElementsByClassName("tckEfectivo");
+    var currentIndex2 = 0;
+
+    var elements3 = document.getElementsByClassName("tckDoble");
+    var currentIndex3 = 0;
+
+            document.onkeydown = function(e) {
       switch (e.keyCode) {
-        case 37:
-          currentIndex = (currentIndex == 0) ? elements.length - 1 : --currentIndex;
-          elements[currentIndex].focus();
 
-          
         
-          
-          break;
-        case 39:
-          currentIndex = ((currentIndex + 1) == elements.length) ? 0 : ++currentIndex;
-          elements[currentIndex].focus();
-
-          break;
-        case 38:
-          currentIndex1 = (currentIndex1 == 0) ? elements1.length - 1 : --currentIndex1;
-          elements1[currentIndex1].focus();
-
+        //flecha izquierda
+        case 37:
+            if($("#validarModal").val() == '1'){
+                currentIndex2 = (currentIndex2 == 0) ? elements2.length - 1 : --currentIndex2;
+                elements2[currentIndex2].focus();
+            }
+            else if($("#validarModal").val() == '2'){
+                currentIndex3 = (currentIndex3 == 0) ? elements3.length - 1 : --currentIndex3;
+                elements3[currentIndex3].focus();
+            }
+            else{
+                currentIndex = (currentIndex == 0) ? elements.length - 1 : --currentIndex;
+                elements[currentIndex].focus();
+            }
          
           break;
-        case 40:
-          currentIndex1 = ((currentIndex1 + 1) == elements1.length) ? 0 : ++currentIndex1;
+          //flecha derecha
+        case 39:
+            if($("#validarModal").val() == '1'){
+                currentIndex2 = ((currentIndex2 + 1) == elements2.length) ? 0 : ++currentIndex2;
+                elements2[currentIndex2].focus();
+            }
+            else if($("#validarModal").val() == '1'){
+                currentIndex3 = ((currentIndex3 + 1) == elements2.length) ? 0 : ++currentIndex3;
+                elements2[currentIndex3].focus();
+            }
+            else{
+                currentIndex = ((currentIndex + 1) == elements3.length) ? 0 : ++currentIndex;
+                elements3[currentIndex].focus();
+         
+            }
+          
+            break;
+         
+          //flecha arriba
+        case 38:
+            currentIndex1 = ((currentIndex1 + 1) == elements1.length) ? 0 : ++currentIndex1;
           elements1[currentIndex1].focus();
-          break;
+        break;
+       
+        //flecha abajo
+        case 40:
+            currentIndex1 = ((currentIndex1 + 1) == elements1.length) ? 0 : ++currentIndex1;
+          elements1[currentIndex1].focus();
+        break;
 
           case 27:
-          $("#modalTipoCobro").modal('hide');
+          $("#modalCobroEfectivo").modal('hide');
+          $("#modalCobroSubsidio").modal('hide');
+          $('#modalCobroParcialSubsidio').modal('hide');
+          $("#modalCobroPlanilla").modal('hide');
+          $("#modalCobroParcialPlanilla").modal('hide'); 
           $("#cantidadProducto").val('1');
           $("#codigoProducto").val('');
           $("#nombreProducto").val('');
           $("#precioProducto").val('');
           $("#precioProductoDecimal").val('');
+          $("#codigoProducto").focus();
+          break;
+          //modal para cobro en efectivo
+          case 112:
+            e.preventDefault();
+            
+            $("#validarModal").val('1');
+            $('#modalCobroEfectivo').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+            $("#cantidadEfectivo").focus();
+          break;
+
+          //modal para cobro full subsidio
+          case 113:
+            e.preventDefault();
+            
+            $("#validarModal").val('2');
+            $('#modalCobroSubsidio').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+            $("#aceptarSubsidio").focus();
+          break;
+          //modal para cobro subsidio parcial
+          case 114:
+            e.preventDefault();
+            
+            $("#validarModal").val('2');
+            $('#modalCobroParcialSubsidio').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+            $("#descuentoPSubs").focus();
+          break;
+
+          //modal para planilla
+          case 115:
+            e.preventDefault();
+            
+            $("#validarModal").val('2');
+            $('#modalCobroPlanilla').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+            $("#aceptarPlanilla").focus();
+          break;
+
+          //modal para planilla parcial
+          case 116:
+            e.preventDefault();
+            
+            $("#validarModal").val('2');
+            $('#modalCobroParcialPlanilla').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+            $("#descuentoPPlanilla").focus();
           break;
       }
     };
 
     
+    
 });
 
+
+$("#cerrarModalCobro").click(function(){
+    //$("#modalTipoCobro").modal('hide');
+          $("#cantidadProducto").val('1');
+          $("#codigoProducto").val('');
+          $("#nombreProducto").val('');
+          $("#precioProducto").val('');
+          $("#precioProductoDecimal").val('');
+});
 
 
 $(document).on("keypress", function (e) {
     if(e.keyCode == '42'){
+        if($('#subsArea').text()=="$ 1.50 diario"){   
+            $("#credito").css("display","block");
+            $("#parcialSubsidio").css("display","block");
+        }else{
+            $("#credito").css("display","none");
+            $("#parcialSubsidio").css("display","none");
+        }
+
         $("#efectivo").focus();
         $('#modalTipoCobro').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
     }
@@ -556,18 +850,48 @@ var app = new Vue({
                 $(".totalCuenta").text("$ "+this.totalCuenta());
             },
             agregarDetalleLista() {
-                this.listas.push({
-                    codigoProductoL: $("#codigoProducto").val(),
-                    nombreProductoL: $("#nombreProducto").val(),
-                    precioProductoL : $("#precioProducto").val(),
-                    precioProductoDecimalL: $("#precioProductoDecimal").val(),
-                    cantidadProductoL : $("#cantidadProducto").val(),
+                if(this.listas.length > 0){
+                    let acum = 0
+                var totalCantidad = 0;
+                var total = 0;
+                let result =  this.listas.filter((item,index)=>{
+
+                    if(item.codigoProductoL === $("#codigoProducto").val()){
+                        totalCantidad = this.listas[index].cantidadProductoL;
+
+                        total = parseFloat(totalCantidad) + parseFloat($("#cantidadProducto").val());
+                        
+                        this.listas[index].cantidadProductoL = total;
+
+                    return this.listas.indexOf(item) === index;
+                    }
+                
                 });
+                if(result.length > 0){
+                    }else{
+                        this.listas.push({
+                        codigoProductoL: $("#codigoProducto").val(),
+                        nombreProductoL: $("#nombreProducto").val(),
+                        precioProductoL : $("#precioProducto").val(),
+                        precioProductoDecimalL: $("#precioProductoDecimal").val(),
+                        cantidadProductoL : $("#cantidadProducto").val(),
+                    });
+                }
+                }else{
+                    this.listas.push({
+                        codigoProductoL: $("#codigoProducto").val(),
+                        nombreProductoL: $("#nombreProducto").val(),
+                        precioProductoL : $("#precioProducto").val(),
+                        precioProductoDecimalL: $("#precioProductoDecimal").val(),
+                        cantidadProductoL : $("#cantidadProducto").val(),
+                    });
+                }
                     $("#cantidadProducto").val('1');
                     $("#codigoProducto").val('');
                     $("#nombreProducto").val('');
                     $("#precioProducto").val('');
                     $("#precioProductoDecimal").val('');
+                    $("#codigoProducto").focus();
             },
 
             totalCuenta() { 
@@ -579,8 +903,8 @@ var app = new Vue({
             },
             cargarDatos() {
                 var id = $("#carnet").val();
-
-                fetch("?1=CobrosController&2=getDatosCliente&carnet=" + id)
+                var fecha = $("#fechaFacturacion").val();
+                fetch("?1=CobrosController&2=getDatosCliente&carnet=" + id+"&fecha="+fecha)
                     .then(response => {
                         return response.json();
                     })
@@ -606,13 +930,7 @@ var app = new Vue({
                       
                         
 
-                        if(dat.subsidioArea == '$ 0.00'){     
-                            $("#credito").css("display","none");
-                            $("#parcialSubsidio").css("display","none");
-                        }else{
-                            $("#credito").css("display","block");
-                            $("#parcialSubsidio").css("display","block");
-                        }
+                       
                     })
                     .catch(err => {
                         $('#nombreCliente').text('');
@@ -706,8 +1024,15 @@ var app = new Vue({
                             $('#frmLista').removeClass('loading');
                             if (r == 1) {
 
-                                app.limpiar();     
-                                $('#modalTipoCobro').modal('hide');        
+                                  
+                                $('#modalCobroEfectivo').modal('hide');
+                                $('#modalCobroSubsidio').modal('hide');    
+                                $("#modalCobroPlanilla").modal('hide'); 
+                                $("#modalCobroParcialPlanilla").modal('hide'); 
+                                $('#modalCobroParcialSubsidio').modal('hide');
+                                $("#remanenteConEfectivo").css("display","none");
+                                $("#cargarEnPlanilla").prop("checked",false);
+                                $("#cargarEnEfectivo").prop("checked",false);
                             }
                             
                         }
@@ -720,29 +1045,29 @@ var app = new Vue({
                 var id = $("#nTicket").val();
                 var caja = $("#caja").val();
 
-            fetch("?1=CobrosController&2=anularTicket&id="+id+"&caja="+caja)
-            .then(response => {
-                return response.json();
-            })
-            .then(dat => {
-
-                dat.forEach(element => {
-                    $("#clienteTkc").text(element["cliente"]);
-                    $("#carnetTkc").text(element["carnet"]);
-                    $("#tipoPagoTkc").text(element["tipoPago"]);
-                    $("#usuarioTkc").text(element["usuarioCobro"]);
-                    $("#efectivoTkc").text(element["efectivoRecibidoTck"]);
-                    $("#cambioTkc").text(element["cambioTkc"]);
-                    $("#totalTkc").text(element["totalTkc"]);
-                    $("#fechaETkc").text(element["fechaE"]);
-                    $("#horaETkc").text(element["horaE"]);
-                    $("#descPlanillaTkc").text(element["descPlanilla"]);
-                    $("#descSubsidioTkc").text(element["descSubsidio"]);
-            });
-                    
+                fetch("?1=CobrosController&2=anularTicket&id="+id+"&caja="+caja)
+                .then(response => {
+                    return response.json();
                 })
-                .catch(err => {
+                .then(dat => {
+
+                    dat.forEach(element => {
+                        $("#clienteTkc").text(element["cliente"]);
+                        $("#carnetTkc").text(element["carnet"]);
+                        $("#tipoPagoTkc").text(element["tipoPago"]);
+                        $("#usuarioTkc").text(element["usuarioCobro"]);
+                        $("#efectivoTkc").text(element["efectivoRecibidoTck"]);
+                        $("#cambioTkc").text(element["cambioTkc"]);
+                        $("#totalTkc").text(element["totalTkc"]);
+                        $("#fechaETkc").text(element["fechaE"]);
+                        $("#horaETkc").text(element["horaE"]);
+                        $("#descPlanillaTkc").text(element["descPlanilla"]);
+                        $("#descSubsidioTkc").text(element["descSubsidio"]);
                 });
+                        
+                    })
+                    .catch(err => {
+                    });
             },
         }
 });
@@ -756,40 +1081,49 @@ var app = new Vue({
     }
 
 
-$("#cantidadProductoL").keypress(function(){
-    app.totalCuenta();
-});
 
-$('#btnAnularTicket').click(function() {
+$('#btnAnularTicket').click(function(e) {
+    e.preventDefault();
     $("#divTicket").hide();
     $("#nTicket").val('');
 $('#modalAnulaTicket').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
 });
 
+
+$("#btnTodoTickets").click(function(e) {
+e.preventDefault();
+
+
+
+$('#modalAnulaTickets').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+});
+
+
+$("#btnProcesarTickets").click(function() {
+ 
+    var idCaja = $("#caja").val();
+    var fecha = $("#fechaTickets").val();
+
+    var table = $('#dtTickets').DataTable();
+    table.destroy();
+    mostrarTickets(idCaja,fecha);
+
+       
+});
+
     $(document).ready(function(){
+        $('#carnet').mask("########-#");
         app.eliminarDetalleLista(0);
         var total = 0;
 
-        $('#precioProducto').mask("###0.00", {reverse: true});
-        $('#precioProductoDecimal').mask("###0.00", {reverse: true});
-
-        $('#cantidadEfectivo').mask("###0.00", {reverse: true});
-        $('#cambio').mask("###0.00", {reverse: true});
-
-        $("#descuentoPPlanilla").mask("###0.00", {reverse: true});
-        $("#RemanentePPlanilla").mask("###0.00", {reverse: true});
-        $("#cantidadEfectivoPPlanilla").mask("###0.00", {reverse: true});
-        $("#cambioPPlanilla").mask("###0.00", {reverse: true});
-
-        $("#descuentoPSubs").mask("###0.00", {reverse: true});
-        $("#RemanentePSubs").mask("###0.00", {reverse: true});
-        $("#cantidadEfectivoPSubs").mask("###0.00", {reverse: true});
-        $("#cambioPSubs").mask("###0.00", {reverse: true});
+       
 
         $("#caja").change(function(){
+            
             app.listas = [];
             limpiar();
             $("#btnAnularTicket").show();
+            $("#btnTodoTickets").show();
             $("#frmCliente").show();
             $(".totalCuenta").text("$ 0.00");
             var text = $("#caja option:selected").text();
@@ -815,7 +1149,7 @@ $('#modalAnulaTicket').modal('setting', 'autofocus', false).modal('setting', 'cl
                     
                 }
                 });
-
+                $("#carnet").focus();
            
         }); 
 
@@ -870,6 +1204,57 @@ $(document).on("click", ".btnEditar", function () {
 });
 
 
+$(document).on("click", ".btnAnularTicketLista", function () {
+    $('#idAnular').val($(this).attr("id"));
+    $("#idTicketAnular").text($(this).attr("id"));
+    $('#modalConfirmAnula').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+});
+
+
+$("#btnCancelarAnular").click(function(){
+    $('#modalAnulaTickets').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+});
+
+
+$("#btnConfirmarAnular").click(function(){
+
+    var id = $("#idAnular").val();
+
+    $.ajax({
+        type: 'POST',
+        data: {
+            id: id,
+        },
+        url: '?1=CobrosController&2=anularTicketLista',
+        success: function (r) {
+            if (r == 1) {
+                //$('#modalConfirmAnula').modal('hide');
+                swal({
+                    title: 'Ticket anulado',
+                    text: 'Guardado con éxito',
+                    type: 'success',
+                    showConfirmButton: false,
+                        timer: 1700
+                });
+
+                var idCaja = $("#caja").val();
+                var fecha = $("#fechaTickets").val();
+                var table = $('#dtTickets').DataTable();
+                table.destroy();
+                mostrarTickets(idCaja,fecha);
+                $('#modalAnulaTickets').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+                
+
+            }
+            
+        }
+    });
+
+
+   
+});
+
+
 $(document).on("click", ".btnCombo", function () {
     var caja = $("#caja").val();
     app.cargarDatosCombo($(this).attr("nombre"),caja);
@@ -891,14 +1276,6 @@ $('#codigoProducto').keyup(function(e){
         $(".totalCuenta").text("$ "+app.totalCuenta());
         //limpiar();
         e.preventDefault();
-
-        if($("#subsArea").text()=="$ 0.00" || $("#subsRemanente").text()=="$ 0.00"){
-            $("#credito").prop("disabled",true);
-            $("#parcialSubsidio").prop("disabled",true);
-        }else{
-            $("#credito").prop("disabled",false);
-            $("#parcialSubsidio").prop("disabled",false);
-        }
         }
       
     }
@@ -911,7 +1288,7 @@ $('#nombreProducto').keyup(function(e){
     {
         if($("#precioProducto").val()=='$ 0.00'){
             $("#labelPrecio").css("display","block");
-        }else{
+        }else if(e.keyCode == 37 || e.keyCode == 39){}else{
         $(".divLista").show();
         app.agregarDetalleLista();
         $(".totalCuenta").text("$ "+app.totalCuenta());
@@ -926,7 +1303,9 @@ $('#cantidadProducto').keyup(function(e){
     {
         if($("#precioProducto").val()=='$ 0.00'){
             $("#labelPrecio").css("display","block");
-        }else{
+        }
+        else if(e.keyCode == 37 || e.keyCode == 39){}
+        else{
         $(".divLista").show();
         app.agregarDetalleLista();
         $(".totalCuenta").text("$ "+app.totalCuenta());
@@ -960,7 +1339,11 @@ $('#precioProducto').keyup(function(e){
         e.preventDefault();
         }
         
-    }else{
+    }
+    else if(e.keyCode == 37 || e.keyCode == 39){
+
+    }
+    else{
         var valor = $(this).val();
         $("#labelPrecio").css("display","none");
         $("#precioProductoDecimal").val(valor);
@@ -1049,6 +1432,8 @@ $("#parcialPlanilla").click(function(){
     $("#RemanentePSubs").val('');
     $("#cantidadEfectivoPSubs").val('');
     $("#cambioPSubs").val('');
+    
+    $("#descuentoPPlanilla").focus();
     }
     else{
         $('#descPlanilla').prop('checked', false);
@@ -1074,116 +1459,51 @@ $("#parcialPlanilla").click(function(){
     }
 });
 
-$("#descPlanilla").click(function(){
-    if( $('#descPlanilla').prop('checked') ) {
-        $("#divPlanilla").show();
-        
+$("#aceptarPlanilla").keypress(function(e){
+    if(e.keyCode==13){
+        var carnet = $("#carnet").val();
+            var total = app.totalCuenta();
+            var efectivo = "0.00";
+            var cambio = "0.00";
+            var usuario = $("#usuario").val();
+            var descPlanilla = app.totalCuenta();
+            var fechaFacturacion = $("#fechaFacturacion").val();
 
-        $('#credito').prop('checked', false);
-        $('#efectivo').prop('checked', false);
-        $('#parcialSubsidio').prop('checked', false);
-        $('#parcialPlanilla').prop('checked', false);
-    $("#divParcialPlanilla").hide();
-    $("#descuentoPPlanilla").val('');
-    $("#RemanentePPlanilla").val('');
-    $("#cantidadEfectivoPPlanilla").val('');
-    $("#cambioPPlanilla").val('');
-    $('#parcialSubsidio').prop('checked', false);
-    $("#divParcialSubs").hide();
+            $.ajax({
+                    type: 'POST',
+                    data: {
+                        carnet: carnet,
+                        total: total,
+                        efectivo : efectivo,
+                        cambio: cambio,
+                        tipoPago: 'Descuento en planilla',
+                        usuario: usuario,
+                        descPlanilla : descPlanilla,
+                        fechaFacturacion: fechaFacturacion,
+                    },
+                    url: '?1=CobrosController&2=guardarEncabezado',
+                    success: function (r) {
+                        if (r == 1) {
+                            app.guardarCobroDetalle();
+                        }
+                        
+                    }
+                }).then(function(){
 
-    $('#efectivo').prop('checked', false);
-    $("#divEfectivo").hide();
-    $("#cantidadEfectivo").val('');
-    $("#cambio").val('');
-    $("#descuentoPSubs").val('');
-    $("#RemanentePSubs").val('');
-    $("#cantidadEfectivoPSubs").val('');
-    $("#cambioPSubs").val('');
+                    imprimir2Tickets(carnet);
+                    
+                });
     }
-    else{
-    $('#descPlanilla').prop('checked', false);
-    $("#divPlanilla").hide();
-
-    $('#parcialPlanilla').prop('checked', false);
-    $("#divParcialPlanilla").hide();
-    $("#descuentoPPlanilla").val('');
-    $("#RemanentePPlanilla").val('');
-    $("#cantidadEfectivoPPlanilla").val('');
-    $("#cambioPPlanilla").val('');
-
-    $('#efectivo').prop('checked', false);
-    $("#divEfectivo").hide();
-    $("#cantidadEfectivo").val('');
-    $("#cambio").val('');
-    $("#descuentoPSubs").val('');
-    $("#RemanentePSubs").val('');
-    $("#cantidadEfectivoPSubs").val('');
-    $("#cambioPSubs").val('');
-    }
+   
 });
 
 
-$("#credito").click(function(){
-    if( $('#credito').prop('checked') ) {
-        $("#divCredito").show();
-
-     
-        $('#parcialPlanilla').prop('checked', false);
-        $('#parcialSubsidio').prop('checked', false);
-    $("#divParcialSubs").hide();
-        $('#descPlanilla').prop('checked', false);
-        $("#divParcialPlanilla").hide();
-        $("#descuentoPPlanilla").val('');
-        $("#RemanentePPlanilla").val('');
-        $("#cantidadEfectivoPPlanilla").val('');
-        $("#cambioPPlanilla").val('');
-
-    $('#descPlanilla').prop('checked', false);
-    $("#divPlanilla").hide();
-
-    $('#parcialPlanilla').prop('checked', false);
-    $("#divParcialPlanilla").hide();
-    $("#descuentoPPlanilla").val('');
-    $("#RemanentePPlanilla").val('');
-    $("#cantidadEfectivoPPlanilla").val('');
-    $("#cambioPPlanilla").val('');
-
-    $('#efectivo').prop('checked', false);
-    $("#divEfectivo").hide();
-
-
-    $("#descuentoPSubs").val('');
-    $("#RemanentePSubs").val('');
-    $("#cantidadEfectivoPSubs").val('');
-    $("#cambioPSubs").val('');
-    }
-    else{
-    $('#descPlanilla').prop('checked', false);
-    $("#divPlanilla").hide();
-
-    $('#parcialPlanilla').prop('checked', false);
-    $("#divParcialPlanilla").hide();
-    $("#descuentoPPlanilla").val('');
-    $("#RemanentePPlanilla").val('');
-    $("#cantidadEfectivoPPlanilla").val('');
-    $("#cambioPPlanilla").val('');
-
-    $('#efectivo').prop('checked', false);
-    $("#divEfectivo").hide();
-    $("#cantidadEfectivo").val('');
-    $("#cambio").val('');
-    $("#divCredito").hide();
-
-    $("#descuentoPSubs").val('');
-    $("#RemanentePSubs").val('');
-    $("#cantidadEfectivoPSubs").val('');
-    $("#cambioPSubs").val('');
-    }
-});
 
 
 $("#parcialSubsidio").click(function(){
     if( $('#parcialSubsidio').prop('checked') ) {
+
+       
         $("#divParcialSubs").show();
 
      
@@ -1212,6 +1532,7 @@ $("#parcialSubsidio").click(function(){
     $("#RemanentePSubs").val('');
     $("#cantidadEfectivoPSubs").val('');
     $("#cambioPSubs").val('');
+    $("#descuentoPSubs").focus();
     }
     else{
     $('#descPlanilla').prop('checked', false);
@@ -1252,7 +1573,12 @@ $("#cantidadEfectivo").keyup(function(){
 });
 
 
-$("#descuentoPPlanilla").keyup(function(){
+$("#descuentoPPlanilla").keyup(function(e){
+    if(e.keyCode=='13'){
+        e.preventDefault();
+        $("#cantidadEfectivoPPlanilla").focus();
+
+    }else{
     var cuenta = app.totalCuenta();
     var descPlanilla = $(this).val();
     var remanenteCuenta = parseFloat(cuenta)-parseFloat(descPlanilla);
@@ -1262,9 +1588,50 @@ $("#descuentoPPlanilla").keyup(function(){
     }else{
         $("#RemanentePPlanilla").val(remanenteCuenta.toFixed(2));
     }
+    }
+   
 });
 
-$("#cantidadEfectivoPPlanilla").keyup(function(){
+$("#cantidadEfectivoPPlanilla").keyup(function(e){
+
+    if(e.keyCode=='13'){
+        e.preventDefault();
+        
+        var carnet = $("#carnet").val();
+            var total = app.totalCuenta();
+            var efectivo = $("#cantidadEfectivoPPlanilla").val();
+            var cambio = $("#cambioPPlanilla").val();
+            var usuario = $("#usuario").val();
+            var descPlanilla = $("#descuentoPPlanilla").val();
+            var fechaFacturacion = $("#fechaFacturacion").val();
+
+            $.ajax({
+                    type: 'POST',
+                    data: {
+                        carnet: carnet,
+                        total: total,
+                        efectivo : efectivo,
+                        cambio: cambio,
+                        tipoPago: 'Parcial en planilla',
+                        usuario: usuario,
+                        descPlanilla : descPlanilla,
+                        fechaFacturacion: fechaFacturacion
+                    },
+                    url: '?1=CobrosController&2=guardarEncabezado',
+                    success: function (r) {
+                        if (r == 1) {
+                            app.guardarCobroDetalle();   
+                        }
+                        
+                    }
+                }).then(function(){
+                    imprimir2Tickets(carnet);
+                    
+                });
+
+                
+                
+    }else{
     var cuenta = $("#RemanentePPlanilla").val();
     var efectivo = $(this).val();
     var cobro = parseFloat(efectivo)-parseFloat(cuenta);
@@ -1274,11 +1641,17 @@ $("#cantidadEfectivoPPlanilla").keyup(function(){
     }else{
         $("#cambioPPlanilla").val(cobro.toFixed(2));
     }
+    }
+    
 });
 
 
-$("#descuentoPSubs").keyup(function(){
-    var cuenta = app.totalCuenta();
+$("#descuentoPSubs").keyup(function(e){
+
+    if(e.keyCode== 13){
+        $("#cargarEnPlanilla").focus();
+    }else{
+        var cuenta = app.totalCuenta();
     var descPlanilla = $(this).val();
     var remanenteCuenta = parseFloat(cuenta)-parseFloat(descPlanilla);
 
@@ -1290,61 +1663,184 @@ $("#descuentoPSubs").keyup(function(){
     }else{
         $("#RemanentePSubs").val(remanenteCuenta.toFixed(2));
     }
+    }
+    
 });
 
-$("#cantidadEfectivoPSubs").keyup(function(){
-    var cuenta = $("#RemanentePSubs").val();
-    var efectivo = $(this).val();
-    var cobro = parseFloat(efectivo)-parseFloat(cuenta);
+$("#cantidadEfectivoPSubs").keyup(function(e){
+    if(e.keyCode == '13'){
+        e.preventDefault();
+        var remanente = $("#validarRemanente").val();
+            var carnet = $("#carnet").val();
+            var total = app.totalCuenta();
+            var efectivo = $("#cantidadEfectivoPSubs").val();
+            var cambio = $("#cambioPSubs").val();
+            var usuario = $("#usuario").val();
+            var descSubsidio = $("#descuentoPSubs").val();
+            var descPlanilla = "0.00";
+            var fechaFacturacion = $("#fechaFacturacion").val();
 
-    if(isNaN(cobro)){
-        $("#cambioPSubs").val('');
+            if(descSubsidio > remanente){
+                swal({
+                    title: 'Denegado',
+                    text: 'El monto excede el monto disponible para subisidio',
+                    type: 'error',
+                    showConfirmButton: false,
+                    timer: 2000
+                    });
+            }else{
+                $.ajax({
+                    type: 'POST',
+                    data: {
+                        carnet: carnet,
+                        total: total,
+                        efectivo : efectivo,
+                        cambio: cambio,
+                        tipoPago: 'Parcial en subsidio',
+                        usuario: usuario,
+                        descSubsidio : descSubsidio,
+                        descPlanilla: descPlanilla,
+                        fechaFacturacion : fechaFacturacion,
+                    },
+                    url: '?1=CobrosController&2=guardarEncabezado',
+                    success: function (r) {
+                        if (r == 1) {
+                            app.guardarCobroDetalle();
+                        }
+                        
+                    }
+                }).then(function(){
+                    imprimir2Tickets(carnet);
+                 
+                    
+                });
+
+            }
     }else{
-        $("#cambioPSubs").val(cobro.toFixed(2));
+        var cuenta = $("#RemanentePSubs").val();
+        var efectivo = $(this).val();
+        var cobro = parseFloat(efectivo)-parseFloat(cuenta);
+
+        if(isNaN(cobro)){
+            $("#cambioPSubs").val('');
+        }else{
+            $("#cambioPSubs").val(cobro.toFixed(2));
+        }
     }
+ 
 });
 
 function imprimirTicket(carnet){
-
-                                swal({
-                                    title: 'Cobro Registrado',
-                                    text: 'Se imprimirá el ticket',
-                                    type: 'success',
-                                    showConfirmButton: true,
-                                        timer: 1500
-                                }).then((result) => {
-                                     $.ajax({
-                                        type: 'POST',
-                                        url: './app/Controllers/impresionTermica/ticketNormal.php?carnet='+carnet,
-                                    });    
-
-                                    $("#carnet").val('');
-                                    $(".divNombre").hide(); 
-                                }); 
+    $("#siTckEfectivo").focus();
+    $("#modalConfirmarTicketEfectivo").modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+    
+                                
           
 }
 
-function imprimir2Tickets(carnet){
-    swal({
-                                    title: 'Cobro Registrado',
-                                    text: 'Se imprimirá el ticket',
-                                    type: 'success',
-                                    showConfirmButton: false,
-                                        timer: 1500
-                                }).then((result) => {
-                                     $.ajax({
-                                        type: 'POST',
-                                        url: './app/Controllers/impresionTermica/ticketNormal.php?carnet='+carnet,
-                                    });    
 
-                                $.ajax({
-                                        type: 'POST',
-                                        url: './app/Controllers/impresionTermica/ticketNormal.php?carnet='+carnet,
-                                    });  
-                                    $("#carnet").val('');
-                                    $(".divNombre").hide(); 
-                                }); 
+$("#siTckEfectivo").keyup(function(e){
+   
+    if(e.keyCode=='13'){
+        $("#modalConfirmarTicketEfectivo").modal('hide');
+    swal({
+        title: 'Cobro Registrado',
+        text: 'Se imprimirá el ticket',
+        type: 'success',
+        showConfirmButton: true,
+                timer: 1500
+        }).then((result) => {
+            $.ajax({
+                type: 'POST',
+                url: './app/Controllers/impresionTermica/ticketNormal.php?carnet='+carnet,
+            });    
+            app.limpiar();  
+            limpiarTicket(); 
+            $("#carnet").val('');
+            $("#carnet").focus();
+            $(".divNombre").hide(); 
+        }); 
+    }
+});
+
+$("#noTckEfectivo").keyup(function(e){
+   
+   if(e.keyCode=='13'){
+       $("#modalConfirmarTicketEfectivo").modal('hide');
+   swal({
+       title: 'Cobro Registrado',
+       text: 'No se imprimirá el ticket',
+       type: 'success',
+       showConfirmButton: true,
+               timer: 1500
+       }).then((result) => {
+        app.limpiar();  
+        limpiarTicket(); 
+           $("#carnet").val('');
+           $("#carnet").focus();
+           $(".divNombre").hide(); 
+       }); 
+   }
+});
+
+
+
+function imprimir2Tickets(carnet){
+    $("#siTckDoble").focus();
+    $("#modalConfirmarDoble").modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
 }
+
+
+$("#siTckDoble").keyup(function(e){
+   
+   if(e.keyCode=='13'){
+       $("#modalConfirmarDoble").modal('hide');
+       swal({
+            title: 'Cobro Registrado',
+            text: 'Se imprimirá el ticket',
+            type: 'success',
+            showConfirmButton: false,
+                timer: 1500
+        }).then((result) => {
+             $.ajax({
+                type: 'POST',
+                url: './app/Controllers/impresionTermica/ticketNormal.php?carnet='+carnet,
+            });    
+
+        $.ajax({
+                type: 'POST',
+                url: './app/Controllers/impresionTermica/ticketNormal.php?carnet='+carnet,
+            });  
+            app.limpiar();  
+            limpiarTicket(); 
+            $("#carnet").val('');
+            $("#carnet").focus();
+            $(".divNombre").hide(); 
+        }); 
+   }
+});
+
+$("#noTckDoble").keyup(function(e){
+  
+  if(e.keyCode=='13'){
+      $("#modalConfirmarDoble").modal('hide');
+  swal({
+      title: 'Cobro Registrado',
+      text: 'No se imprimirá el ticket',
+      type: 'success',
+      showConfirmButton: true,
+              timer: 1500
+      }).then((result) => {
+            app.limpiar();  
+            limpiarTicket(); 
+          $("#carnet").val('');
+          $("#carnet").focus();
+          $(".divNombre").hide(); 
+      }); 
+  }
+});
+
+
 function limpiarTicket(){
     $("#codigoProducto").val('');
     $("#nombreProducto").val('');
@@ -1393,6 +1889,7 @@ $("#btnCobroEfectivo").click(function(){
             var efectivo = $("#cantidadEfectivo").val();
             var cambio = $("#cambio").val();
             var usuario = $("#usuario").val();
+            var fechaFacturacion = $("#fechaFacturacion").val();
 
            $.ajax({
                     type: 'POST',
@@ -1403,6 +1900,7 @@ $("#btnCobroEfectivo").click(function(){
                         cambio: cambio,
                         tipoPago: 'Efectivo',
                         usuario: usuario,
+                        fechaFacturacion : fechaFacturacion,
                     },
                     url: '?1=CobrosController&2=guardarEncabezado',
                     success: function (r) {
@@ -1414,7 +1912,8 @@ $("#btnCobroEfectivo").click(function(){
                     }
                 }).then(function(){
                     imprimirTicket(carnet);
-                    limpiarTicket(); 
+                   // limpiarTicket(); 
+                    
                 });
                 
 });
@@ -1427,7 +1926,7 @@ $("#btnCobroDescuentoPPlanilla").click(function(){
             var cambio = $("#cambioPPlanilla").val();
             var usuario = $("#usuario").val();
             var descPlanilla = $("#descuentoPPlanilla").val();
-
+            var fechaFacturacion = $("#fechaFacturacion").val();
             $.ajax({
                     type: 'POST',
                     data: {
@@ -1438,6 +1937,7 @@ $("#btnCobroDescuentoPPlanilla").click(function(){
                         tipoPago: 'Parcial en planilla',
                         usuario: usuario,
                         descPlanilla : descPlanilla,
+                        fechaFacturacion : fechaFacturacion,
                     },
                     url: '?1=CobrosController&2=guardarEncabezado',
                     success: function (r) {
@@ -1448,7 +1948,7 @@ $("#btnCobroDescuentoPPlanilla").click(function(){
                     }
                 }).then(function(){
                     imprimir2Tickets(carnet);
-                    limpiarTicket(); 
+                   
                 });
 
                 
@@ -1464,6 +1964,7 @@ $("#btnCobroDescuentoPlanilla").click(function(){
             var cambio = "0.00";
             var usuario = $("#usuario").val();
             var descPlanilla = app.totalCuenta();
+            var fechaFacturacion = $("#fechaFacturacion").val();
 
             $.ajax({
                     type: 'POST',
@@ -1475,6 +1976,7 @@ $("#btnCobroDescuentoPlanilla").click(function(){
                         tipoPago: 'Descuento en planilla',
                         usuario: usuario,
                         descPlanilla : descPlanilla,
+                        fechaFacturacion: fechaFacturacion,
                     },
                     url: '?1=CobrosController&2=guardarEncabezado',
                     success: function (r) {
@@ -1485,7 +1987,7 @@ $("#btnCobroDescuentoPlanilla").click(function(){
                     }
                 }).then(function(){
                     imprimir2Tickets(carnet);
-                    limpiarTicket(); 
+                  
                 });
 });
 
@@ -1553,65 +2055,78 @@ $("#btnGuardarAnular").click(function(){
 
 
 
-$("#btnCobroSubsidio").click(function(){
+$("#aceptarSubsidio").keypress(function(e){
+    if(e.keyCode== 13){
+        var remanente = $("#validarRemanente").val();
 
-    var remanente = $("#validarRemanente").val();
 
+        var carnet = $("#carnet").val();
+        var total = app.totalCuenta();
+        var efectivo = "0.00";
+        var cambio = "0.00";
+        var usuario = $("#usuario").val();
+        var descSubsidio = app.totalCuenta();
+        var fechaFacturacion = $("#fechaFacturacion").val();
 
-            var carnet = $("#carnet").val();
-            var total = app.totalCuenta();
-            var efectivo = "0.00";
-            var cambio = "0.00";
-            var usuario = $("#usuario").val();
-            var descSubsidio = app.totalCuenta();
-
-            if(descSubsidio > remanente){
-                swal({
-                    title: 'Denegado',
-                    text: 'El monto excede el monto disponible para subisidio',
-                    type: 'error',
-                    showConfirmButton: false,
-                    timer: 2000
-                    });
-            }else{
-                $.ajax({
-                    type: 'POST',
-                    data: {
-                        carnet: carnet,
-                        total: total,
-                        efectivo : efectivo,
-                        cambio: cambio,
-                        tipoPago: 'Subsidio',
-                        usuario: usuario,
-                        descSubsidio : descSubsidio,
-                    },
-                    url: '?1=CobrosController&2=guardarEncabezado',
-                    success: function (r) {
-                        if (r == 1) {
-                            app.guardarCobroDetalle();  
-                        }
-                        
-                    }
-                }).then(function(){
-                    imprimir2Tickets(carnet);
-                    limpiarTicket(); 
+        if(descSubsidio > remanente){
+            swal({
+                title: 'Denegado',
+                text: 'El monto excede el monto disponible para subisidio',
+                type: 'error',
+                showConfirmButton: false,
+                timer: 2000
                 });
-            }
+        }else{
+            $.ajax({
+                type: 'POST',
+                data: {
+                    carnet: carnet,
+                    total: total,
+                    efectivo : efectivo,
+                    cambio: cambio,
+                    tipoPago: 'Subsidio',
+                    usuario: usuario,
+                    descSubsidio : descSubsidio,
+                    fechaFacturacion : fechaFacturacion,
+                },
+                url: '?1=CobrosController&2=guardarEncabezado',
+                success: function (r) {
+                    if (r == 1) {
+                        app.guardarCobroDetalle();  
+                    }
+                    
+                }
+            }).then(function(){
+                imprimir2Tickets(carnet);
+                
+            });
+        }
 
+    }
+   
             
                 
 });
 
 
-$("#btnCobroDescuentoPSubs").click(function(){
-    var remanente = $("#validarRemanente").val();
+$("#cargarEnPlanilla").keyup(function(e){
+
+    if(e.keyCode== '13'){
+        $("#remanenteConEfectivo").css("display","none");
+        $("#cargarEnPlanilla").prop("checked",true);
+        $("#cargarEnEfectivo").prop("checked",false);
+        $("#cantidadEfectivoPSubs").val('');
+        $("#cambioPSubs").val('');
+
+        var remanente = $("#validarRemanente").val();
             var carnet = $("#carnet").val();
             var total = app.totalCuenta();
-            var efectivo = $("#cantidadEfectivoPSubs").val();
-            var cambio = $("#cambioPSubs").val();
+            var efectivo = "0.00";
+            var cambio = "0.00";
             var usuario = $("#usuario").val();
             var descSubsidio = $("#descuentoPSubs").val();
-
+            var descPlanilla = $("#RemanentePSubs").val();
+            var fechaFacturacion = $("#fechaFacturacion").val();
 
             if(descSubsidio > remanente){
                 swal({
@@ -1621,7 +2136,17 @@ $("#btnCobroDescuentoPSubs").click(function(){
                     showConfirmButton: false,
                     timer: 2000
                     });
-            }else{
+            }
+            else if(remanente < 0.01 ){
+                swal({
+                    title: 'Denegado',
+                    text: 'Subsidio utilizado',
+                    type: 'error',
+                    showConfirmButton: false,
+                    timer: 2000
+                    });
+            }
+            else{
                 $.ajax({
                     type: 'POST',
                     data: {
@@ -1632,6 +2157,8 @@ $("#btnCobroDescuentoPSubs").click(function(){
                         tipoPago: 'Parcial en subsidio',
                         usuario: usuario,
                         descSubsidio : descSubsidio,
+                        descPlanilla: descPlanilla,
+                        fechaFacturacion: fechaFacturacion,
                     },
                     url: '?1=CobrosController&2=guardarEncabezado',
                     success: function (r) {
@@ -1642,12 +2169,81 @@ $("#btnCobroDescuentoPSubs").click(function(){
                     }
                 }).then(function(){
                     imprimir2Tickets(carnet);
-                    limpiarTicket(); 
+                   
                 });
 
             }
 
+    }
+   
             
+});
+
+
+$("#cargarEnEfectivo").keyup(function(e){
+
+if(e.keyCode == '13'){
+    $("#remanenteConEfectivo").css("display","block");
+        $("#cargarEnPlanilla").prop("checked",false);
+        $("#cargarEnEfectivo").prop("checked",true);
+        $("#cantidadEfectivoPSubs").val('');
+        $("#cambioPSubs").val('');
+        $("#cantidadEfectivoPSubs").focus();
+} 
+});
+
+
+
+$("#cantidadEfectivo").keypress(function(e){
+    if(e.keyCode == '13'){
+
+
+        var carnet = $("#carnet").val();
+            var total = app.totalCuenta();
+            var efectivo = $("#cantidadEfectivo").val();
+            var cambio = $("#cambio").val();
+            var usuario = $("#usuario").val();
+            var fechaFacturacion = $("#fechaFacturacion").val();
+
+
+            if(efectivo == ''){
+                swal({
+                    title: 'Cobro Registrado',
+                    text: 'Se imprimirá el ticket',
+                    type: 'success',
+                    showConfirmButton: true,
+                    timer: 1500
+                    });
+            }else{
+                $.ajax({
+                    type: 'POST',
+                    data: {
+                        carnet: carnet,
+                        total: total,
+                        efectivo : efectivo,
+                        cambio: cambio,
+                        tipoPago: 'Efectivo',
+                        usuario: usuario,
+                        fechaFacturacion : fechaFacturacion,
+                    },
+                    url: '?1=CobrosController&2=guardarEncabezado',
+                    success: function (r) {
+                        if (r == 1) {
+                         
+                            app.guardarCobroDetalle();      
+                               
+                        }
+                    }
+                }).then(function(){
+                   
+                    imprimirTicket(carnet);
+                    //limpiarTicket(); 
+                });
+            }
+
+           
+    }
+    
 });
 
 </script>

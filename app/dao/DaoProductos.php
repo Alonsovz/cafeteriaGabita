@@ -86,7 +86,7 @@ class DaoProductos extends DaoBase {
     {
 
         $_query="select nombre from productos 
-        WHERE codigo='".$this->objeto->getCodigoBarra()."' and idSucursal=".$this->objeto->getCodigoSucursal()."";
+        WHERE idEliminado = 1 and codigo='".$this->objeto->getCodigoBarra()."' and idSucursal=".$this->objeto->getCodigoSucursal()."";
        
 
         $resultado=$this->con->ejecutar($_query)->fetch_assoc();

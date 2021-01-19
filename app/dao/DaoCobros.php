@@ -16,40 +16,19 @@ class DaoCobros extends DaoBase {
         when 
         (select sum(t.descuentoSubsidio) from enc_ticket t 
             inner join clientes c on c.id = t.idCliente
-            where  DATE(t.fechaEmision) = curdate() and c.carnet = '".$this->objeto->getCarnet()."'
+            where t.estado = 1
+            and t.fechaEmision between '".$this->objeto->getFechaFacturacion()." 00:00:00' and '".$this->objeto->getFechaFacturacion()." 23:59:59' 
+            and DATE(t.fechaEmision) = curdate() and c.carnet = '".$this->objeto->getCarnet()."'
         )!= ''
         then
          (ROUND((1.50 - ( select sum(t.descuentoSubsidio) from enc_ticket t 
          inner join clientes c on c.id = t.idCliente
-         where  DATE(t.fechaEmision) = curdate() and c.carnet = '".$this->objeto->getCarnet()."') ),2))
+         where  t.estado = 1 
+         and t.fechaEmision between '".$this->objeto->getFechaFacturacion()." 00:00:00' and '".$this->objeto->getFechaFacturacion()." 23:59:59' 
+         and DATE(t.fechaEmision) = curdate() and c.carnet = '".$this->objeto->getCarnet()."') ),2))
         else
             1.50
         end as subsidioremanente,
-        case 
-        when (
-
-            select CONCAT('$ ',ROUND(a.cantidadSubsidio - sum(t.descuentoSubsidio) , 2 ))   from clientes c
-            inner join areas a on a.id = c.idArea
-            inner join subsidio sb on sb.idCliente = c.id
-            inner join enc_ticket t on t.idCliente = c.id
-            where c.idEliminado = 1 and c.carnet= '".$this->objeto->getCarnet()."'
-            and sb.mes = month(curdate()) and sb.anio = year(curdate())
-            and t.tipoPago in ('Parcial en subsidio','Subsidio')
-        ) != ''
-        then 
-        (
-
-            select CONCAT('$ ',ROUND(a.cantidadSubsidio - sum(t.descuentoSubsidio) , 2 ))   from clientes c
-            inner join areas a on a.id = c.idArea
-            inner join subsidio sb on sb.idCliente = c.id
-            inner join enc_ticket t on t.idCliente = c.id
-            where c.idEliminado = 1 and c.carnet= '".$this->objeto->getCarnet()."'
-            and sb.mes = month(curdate()) and sb.anio = year(curdate())
-            and t.tipoPago in ('Parcial en subsidio','Subsidio')
-        )
-        else 
-        CONCAT('$ ',ROUND(a.cantidadSubsidio , 2 ))
-        end as remanente,
         CONCAT('$ ',ROUND(a.cantidadSubsidio , 2 )) as subsidioArea  from clientes c
         inner join areas a on a.id = c.idArea
         inner join sucursales s on s.id = a.idSucursal
@@ -98,6 +77,44 @@ class DaoCobros extends DaoBase {
        
     }
 
+    public function mostrarTickets($idCaja, $fecha){
+
+        
+        $_query = " SELECT 
+        cl.nombre as cliente, cl.carnet, t.tipoPago, CONCAT('$ ',round(efectivoRecibido,2)) as efectivoRecibidoTck,
+        CONCAT('$ ',round(total,2)) as totalTkc,
+        CONCAT('$ ',round(descuentoPlanilla,2)) as descPlanilla,
+        CONCAT('$ ',round(descuentoSubsidio,2)) as descSubsidio, t.id as idTicket 
+        from enc_ticket t 
+        inner join clientes cl on cl.id = t.idCliente
+        inner join areas a on a.id = cl.idArea
+        INNER join sucursales s on s.id = a.idSucursal
+        INNER join cajas c on c.idSucursal = s.id
+        where t.estado = 1 and c.id = ".$idCaja."
+        and t.fechaEmision between '".$fecha." 00:00:00' and '".$fecha." 23:59:59' ";
+
+            $resultado = $this->con->ejecutar($_query);
+
+            $_json = '';
+
+            while($fila = $resultado->fetch_assoc()) {
+
+                $object = json_encode($fila);
+
+                $btnEditar = '<a style=\"font-size:13px;\" id=\"'.$fila["idTicket"].'\" class=\" ui icon red small button btnAnularTicketLista\"><i class=\"trash icon\"></i></a>';
+      
+                $acciones = ', "Acciones": "'.$btnEditar.'"';
+
+                $object = substr_replace($object, $acciones, strlen($object) -1, 0);
+
+                $_json .= $object.',';
+            }
+
+            $_json = substr($_json,0, strlen($_json) - 1);
+
+            return '{"data": ['.$_json .']}';
+       
+    }
 
     public function getDatosProductoCodigo(){
 
@@ -168,10 +185,18 @@ class DaoCobros extends DaoBase {
         $fila = $resultado1->fetch_assoc();
         $idCliente = $fila['id'];
 
+
+        $hora= "select curtime() as filaHora;";
+
+        $hora1 = $this->con->ejecutar($hora);
+
+        $filaHora = $hora1->fetch_assoc();
+        $horaFinal = $filaHora['filaHora'];
+
         $_query = "insert into enc_ticket values(null,".$idCliente.",'".$this->objeto->getTipoPago()."',
          ".$this->objeto->getTotal().",".$this->objeto->getEfectivo().",".$this->objeto->getCambio().",
          ".$this->objeto->getDescuentoPlanilla().",".$this->objeto->getDescuentoSubsidio().",1,
-         '".$this->objeto->getNomUsuario()."',now())";
+         '".$this->objeto->getNomUsuario()."','".$this->objeto->getFechaFacturacion()." ".$horaFinal."')";
 
         $resultado = $this->con->ejecutar($_query);
 

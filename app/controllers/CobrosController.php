@@ -16,6 +16,8 @@ class CobrosController extends ControladorBase {
         $dao = new DaoCobros();
         
         $dao->objeto->setCarnet($_REQUEST["carnet"]);
+        $dao->objeto->setFechaFacturacion($_REQUEST["fecha"]);
+        
 
         echo $dao->getDatosCliente();
     }
@@ -83,9 +85,11 @@ class CobrosController extends ControladorBase {
             }
             else if($_REQUEST["tipoPago"]=='Parcial en subsidio'){
                 $dao->objeto->setDescuentoSubsidio($_REQUEST["descSubsidio"]);
-                $dao->objeto->setDescuentoPlanilla("0.00");
+                $dao->objeto->setDescuentoPlanilla($_REQUEST["descPlanilla"]);
             }
             $dao->objeto->setNomUsuario($_REQUEST["usuario"]);
+            $dao->objeto->setFechaFacturacion($_REQUEST["fechaFacturacion"]);
+            
 
             echo $dao->guardarEncabezado();
           
@@ -142,6 +146,25 @@ class CobrosController extends ControladorBase {
 
 
     public function anularEstadoTicket() {
+        $id = $_REQUEST['id'];
+
+        $dao = new DaoCobros();
+
+        echo $dao->anularEstadoTicket($id);
+    }
+
+
+    public function mostrarTickets() {
+        $idCaja = (isset($_REQUEST['sucursal']))? $_REQUEST['sucursal']:0;
+        $fecha = (isset($_REQUEST['fecha']))? $_REQUEST['fecha']:0;
+
+        $dao = new DaoCobros();
+
+        echo $dao->mostrarTickets($idCaja,$fecha);
+    }
+
+
+    public function anularTicketLista(){
         $id = $_REQUEST['id'];
 
         $dao = new DaoCobros();

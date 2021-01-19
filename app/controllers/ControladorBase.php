@@ -19,7 +19,7 @@ class ControladorBase {
         require_once "./app/view/Components/headerBar.php";
     }
 
-    public function validarSesion() {
+    public static function validarSesion() {
         if(empty($_SESSION["codigoUsuario"])) {
             header("location: ?");
         }

@@ -569,8 +569,8 @@ var app = new Vue({
                             if (r == 1) {
 
                                 swal({
-                                    title: 'Combo Registradao',
-                                    text: 'Guardada con éxito',
+                                    title: 'Combo Registrado',
+                                    text: 'Guardado con éxito',
                                     type: 'success',
                                     showConfirmButton: false,
                                         timer: 1700
@@ -579,7 +579,13 @@ var app = new Vue({
                                         location.href = '?';
                                     }
                                 }); 
-                                $('#dtCombos').DataTable().ajax.reload();
+                                var table = $('#dtProductosCobro').DataTable();
+                                table.destroy();
+                                tablaProductos(sucursal);
+
+                                var table1 = $('#dtCombos').DataTable();
+                                table1.destroy();
+                                mostrarCombos(sucursal);
                                 limpiar();             
                             }
                             

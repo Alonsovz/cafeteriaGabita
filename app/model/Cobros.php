@@ -16,9 +16,30 @@ class Cobros extends ModeloBase{
     private $nomUsuario;
     private $descuentoPlanilla;
     private $descuentoSubsidio;
+    private $fechaFacturacion;
 
     public function __construct() {
 
+    }
+
+    /**
+     * Get the value of nomUsuario
+     */ 
+    public function getFechaFacturacion()
+    {
+        return $this->fechaFacturacion;
+    }
+
+    /**
+     * Set the value of nomUsuario
+     *
+     * @return  self
+     */ 
+    public function setFechaFacturacion($fechaFacturacion)
+    {
+        $this->fechaFacturacion = $fechaFacturacion;
+
+        return $this;
     }
 
     /**
