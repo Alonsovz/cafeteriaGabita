@@ -18,14 +18,14 @@ class DaoCobros extends DaoBase {
             inner join clientes c on c.id = t.idCliente
             where t.estado = 1
             and t.fechaEmision between '".$this->objeto->getFechaFacturacion()." 00:00:00' and '".$this->objeto->getFechaFacturacion()." 23:59:59' 
-            and DATE(t.fechaEmision) = curdate() and c.carnet = '".$this->objeto->getCarnet()."'
+            and c.carnet = '".$this->objeto->getCarnet()."'
         )!= ''
         then
          (ROUND((1.50 - ( select sum(t.descuentoSubsidio) from enc_ticket t 
          inner join clientes c on c.id = t.idCliente
          where  t.estado = 1 
          and t.fechaEmision between '".$this->objeto->getFechaFacturacion()." 00:00:00' and '".$this->objeto->getFechaFacturacion()." 23:59:59' 
-         and DATE(t.fechaEmision) = curdate() and c.carnet = '".$this->objeto->getCarnet()."') ),2))
+          and c.carnet = '".$this->objeto->getCarnet()."') ),2))
         else
             1.50
         end as subsidioremanente,

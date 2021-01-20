@@ -1,7 +1,7 @@
 <?php
 
 
-$carnet = $_REQUEST["carnet"];
+$id = $_REQUEST["id"];
 
 require_once('../../model/conexion.php');
 	$conn=new Conexion();
@@ -23,9 +23,7 @@ require_once('../../model/conexion.php');
 	inner join clientes c on c.id = et.idCliente
 	inner join areas a on a.id = c.idArea
 	inner join sucursales s on s.id = a.idSucursal
-	where  c.carnet = ".$carnet."
-	order by et.id DESC
-	LIMIT 1;";
+	where  et.id = ".$id.";";
 	$encabezado=mysqli_query($link, $query);
 	$encTicket=mysqli_query($link, $query);
 

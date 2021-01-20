@@ -294,6 +294,7 @@
                         </div>
             </div>
        </form>
+       <button id="btnImprimirTicket" class="ui green button">Imprimir ticket</button>
     </div>
     <div class="actions">
             <button class="ui black deny button">
@@ -312,7 +313,7 @@
     <div class="header" style="background-color:#024D54; color:white;">
     <i class="ticket icon"></i><i class="close icon"></i> Anular Tickets
     </div>
-    <div class="content" class="ui equal width form" style="background-color:#E0E0E0;">
+    <div class="scrolling content" class="ui equal width form" style="background-color:#E0E0E0;">
        <form class="ui form"> 
             <div class="field">
                 <div class="fields">
@@ -1710,7 +1711,7 @@ $("#cantidadEfectivoPSubs").keyup(function(e){
                         
                     }
                 }).then(function(){
-                    imprimir2Tickets(carnet);
+                    imprimirTicket(carnet);
                  
                     
                 });
@@ -2097,7 +2098,7 @@ $("#aceptarSubsidio").keypress(function(e){
                     
                 }
             }).then(function(){
-                imprimir2Tickets(carnet);
+                imprimirTicket(carnet);
                 
             });
         }
@@ -2246,4 +2247,13 @@ $("#cantidadEfectivo").keypress(function(e){
     
 });
 
+
+$("#btnImprimirTicket").click(function(){
+    var idTicket = $("#nTicket").val();
+
+    $.ajax({
+                type: 'POST',
+                url: './app/Controllers/impresionTermica/ticketNormal2.php?id='+idTicket,
+            }); 
+});
 </script>
