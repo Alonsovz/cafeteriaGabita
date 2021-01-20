@@ -1740,7 +1740,7 @@ function imprimirTicket(carnet){
 
 
 $("#siTckEfectivo").keyup(function(e){
-   
+   var carnet = $("#carnet").val();
     if(e.keyCode=='13'){
         $("#modalConfirmarTicketEfectivo").modal('hide');
     swal({
@@ -1792,7 +1792,7 @@ function imprimir2Tickets(carnet){
 
 
 $("#siTckDoble").keyup(function(e){
-   
+    var carnet = $("#carnet").val();
    if(e.keyCode=='13'){
        $("#modalConfirmarDoble").modal('hide');
        swal({
